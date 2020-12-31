@@ -39,9 +39,11 @@ if sys.platform == "darwin":
         #                 'optimize'       : 1,  #2
                          'compressed'     : 0,
         #                 'excludes': ['Tkinter','tcl','tk','_ssl', 'email'],
-                         'excludes': ['Tkinter','tcl','tk','_ssl', 'pygame', 'pygame.pypm'],
+         #                'excludes': ['Tkinter','tcl','tk','_ssl', 'pygame', 'pygame.pypm'],
+                         'excludes': ['Tkinter','tcl','tk','_ssl'],
         #                 'includes': ['mechanize', 'urllib', 'socket', 'pygame.pypm' ],
                          'includes': ['mechanize', 'urllib', 'socket' ],
+         #                'includes': ['mechanize', 'urllib', 'socket', 'pygame', 'pygame.pypm' ],
                          'packages': ['wx'],
                          'plist': {
                                    'CFBundleDocumentTypes': [{

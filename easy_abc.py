@@ -115,6 +115,9 @@ try:
 except ImportError:
     fluidsynth_available = False
 
+#FAU 20201228: add playback thanks to mplay for Mac
+from mplaysmfplayer import *
+
 from wxmediaplayer import *
 from xml2abc_interface import xml_to_abc, abc_to_xml
 from midi2abc import midi_to_abc, Note, duration2abc
@@ -3692,7 +3695,15 @@ class MainFrame(wx.Frame):
             default_soundfont_path = '/usr/share/sounds/sf2/FluidR3_GM.sf2'
         
         soundfont_path = settings.get('soundfont_path', default_soundfont_path)
-
+        
+        if wx.Platform == "__WXMAC__" and self.mc is None:
+            try:
+                self.mc = MPlaySMFPlayer(self)
+                fluidsynth_available = False
+            except:
+                print("erreur smf")
+                self.mc = None
+            
         if fluidsynth_available and soundfont_path and os.path.exists(soundfont_path):
             try:
                 self.mc = FluidSynthPlayer(soundfont_path)
@@ -3704,7 +3715,9 @@ class MainFrame(wx.Frame):
             try:
                 backend = None
                 if wx.Platform == "__WXMAC__":
-                    backend = wx.media.MEDIABACKEND_QUICKTIME
+                    '''FAU 23.12.2020: As wxMediaCtrl does not handle properly midi file, use pygame to be able to play
+                    '''
+                    #backend = wx.media.MEDIABACKEND_QUICKTIME
                 elif wx.Platform == "__WXMSW__":
                     if platform.release() == 'XP':
                         backend = wx.media.MEDIABACKEND_DIRECTSHOW
@@ -3837,7 +3850,8 @@ class MainFrame(wx.Frame):
 
         self.play_timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.OnPlayTimer, self.play_timer)
-        self.play_timer.Start(50)
+        #FAU 20201228: No need to start timer before play is started
+        #self.play_timer.Start(50)
         self.music_update_thread.start()
         self.update_multi_tunes_menu_items()
 
@@ -4187,6 +4201,8 @@ class MainFrame(wx.Frame):
 
     def stop_playing(self):
         self.mc.Stop()
+        #FAU 20201228: play timer can be stopped no need to update progress slider
+        self.play_timer.Stop()
         self.mc.Load('NONEXISTANT_FILE____.mid') # be sure the midi file is released 2014-10-25 [SS]
         self.play_button.SetBitmap(self.play_bitmap)
         self.play_button.Refresh()
@@ -4253,10 +4269,14 @@ class MainFrame(wx.Frame):
     def do_load_media_file(self, path):
         # self.media_file_loaded = False
         if self.mc.Load(path):
-            if wx.Platform == "__WXMSW__" and platform.release() != 'XP':
+            #FAU 20201228: added support for playback for Mac with SMF player
+            if wx.Platform == "__WXMAC__" or (wx.Platform == "__WXMSW__" and platform.release() != 'XP'):
                 # 1.3.6.3 [JWDJ] 2015-3 It seems mc.Play() triggers the OnMediaLoaded event
                 # self.OnMediaLoaded(None)
                 self.mc.Play() # does not start playing but triggers OnMediaLoaded event
+                #FAU 20201228: Start timer to be able to have progress bar updated
+                self.play_timer.Start(20)
+                self.play_button.SetBitmap(self.pause_bitmap)
         else:
             wx.MessageBox(_("Unable to load %s: Unsupported format?") % path,
                           _("Error"), wx.ICON_ERROR | wx.OK)
@@ -4271,9 +4291,9 @@ class MainFrame(wx.Frame):
             self.progress_slider.SetValue(0)
             self.OnBpmSlider(None)
             self.update_playback_rate()
-            if wx.Platform == "__WXMAC__":
-                self.mc.Seek(0)  # When using wx.media.MEDIABACKEND_QUICKTIME the music starts playing too early (when loading a file)
-                time.sleep(0.5)  # hopefully this fixes the first notes not being played
+            #if wx.Platform == "__WXMAC__": # not used anymore
+            #    self.mc.Seek(0)  # When using wx.media.MEDIABACKEND_QUICKTIME the music starts playing too early (when loading a file)
+            #    time.sleep(0.5)  # hopefully this fixes the first notes not being played
             self.play()
         wx.CallAfter(play)
 
@@ -4313,7 +4333,8 @@ class MainFrame(wx.Frame):
             self.OnToolRecord(None)
 
     def OnSeek(self, evt):
-        self.mc.Seek(self.progress_slider.GetValue())
+        if wx.Platform != "__WXMAC__": #FAU 20201229: Odd behavior and not possible to change for now on Mac
+            self.mc.Seek(self.progress_slider.GetValue())
 
     def OnZoomSlider(self, evt):
         old_factor = self.zoom_factor
@@ -4331,9 +4352,16 @@ class MainFrame(wx.Frame):
 
     def OnPlayTimer(self, evt):
         if not self.is_closed and self.progress_slider.Parent.Shown and self.mc.is_playing:
+            if wx.Platform == "__WXMAC__": #FAU 20201229: Used to give the hand to MIDI player
+                delta = self.mc.IdlePlay()
+                if delta == 0:
+                    if self.loop_midi_playback:
+                        self.mc.Seek(0)
+                    else:
+                        self.stop_playing()
             offset = self.mc.Tell()
             if offset >= self.progress_slider.Max:
-                length = self.mc.Length()
+                length = round(self.mc.Length()) #FAU 20201229: use the round to avoid warning in case Length is not an int
                 self.progress_slider.SetRange(0, length)
             if self.settings.get('follow_score', False):
                 self.queue_number_follow_score += 1
