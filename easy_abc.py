@@ -1,6 +1,7 @@
 #
 
-program_name = 'EasyABC 1.3.7.9 2020-12-31 FAU-Test'
+program_name = 'EasyABC 1.3.7.9 2021-01-01'
+program_name = program_name + ' FAU-Test'
 
 # Copyright (C) 2011-2014 Nils Liberg (mail: kotorinl at yahoo.co.uk)
 # Copyright (C) 2015-2020 Seymour Shlien (mail: fy733@ncf.ca), Jan Wybren de Jong (jw_de_jong at yahoo dot com)
