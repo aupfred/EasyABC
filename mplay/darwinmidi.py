@@ -278,10 +278,12 @@ class DLSSynth:
 
 class midiDevice:
     def __init__(self):
-        if MIDIGetDestination(0) != 0:
-            self.device = CoreMidiDevice()
-        else:
-            self.device = DLSSynth()
+        #FAU: 20210102: Disabling the use of Midi Devices that are creating error type Need to look further at CFStringCreateWithCString
+        #if MIDIGetDestination(0) != 0:
+        #    self.device = CoreMidiDevice()
+        #else:
+        #    self.device = DLSSynth()
+        self.device = DLSSynth()
 
     def midievent(self, buf):
         self.device.midievent(buf)
