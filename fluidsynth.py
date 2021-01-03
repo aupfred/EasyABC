@@ -37,7 +37,7 @@ if platform.system() == 'Windows':
     os.environ['PATH'] = fluidsynth_lib_path + ';' + envpath
     lib = 'libfluidsynth-2.dll'
 else:
-    lib = "libfluidsynth.so.2"
+    lib = 'libfluidsynth.so.2'
     #FAU 20201229: for now do not use fluidsynth on Mac keep on with the SMF Player.
     #lib = "libfluidsynth.{}".format("so.2" if platform.uname()[0] != "Darwin" else "dylib")
 
