@@ -7,9 +7,9 @@ import os.path
 if sys.version_info.major > 2:
     basestring = str
 
-version = '1.3.7.9'
+version = '1.3.8'
 description = "EasyABC"
-long_description = "Nils Liberg's EasyABC 1.3.7 (Seymour Shlien)"
+long_description = "Nils Liberg's EasyABC 1.3.8 (Seymour Shlien)"
 long_description = long_description + " Mac integration"
 url = 'http://www.nilsliberg.se/ksp/easyabc/'
 author = 'Nils Liberg'
@@ -92,13 +92,13 @@ else:
                      'bin\\abc2abc.exe',
                      'bin\\nwc2xml.exe',
                      'bin\\zlibwapi.dll',
-                     'bin\\FluidSynth\\libsndfile-1.dll',
-                     'bin\\FluidSynth\\intl.dll',
-                     'bin\\FluidSynth\\libfluidsynth-2.dll',
-                     'bin\\FluidSynth\\libglib-2.0-0.dll',
-                     'bin\\FluidSynth\\libgobject-2.0-0.dll',
-                     'bin\\FluidSynth\\libgthread-2.0-0.dll',
-                     'bin\\FluidSynth\\libinstpatch-2.dll',				 
+                     'bin\\FluidSynth\\X86\\libsndfile-1.dll',
+                     'bin\\FluidSynth\\X86\\intl.dll',
+                     'bin\\FluidSynth\\X86\\libfluidsynth-3.dll',
+                     'bin\\FluidSynth\\X86\\libglib-2.0-0.dll',
+                     'bin\\FluidSynth\\X86\\libgobject-2.0-0.dll',
+                     'bin\\FluidSynth\\X86\\libgthread-2.0-0.dll',
+                     'bin\\FluidSynth\\X86\\libinstpatch-2.dll',				 
                      'reference.txt',
                      'gpl-license.txt',
                      'easy_abc.exe.manifest',
