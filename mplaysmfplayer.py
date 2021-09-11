@@ -38,7 +38,7 @@ class MPlaySMFPlayer(MidiPlayer):
         self.midi_file = None
         
         self.is_play_started = False
-        self.loop_midi_playback = False
+        #self.loop_midi_playback = False
         self.__PlaybackRate = 1.0
 
 

@@ -3865,11 +3865,11 @@ class MainFrame(wx.Frame):
         if wx.Platform == "__WXMAC__" and self.mc is None:
             try:
                 self.mc = MPlaySMFPlayer(self)
-                fluidsynth_available = False
+                #fluidsynth_available = False
             except:
                 print("erreur smf")
                 self.mc = None
-            
+        
         self.uses_fluidsynth = False
         if fluidsynth_available and soundfont_path and os.path.exists(soundfont_path):
             try:
