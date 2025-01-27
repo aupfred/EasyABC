@@ -169,6 +169,7 @@ from abc_tune import *
 
 dialog_background_colour = wx.Colour(245, 244, 235)
 default_note_highlight_color = '#FF7F3F'
+default_note_highlight_follow_color = '#FF0000'
 control_margin = 6
 default_midi_volume = 96
 default_midi_pan = 64
@@ -3149,12 +3150,21 @@ class ColorSettingsFrame(wx.Panel):
             b = int(note_highlight_color[5:7], 16)
             self.note_highlight_color_picker = wx.ColourPickerCtrl(self, wx.ID_ANY, wx.Colour(r, g, b))
 
+        note_highlight_follow_color = self.settings.get('note_highlight_follow_color', default_note_highlight_follow_color)
+        note_highlight_follow_color_label = wx.StaticText(self, wx.ID_ANY, _("Note highlight color when follow score"))
+        self.note_highlight_follow_color_picker = wx.ColourPickerCtrl(self, wx.ID_ANY, colour=wx.Colour(note_highlight_follow_color))
+            
         grid_sizer.Add(note_highlight_color_label, pos=(0,0), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
         grid_sizer.Add(self.note_highlight_color_picker, pos=(0,1), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(note_highlight_follow_color_label, pos=(1,0), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(self.note_highlight_follow_color_picker, pos=(1,1), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
 
-        note_highlight_color_tooltip = _('Color of selected note or currently playing note')
+        note_highlight_color_tooltip = _('Color of selected note')
         self.note_highlight_color_picker.SetToolTip(wx.ToolTip(note_highlight_color_tooltip))
         self.note_highlight_color_picker.Bind(wx.EVT_COLOURPICKER_CHANGED, self.OnNoteHighlightColorChanged)
+        note_highlight_follow_color_tooltip = _('Color of currently playing note')
+        self.note_highlight_follow_color_picker.SetToolTip(wx.ToolTip(note_highlight_follow_color_tooltip))
+        self.note_highlight_follow_color_picker.Bind(wx.EVT_COLOURPICKER_CHANGED, self.OnNoteHighlightFollowColorChanged)
 
         self.SetSizer(grid_sizer)
         self.SetAutoLayout(True)
@@ -3166,6 +3176,12 @@ class ColorSettingsFrame(wx.Panel):
         color = wxcolor.GetAsString(flags=wx.C2S_HTML_SYNTAX)
         self.settings['note_highlight_color'] = color
         self.Parent.Parent.Parent.Parent.renderer.highlight_color = color
+
+    def OnNoteHighlightFollowColorChanged(self, evt):
+        wxcolor = self.note_highlight_follow_color_picker.GetColour()
+        color = wxcolor.GetAsString(flags=wx.C2S_HTML_SYNTAX)
+        self.settings['note_highlight_follow_color'] = color
+        self.Parent.Parent.Parent.Parent.renderer.highlight_follow_color = color
 
 
 # 1.3.6 [SS] 2014-12-01
@@ -4021,7 +4037,7 @@ class MainFrame(wx.Frame):
         self.editor.SetMarginType(1,stc.STC_MARGIN_NUMBER)
 
         # 1.3.6.2 [JWdJ] 2015-02
-        self.renderer = SvgRenderer(self.settings['can_draw_sharps_and_flats'], self.settings.get('note_highlight_color', default_note_highlight_color))
+        self.renderer = SvgRenderer(self.settings['can_draw_sharps_and_flats'], self.settings.get('note_highlight_color', default_note_highlight_color), self.settings.get('note_highlight_follow_color', default_note_highlight_follow_color))#'#FF0000')
         self.music_pane = MusicScorePanel(self, self.renderer)
         self.music_pane.SetBackgroundColour((255, 255, 255))
         self.music_pane.OnNoteSelectionChangedDesc = self.OnNoteSelectionChangedDesc
@@ -4673,7 +4689,7 @@ class MainFrame(wx.Frame):
         self.current_time_slice = current_time_slice
         if current_time_slice.page == self.current_page_index:
             try:
-                self.music_pane.draw_notes_highlighted(current_time_slice.indices)
+                self.music_pane.draw_notes_highlighted(current_time_slice.indices, highlight_follow=True)
             except:
                 pass
                 # self.music_and_score_out_of_sync()

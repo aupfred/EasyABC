@@ -290,7 +290,7 @@ class SvgPage(object):
 
 
 class SvgRenderer(object):
-    def __init__(self, can_draw_sharps_and_flats, highlight_color):
+    def __init__(self, can_draw_sharps_and_flats, highlight_color, highlight_follow_color = None):
         self.can_draw_sharps_and_flats = can_draw_sharps_and_flats
         self.path_cache = {}
         self.fill_cache = {}
@@ -313,6 +313,11 @@ class SvgRenderer(object):
         self.buffer = None
         # 1.3.6.2 [JWdJ] 2015-02-12 Added voicecolor
         self.highlight_color = highlight_color
+        if highlight_follow_color:
+            self.highlight_follow_color = highlight_follow_color
+        else:
+            self.highlight_follow_color = highlight_color
+        self.highlight_follow = False
         self.default_transform = None
         #self.update_buffer(self.empty_page)
         if wx.Platform == "__WXMAC__":
@@ -387,7 +392,7 @@ class SvgRenderer(object):
             dc.SetBackground(wx.WHITE_BRUSH)
             dc.Clear()
 
-    def draw_notes(self, page, note_indices, highlight, dc=None):
+    def draw_notes(self, page, note_indices, highlight, dc=None, highlight_follow=False ):
         if not page.note_draw_info or not note_indices:
             return
         dc = dc or wx.MemoryDC(self.buffer)
@@ -399,7 +404,7 @@ class SvgRenderer(object):
         for element_id, current_color, matrix in [page.note_draw_info[i] for i in note_indices]:
             gc.PushState()
             transform(gc.CreateMatrix(*matrix))
-            self.draw_svg_element(page, gc, page.id_to_element[element_id], highlight, current_color, {})
+            self.draw_svg_element(page, gc, page.id_to_element[element_id], highlight, current_color, {}, highlight_follow)
             gc.PopState()
         gc.PopState()
 
@@ -649,7 +654,7 @@ class SvgRenderer(object):
     #     om.Concat(sm)
     #     return om
 
-    def draw_svg_element(self, page, dc, svg_element, highlight, current_color, current_style):
+    def draw_svg_element(self, page, dc, svg_element, highlight, current_color, current_style, highlight_follow=False):
         ''' This is the main engine for converting the svg items in the svg file into graphics
         displayed in the music pane. The book SVG Essentials by J. David
         Eisenberg describes all the elements used (eg. g, use, ellipse, ...)
@@ -701,7 +706,7 @@ class SvgRenderer(object):
 
             # 1.3.6.2 [JWdJ] 2015-02-14 Only 'g' and 'defs' have children
             for child in svg_element.children:
-                self.draw_svg_element(page, dc, child, highlight, current_color, current_style.copy())
+                self.draw_svg_element(page, dc, child, highlight, current_color, current_style.copy(), highlight_follow)
 
         # if something is going to be drawn, prepare
         else:
@@ -714,7 +719,10 @@ class SvgRenderer(object):
                     fill = current_color
 
                 if highlight and fill != 'none':
-                    fill = self.highlight_color
+                    if highlight_follow:
+                        fill = self.highlight_follow_color
+                    else:
+                        fill = self.highlight_color    
 
                 self.set_fill(dc, fill)
 
@@ -723,7 +731,10 @@ class SvgRenderer(object):
                 stroke = current_color
 
             if highlight and stroke != 'none':
-                stroke = self.highlight_color
+                if highlight_follow:
+                    stroke = self.highlight_follow_color
+                else:
+                    stroke = self.highlight_color
 
             self.set_stroke(dc, stroke, float(attr.get('stroke-width', 1.0)), attr.get('stroke-linecap', 'butt'), attr.get('stroke-dasharray', None))
 
@@ -753,7 +764,7 @@ class SvgRenderer(object):
 
             dc.PushState()
             dc.Translate(x, y)
-            self.draw_svg_element(page, dc, page.id_to_element[element_id], highlight, current_color, current_style.copy())
+            self.draw_svg_element(page, dc, page.id_to_element[element_id], highlight, current_color, current_style.copy(), highlight_follow)
             if desc:
                 page.note_draw_info.append((element_id, current_color, dc.GetTransform().Get()))
             dc.PopState()
