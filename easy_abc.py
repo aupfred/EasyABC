@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-program_version = '1.3.8.7'
+program_version = '1.x.x.x'
 program_name = 'EasyABC ' + program_version
 
 # Copyright (C) 2011-2014 Nils Liberg (mail: kotorinl at yahoo.co.uk)
