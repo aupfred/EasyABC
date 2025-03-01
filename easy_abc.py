@@ -120,7 +120,7 @@ from xml2abc_interface import xml_to_abc, abc_to_xml
 from midi2abc import midi_to_abc, Note, duration2abc
 from generalmidi import general_midi_instruments
 from abc_styler import ABCStyler
-from abc_character_encoding import decode_abc, abc_text_to_unicode, get_encoding_abc
+from abc_character_encoding import decode_abc, abc_text_to_unicode, get_encoding_abc, abc_str_charset_re
 from abc_search import abc_matches_iter
 from fractions import Fraction
 from music_score_panel import MusicScorePanel
@@ -654,19 +654,24 @@ def add_table_of_contents_to_postscript_file(filepath):
             return '<FEFF%s>' % ''.join('%.4x' % ord(c) for c in s)   # encode unicode
         else:
             return '(%s)' % s.replace('(', r'\(').replace(')', r'\)') # escape any parenthesis
-    lines = list(codecs.open(filepath, 'rU', 'utf-8'))
+    lines = list(codecs.open(filepath, 'rb', 'utf-8'))
     for line in lines:
         if 'pdfmark' in line:
             return   # pdfmarks have already been added
     new_lines = []
-    new_tune_state = False
+    new_tune_index = new_tune_state = False
     tunes = []
     for line in lines:
-        new_lines.append(line)
-        m = re.match(r'% --- (\d+) \((.*?)\) ---', line)
-        if m:
+        new_lines.append(line.rstrip())
+        #m = re.match(r'% --- (\d+) \((.*?)\) ---', line)
+        m = re.match(r'% --- xref (\d+)', line)
+        if m and not new_tune_index:
+            new_tune_index = True
+            tune_index = m.group(1)
+        m = re.match(r'% --- title (.*)', line)
+        if m and new_tune_index:
             new_tune_state = True
-            tune_index, tune_title = m.group(1), m.group(2)
+            tune_title = m.group(1)
             tunes.append((tune_index, tune_title))
         if new_tune_state and (line.rstrip().endswith('showc') or
                                line.rstrip().endswith('showr') or
@@ -674,7 +679,8 @@ def add_table_of_contents_to_postscript_file(filepath):
             ps_title = to_ps_string(decode_abc(tune_title))
             new_lines.append('[ /Dest /NamedDest%s /View [ /XYZ null null null ] /DEST pdfmark' % tune_index)
             new_lines.append('[ /Action /GoTo /Dest /NamedDest%s /Title %s /OUT pdfmark' % (tune_index, ps_title))
-            new_tune_state = False  # now this tune has been handled, wait for next one....
+            new_tune_index = new_tune_state = False  # now this tune has been handled, wait for next one....
+            
     codecs.open(filepath, 'wb', 'utf-8').write(os.linesep.join(new_lines))
 
 def sort_abc_tunes(abc_code, sort_fields, keep_free_text=True):
@@ -783,7 +789,9 @@ def process_abc_code(settings, abc_code, header, minimal_processing=False, tempo
 
     # 1.3.6.3 [JWdJ] 2015-04-22 fixing newlines to part of process_abc_code
     abc_code = re.sub(r'\r\n|\r', '\n', abc_code)  ## TEST
-
+    
+    abc_code = abc_str_charset_re.sub(r'\g<1>abc-charset utf-8 %removed \g<encoding>', abc_code)
+    
     return abc_code
 
 def AbcToPS(abc_code, cache_dir, extra_params='', abcm2ps_path=None, abcm2ps_format_path=None):
@@ -4773,6 +4781,7 @@ class MainFrame(wx.Frame):
             self.OnToolRecord(None)
         #if self.uses_fluidsynth:
         #    self.OnAfterStop()
+        self.editor.SetFocus()
 
     def OnSeek(self, evt):
         self.mc.Seek(self.progress_slider.GetValue())
@@ -5083,7 +5092,7 @@ class MainFrame(wx.Frame):
     def generate_incipits_abc(self):
         def get_num_music_lines_in_tune(abc):
             try:
-                notes = re.split(r'K:.*\s*', abc, 1)[1]  # extract part after first K: field
+                notes = re.split(r'K:.*\s*', abc, maxsplit=1)[1]  # extract part after first K: field
                 notes = re.sub(r'\[\w:.*?\]', '', notes) # remove fields
                 return len([l for l in text_to_lines(notes) if l.strip()])  # return number of non-empty lines
             except IndexError:
@@ -5920,6 +5929,7 @@ class MainFrame(wx.Frame):
             self.future_time_slice = None
             self.last_played_svg_row = None
             wx.CallAfter(self.PlayMidi, remove_repeats)
+        self.editor.SetFocus()
 
     @property
     def loop_midi_playback(self):
@@ -5936,6 +5946,7 @@ class MainFrame(wx.Frame):
             self.set_loop_midi_playback(True)
         if not self.mc.is_playing:
             self.OnToolPlay(evt)
+        self.editor.SetFocus()
 
     def OnToolRefresh(self, evt):
         self.refresh_tunes()
@@ -5960,6 +5971,7 @@ class MainFrame(wx.Frame):
             pane.Dockable(not pane.IsFloating()) # JWDJ: moving a floating abc-assist must not try to dock it again
         else:
             self.ShowAbcAssist(not shown)
+        self.editor.SetFocus()
 
     # 1.3.7 [JWdJ] 2016-01-06
     def ShowAbcAssist(self, show):
@@ -6128,7 +6140,12 @@ class MainFrame(wx.Frame):
         try:
             return file_as_bytes.decode('utf-8')
         except UnicodeError:
-            return file_as_bytes.decode('latin-1')
+            modal_result = wx.MessageBox(_("This ABC file seems not to be encoded using UTF-8 but contains no indication of this fact. "
+                                           "It is strongly recommended that an I:abc-charset field is added in order for you to load the file and safely save changes to it. "
+                                           "EasyABC is about to continue with latin-1 encoding. Do you want EasyABC to add this for you automatically?"), _("Add abc-charset field?"), wx.ICON_QUESTION | wx.YES | wx.NO)
+            if modal_result == wx.YES:
+                text = os.linesep.join(('%abc', '% EasyABC has added the charset instruction in the flowing line', 'I:abc-charset latin-1', file_as_bytes.decode('latin-1')))
+            return text
 
     @staticmethod
     def fix_end_of_line_sequence(text):
@@ -6202,34 +6219,40 @@ class MainFrame(wx.Frame):
         else:
             f = open(self.current_file, 'wb')
             s = self.editor.GetText()
-            if PY3 or type(s) is unicode:
-                if PY3:
-                    encoding = 'utf-8'
-                else:
-                    encoding = get_encoding_abc(s)
-                try:
-                    s.encode(encoding, 'strict')
-                except UnicodeEncodeError as e: # 1.3.6.2 [JWdJ] 2015-02
-                    sample_letters = s[e.start:e.end][:30]
-                    modal_result = wx.MessageBox(_("This document contains characters (eg. %(ABC)s) that cannot be represented using the current character encoding (%(encoding)s). "
-                                                   "Do you want to switch to using UTF-8 as your character encoding (recommended)? "
-                                                   "(choosing No may cause some of these characters to be replaced by '?' when they are saved)") %
-                                                   {'ABC': sample_letters, 'encoding': encoding},
-                                                 _('Switch to UTF-8 encoding?'), wx.ICON_QUESTION | wx.YES | wx.NO)
-                    if modal_result == wx.YES:
-                        s = os.linesep.join(('I:abc-charset utf-8', s))
-                        self.editor.BeginUndoAction()
-                        self.editor.SetText(s)
-                        self.editor.EndUndoAction()
-                        encoding = 'utf-8'
+            match = abc_str_charset_re.search(s)
+            if match:
+                encoding = match.group('encoding')
 
-                s = s.encode(encoding, 'replace')
+                if encoding != 'utf-8':
+                    # normalize a bit
+                    if encoding in ['utf8', 'UTF-8', 'UTF8']:
+                        encoding = 'utf-8'
+                    codecs.lookup(encoding) # make sure that it exists at this point so as to avoid confusing errors later
+            else:
+                encoding = 'utf-8'
+            try:
+                s.encode(encoding, 'strict') #strict mode will raise an error if something cannot be encoded
+            except UnicodeEncodeError as e:
+                sample_letters = s[e.start:e.end][:30]
+                modal_result = wx.MessageBox(_("This document contains characters (eg. %(ABC)s) that cannot be represented using the current character encoding (%(encoding)s). "
+                                               "Do you want to switch to using UTF-8 as your character encoding (recommended)? "
+                                               "(choosing No may cause some of these characters to be replaced by '?' when they are saved)") %
+                                               {'ABC': sample_letters, 'encoding': encoding},
+                                             _('Switch to UTF-8 encoding?'), wx.ICON_QUESTION | wx.YES | wx.NO)
+                if modal_result == wx.YES:
+                    s = os.linesep.join(('I:abc-charset utf-8', s))
+                    self.editor.BeginUndoAction()
+                    self.editor.SetText(s)
+                    self.editor.EndUndoAction()
+                    encoding = 'utf-8'
+
+            s = s.encode(encoding, 'replace') #replace mode will replace an unknown character by a "?"
 
             f.write(s)
             f.close()
             self.add_recent_file(self.current_file)
             self.editor.SetSavePoint()
-
+    
     def save_as(self, directory=None):
         wildcard = _('ABC file') + " (*.abc)|*.abc"
         defaultDir = ''
@@ -6569,7 +6592,7 @@ class MainFrame(wx.Frame):
 
     def OnShowTunesList(self, evt):
         win = wx.FindWindowByName('tuneslistframe')
-        tunes_list = 'index|title|startline"\n'
+        tunes_list = 'index|title|startline\n'
         for i, (index, title, startline) in enumerate(self.tunes):
             tunes_list = tunes_list + str(index) + '|' + str(title) + '|' + str(startline) +'\n'
         if win is None:
@@ -6620,13 +6643,44 @@ class MainFrame(wx.Frame):
     def do_command(self, cmd):
         self.editor.CmdKeyExecute(cmd)
 
-    def OnUndo(self, evt):      self.do_command(stc.STC_CMD_UNDO)
-    def OnRedo(self, evt):      self.do_command(stc.STC_CMD_REDO)
-    def OnCut(self, evt):       self.do_command(stc.STC_CMD_CUT)
-    def OnCopy(self, evt):      self.do_command(stc.STC_CMD_COPY)
-    def OnPaste(self, evt):     self.do_command(stc.STC_CMD_PASTE)
-    def OnDelete(self, evt):    self.do_command(stc.STC_CMD_CLEAR)
-    def OnSelectAll(self, evt): self.do_command(stc.STC_CMD_SELECTALL)
+    def OnUndo(self, evt):      #self.do_command(stc.STC_CMD_UNDO)
+        if self.tune_list.HasFocus():
+            return
+        widget = self.FindFocus()
+        widget.Undo()
+    def OnRedo(self, evt):      #self.do_command(stc.STC_CMD_REDO)
+        if self.tune_list.HasFocus():
+            return
+        widget = self.FindFocus()
+        widget.Redo()
+    def OnCut(self, evt):       #self.do_command(stc.STC_CMD_CUT)
+        if self.tune_list.HasFocus():
+            return
+        widget = self.FindFocus()
+        widget.Cut()
+    def OnCopy(self, evt):      #self.do_command(stc.STC_CMD_COPY)
+        if self.tune_list.HasFocus():
+            self.OnExportToClipboard(evt)
+        else:
+            widget = self.FindFocus()
+            widget.Copy()
+    def OnPaste(self, evt):    #self.do_command(stc.STC_CMD_PASTE)
+        if self.tune_list.HasFocus():
+            return
+        widget = self.FindFocus()
+        widget.Paste()
+    def OnDelete(self, evt):    #self.do_command(stc.STC_CMD_CLEAR)
+        if self.tune_list.HasFocus():
+            return
+        widget = self.FindFocus()
+        widget.Clear()
+    def OnSelectAll(self, evt): #self.do_command(stc.STC_CMD_SELECTALL)
+        if self.tune_list.HasFocus():
+            for i in range(self.tune_list.GetItemCount()):
+                self.tune_list.Select(i,1)
+        else:
+            widget = self.FindFocus()
+            widget.SelectAll()
 
     def OnFind(self, evt):
         self.close_existing_find_and_replace_dialogs()
@@ -8193,6 +8247,7 @@ class MainFrame(wx.Frame):
 
     def OnPageSelected(self, evt):
         self.select_page(self.cur_page_combo.GetSelection())
+        self.editor.SetFocus()
 
     def select_page(self, page_index):
         self.current_page_index = page_index
