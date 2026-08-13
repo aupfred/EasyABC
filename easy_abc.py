@@ -5454,7 +5454,7 @@ class MainFrame(wx.Frame):
     def export_pdf_tunes(self, only_selected=False, single_file=False):
         gs_path = self.settings.get('gs_path')
         if not gs_path:
-            dlg = wx.MessageDialog(self, _('EasyABC needs an external program called GhostScript to generate PDFs. You can get it from https://www.ghostscript.com/download/'), _('Warning'), wx.OK)
+            dlg = wx.MessageDialog(self, _('EasyABC needs an external program called GhostScript to generate PDFs. You can get it from https://www.ghostscript.com/download/ or on macOS from https://pages.uoregon.edu/koch/ or with homebrew'), _('Warning'), wx.OK)
             dlg.ShowModal()
             return
         if not os.path.exists(gs_path):
