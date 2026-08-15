@@ -7,11 +7,11 @@ import os.path
 if sys.version_info >= (3,0,0):
     basestring = str
 
-version = '1.3.8.7'
+version = '1.4.0.0'
 description = "EasyABC"
-long_description = "Nils Liberg's EasyABC 1.3.8 (Seymour Shlien)"
+long_description = "Nils Liberg's EasyABC 1.4.0"
 url = 'https://sourceforge.net/projects/easyabc/'
-author = 'Nils Liberg'
+author = 'Nils Liberg, Jan Wybren de Wong, Seymour Shlien, Frederic Aupepin'
 
 options = {}
 executables = []
@@ -20,6 +20,8 @@ include_files = [os.path.join('locale', 'sv', 'LC_MESSAGES', 'easyabc.po'),
                  os.path.join('locale', 'sv', 'LC_MESSAGES', 'easyabc.mo'),
                  os.path.join('locale', 'da', 'LC_MESSAGES', 'easyabc.po'),
                  os.path.join('locale', 'da', 'LC_MESSAGES', 'easyabc.mo'),
+                 os.path.join('locale', 'de', 'LC_MESSAGES', 'easyabc.po'),
+                 os.path.join('locale', 'de', 'LC_MESSAGES', 'easyabc.mo'),
                  os.path.join('locale', 'fr', 'LC_MESSAGES', 'easyabc.po'),
                  os.path.join('locale', 'fr', 'LC_MESSAGES', 'easyabc.mo'),
                  os.path.join('locale', 'nl', 'LC_MESSAGES', 'easyabc.po'),
@@ -60,6 +62,7 @@ if sys.platform == "darwin":
                   ('locale', []),
                   ('locale/sv', []), ('locale/sv/LC_MESSAGES', glob.glob(os.path.join('locale/sv/LC_MESSAGES/*'))),
                   ('locale/da', []), ('locale/da/LC_MESSAGES', glob.glob(os.path.join('locale/da/LC_MESSAGES/*'))),
+                  ('locale/de', []), ('locale/de/LC_MESSAGES', glob.glob(os.path.join('locale/de/LC_MESSAGES/*'))),
                   ('locale/fr', []), ('locale/fr/LC_MESSAGES', glob.glob(os.path.join('locale/fr/LC_MESSAGES/*'))),
                   ('locale/nl', []), ('locale/nl/LC_MESSAGES', glob.glob(os.path.join('locale/nl/LC_MESSAGES/*'))),
                   ('locale/ja', []), ('locale/ja/LC_MESSAGES', glob.glob(os.path.join('locale/ja/LC_MESSAGES/*'))),
