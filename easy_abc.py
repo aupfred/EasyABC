@@ -416,28 +416,38 @@ def show_in_browser(url):
     handle.open(url)
 
 
-#FAU 20240105: py2app and py2exe sets variable sys.frozen
-#FAU 20240105: py2app sets also environment variable RESOURCEPATH to point to Resources folder
-#FAU 20240105: Use of this information to either look for the libraries side to easy_abc or in the app folder
+#FAU: py2app and py2exe sets variable sys.frozen
+#FAU: py2app sets also environment variable RESOURCEPATH to point to Resources folder
+#FAU: Use of this information to either look for the libraries side to easy_abc or in the app folder
 def get_default_path_for_executable(name):
+    # Windows: add .exe
     if wx.Platform == "__WXMSW__":
-        exe_name = '{0}.exe'.format(name)
+        exe_name = f"{name}.exe"
     else:
         exe_name = name
 
-    if wx.Platform == "__WXMAC__" and getattr(sys, "frozen", None) and os.environ.get('RESOURCEPATH'):
-        path = os.path.join(os.path.dirname(os.environ["RESOURCEPATH"]),'Helpers', exe_name)
-    else:
-        path = os.path.join(cwd, 'bin', exe_name)
+    # --- macOS bundle case (PyInstaller / py2app) ---
+    if wx.Platform == "__WXMAC__" and getattr(sys, "frozen", None) and os.environ.get("RESOURCEPATH"):
+        path = os.path.join(os.path.dirname(os.environ["RESOURCEPATH"]), "Helpers", exe_name)
+        #print("Mac App: " + str(path))
+        return path
 
-    path = os.path.join(cwd, 'bin', exe_name)
+    # --- Linux / GTK case ---
     if wx.Platform == "__WXGTK__":
-        if not os.path.exists(path):
-            path = '/usr/local/bin/{0}'.format(name)
-        if not os.path.exists(path):
-            path = '/usr/bin/{0}'.format(name)
+        # Try system locations
+        candidate_paths = [
+            f"/usr/local/bin/{exe_name}",
+            f"/usr/bin/{exe_name}",
+        ]
+        for p in candidate_paths:
+            if os.path.exists(p):
+                return p
+        # fallback
+        return os.path.join(cwd, "bin", exe_name)
 
-    return path
+    # --- Windows or macOS non-frozen fallback ---
+    #print("Default path: " + str(cwd) +"/bin/"+ str(exe_name))
+    return os.path.join(cwd, "bin", exe_name)
 
 
 # p09 2014-10-14 [SS]
@@ -2169,11 +2179,30 @@ class AbcFileSettingsFrame(wx.Panel):
             # [SS] 1.3.6.4 2015-12-23
             if current_path:
                 control.SetValue(current_path)
+
+            if entry.add_default:
+                default_path = get_default_path_for_executable(entry.name)
+
+                if current_path == default_path:
+                    default_label=_("[default]")
+                    control.SetValue(f"{current_path}   {default_label}")
+                    # default value: gray + italic
+                    font = control.GetFont()
+                    font.SetStyle(wx.FONTSTYLE_ITALIC)
+                    control.SetFont(font)
+                    control.SetForegroundColour(wx.Colour(120,120,120))  # gris
+                else:
+                    # user value: default color
+                    control.SetForegroundColour(wx.NullColour)
             control.Bind(wx.EVT_TEXT, self.OnChangePath, control)
 
             self.control_to_name[control] = entry.name
             if entry.tooltip:
-                control.SetToolTip(wx.ToolTip(entry.tooltip))
+                tooltip_for_control = entry.tooltip
+                if entry.add_default:
+                    default_tool_tip = _("If empty, reset to default")
+                    tooltip_for_control = f"{tooltip_for_control}. {default_tool_tip}"
+                control.SetToolTip(wx.ToolTip(tooltip_for_control))
 
             browse_button = wx.Button(self, wx.ID_ANY, _('Browse...'))
             self.browsebutton_to_control[browse_button] = control
@@ -2271,6 +2300,47 @@ class AbcFileSettingsFrame(wx.Panel):
         if on_changed is not None:
             on_changed(path)
 
+    def change_path_for_control(self, control, path):
+        name = self.control_to_name[control]
+        setting_name = f"{name}_path"
+
+        # If user clears the path → use default path
+        if not path.strip():
+            default_path = get_default_path_for_executable(name)
+            self.settings[setting_name] = default_path
+
+            # Do NOT modify path_choices
+            # Do NOT delete history
+            # Do NOT append anything
+            default_label=_("[default]")
+            control.SetValue(f"{default_path}   {default_label}")
+            # Apply style for default value
+            font = control.GetFont()
+            font.SetStyle(wx.FONTSTYLE_ITALIC)
+            control.SetFont(font)
+            control.SetForegroundColour(wx.Colour(120,120,120))
+
+            self.statusbar.SetStatusText(setting_name + " reset to default: " + default_path)
+            return
+
+        font = control.GetFont()
+        font.SetStyle(wx.FONTSTYLE_NORMAL)
+        control.SetFont(font)
+        control.SetForegroundColour(wx.NullColour)
+        # Normal case: user selects a path
+        self.settings[setting_name] = path
+
+        if isinstance(control, wx.ComboBox):
+            setting_name_choices = f"{name}_path_choices"
+            paths = self.append_exe(path, control.Items)
+            self.settings[setting_name_choices] = "|".join(paths)
+
+        self.statusbar.SetStatusText(setting_name + " was updated to " + path)
+
+        on_changed = self.afterchanged.get(setting_name)
+        if on_changed is not None:
+            on_changed(path)
+ 
     def midiplayer_changed(self, path):
         app = wx.GetApp()
         app.frame.update_play_button() # 1.3.6.3 [JWDJ] 2015-04-21 playbutton enabling centralized
