@@ -416,11 +416,19 @@ def show_in_browser(url):
     handle.open(url)
 
 
+#FAU 20240105: py2app and py2exe sets variable sys.frozen
+#FAU 20240105: py2app sets also environment variable RESOURCEPATH to point to Resources folder
+#FAU 20240105: Use of this information to either look for the libraries side to easy_abc or in the app folder
 def get_default_path_for_executable(name):
     if wx.Platform == "__WXMSW__":
         exe_name = '{0}.exe'.format(name)
     else:
         exe_name = name
+
+    if wx.Platform == "__WXMAC__" and getattr(sys, "frozen", None) and os.environ.get('RESOURCEPATH'):
+        path = os.path.join(os.path.dirname(os.environ["RESOURCEPATH"]),'Helpers', exe_name)
+    else:
+        path = os.path.join(cwd, 'bin', exe_name)
 
     path = os.path.join(cwd, 'bin', exe_name)
     if wx.Platform == "__WXGTK__":
@@ -2156,7 +2164,7 @@ class AbcFileSettingsFrame(wx.Panel):
             path_choices = self.keep_existing_paths(path_choices)
             path_choices = self.append_exe(current_path, path_choices)
             if entry.add_default:
-                path_choices = self.append_exe(self.get_default_path(entry.name), path_choices)
+                path_choices = self.append_exe(get_default_path_for_executable(entry.name), path_choices)
             control = wx.ComboBox(self, wx.ID_ANY, size=wx.Size(450,22),choices=path_choices, style=wx.CB_DROPDOWN)
             # [SS] 1.3.6.4 2015-12-23
             if current_path:
@@ -2315,13 +2323,14 @@ class AbcFileSettingsFrame(wx.Panel):
                 result.append(path)
         return result
 
-    def get_default_path(self, executable):
-        if wx.Platform == "__WXMSW__":
-            return os.path.join(cwd, 'bin', '%s.exe' % executable)
-        elif wx.Platform == "__WXMAC__":
-            return os.path.join(cwd, 'bin', executable)
-        else:
-            return os.path.join(cwd, 'bin', executable)
+#FAU 20240107: redundant function with get_default_path_for_executables
+#    def get_default_path(self, executable):
+#        if wx.Platform == "__WXMSW__":
+#            return os.path.join(cwd, 'bin', '%s.exe' % executable)
+#        elif wx.Platform == "__WXMAC__":
+#            return os.path.join(cwd, 'bin', executable)
+#        else:
+#            return os.path.join(cwd, 'bin', executable)
 
 
 # p09 this was derived from the Abcm2psSettingsFrame. Now it is a separate page in the
