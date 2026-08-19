@@ -56,7 +56,7 @@ if sys.platform == "darwin":
                                    }
                          }
     data_files = [('.', ['reference.txt', 'gpl-license.txt']),
-                  ('bin', ['bin/abc2midi', 'bin/abcm2ps', 'bin/abc2abc', 'bin/nwc2xml', 'bin/midi2abc']),
+                  #('bin', ['bin/abc2midi', 'bin/abcm2ps', 'bin/abc2abc', 'bin/nwc2xml', 'bin/midi2abc']),
                   ('img', glob.glob(os.path.join('img', '*.*'))),
                   ('sound', glob.glob(os.path.join('sound', '*.*'))),
                   ('locale', []),
