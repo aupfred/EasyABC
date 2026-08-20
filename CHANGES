@@ -652,3 +652,4 @@ different panes. Tie/untie option added for notes. Broken rhythm
 - Fixed: Musicscore gets blank when clicking on the musicpanel (aupfred)
 - Fixed: playing issue on selection when no extra header lines to be created by EasyABC (aupfred)
 - Fixed: Copy/Paste management in dialog (aupfred)
+- Fixed: Definition of font Helvetica-Oblique at beginning of incipit file (aupfred)

@@ -5208,6 +5208,10 @@ class MainFrame(wx.Frame):
 
         # extract file header
         lines = []
+        lines.append('')
+        lines.append('%%font Helvetica-Oblique')
+        lines.append('')
+        lines.append('')
         editor = self.editor
         get_line = editor.GetLine
         for i in xrange(editor.GetLineCount()):
@@ -5221,7 +5225,7 @@ class MainFrame(wx.Frame):
         lines.append('%%topspace 0.0cm')
         lines.append('%%staffsep 0.7cm')
         lines.append('%%titleformat T-1') # C1 S1')
-        lines.append('%%maxshrink 1.4')
+        lines.append('%%maxshrink 0.9')
         lines.append('%%musiconly 1')
         lines.append('%%printtempo 0')
         lines.append('%%titlefont Helvetica-Oblique 16')
