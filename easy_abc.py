@@ -9408,17 +9408,6 @@ class MyApp(wx.App):
 
     def MacOpenFile(self, filename):	# [EPO] 2018-11-20 TODO  dup open file creates two frames (why?)
         """Called for files dropped on dock icon, or opened via finders context menu"""
-        #dlg = wx.MessageDialog(None,
-        #                       "This app was just asked to open:\n%s\n"%filename,
-        #                       "File Dropped",
-        #                       wx.OK|wx.ICON_INFORMATION)
-        #dlg.ShowModal()
-        #dlg.Destroy()
-        #frame = self.NewMainFrame()
-        #frame.Show(True)
-        #self.SetTopWindow(frame)
-        ##path = os.path.abspath(sys.argv[1]).decode(sys.getfilesystemencoding())
-        #self.frame.load_or_import(filename)
         if not self.frame.editor.GetModify() and not self.frame.current_file:     # if a new unmodified document
             self.frame.load(filename)
         else:
@@ -9426,18 +9415,11 @@ class MyApp(wx.App):
             self.frame.load(filename)
             
     def MacNewFile(self):
-        #dlg = wx.MessageDialog(None,
-        #                       "This app was just asked to launch",
-        #                       "App started",
-        #                       wx.OK|wx.ICON_INFORMATION)
-        #dlg.ShowModal()
-        #dlg.Destroy()
+        """Called on startup, loads last recent file"""
+        #Todo need to rework the recent file management to manage closure of last file.
         recent_file = self.settings.get('recentfiles', '').split('|')[0]
         if recent_file and os.path.exists(recent_file):
-            path = recent_file
-
-        if path :
-            self.frame.load_or_import(path)
+            self.frame.load_or_import(recent_file)
 
     def OnInit(self):
         try:
