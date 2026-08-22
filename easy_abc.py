@@ -139,8 +139,8 @@ if wx.Platform == "__WXMSW__":
         sys.stdout = open(os.devnull, 'w')
     if sys.stderr is None:
         sys.stderr = open(os.devnull, 'w')
-    import win32api
-    import win32process
+    #import win32api
+    #import win32process
 
 try:
     old_stdout = sys.stdout
@@ -377,7 +377,7 @@ def start_process(cmd):
     global execmessages # 1.3.6.4 [SS] 2015-05-27
     # 1.3.6.4 [SS] 2015-05-01
     if wx.Platform == "__WXMSW__":
-        creationflags = win32process.DETACHED_PROCESS
+        creationflags = subprocess.DETACHED_PROCESS
     else:
         creationflags = 0
     # 1.3.6.4 [SS] 2015-05-27
@@ -397,7 +397,7 @@ def get_output_from_process(cmd, input=None, creationflags=None, cwd=None, bufsi
 
     if creationflags is None:
         if wx.Platform == "__WXMSW__":
-            creationflags = win32process.CREATE_NO_WINDOW
+            creationflags = subprocess.CREATE_NO_WINDOW
         else:
             creationflags = 0
 
@@ -4112,7 +4112,7 @@ class MainFrame(wx.Frame):
         #_icon.CopyFromBitmap(wx.Bitmap(os.path.join('img', 'logo.ico'), wx.BITMAP_TYPE_ICO))
         #self.SetIcon(_icon)
         if wx.Platform == "__WXMSW__":
-            exeName = win32api.GetModuleFileName(win32api.GetModuleHandle(None))
+            exeName = sys.executable
             # 1.3.8.1 [mist13] Icon for Python version in Windows
             if "easy_abc" in exeName:
                 icon = wx.Icon(exeName + ";0", wx.BITMAP_TYPE_ICO)
@@ -4177,7 +4177,7 @@ class MainFrame(wx.Frame):
         self.mc = None
 
         if platform.system() == 'Windows':
-            default_soundfont_path = os.environ.get('HOMEPATH', 'C:') + "\\SoundFonts\\FluidR3_GM.sf2"
+            default_soundfont_path = get_application_path() + '\\sound\\FluidR3_GM.sf2'
         else:
             default_soundfont_path = '/usr/share/sounds/sf2/FluidR3_GM.sf2'
 

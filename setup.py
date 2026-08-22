@@ -86,7 +86,7 @@ if sys.platform == "darwin":
 
 else:
     from cx_Freeze import setup, Executable
-    base = "Win32GUI"
+    base = "gui"
     icon = 'img\\logo.ico'
     include_files = include_files + \
                     ['bin\\abc2midi.exe',
@@ -102,6 +102,9 @@ else:
                      'bin\\FluidSynth\\X86\\libgobject-2.0-0.dll',
                      'bin\\FluidSynth\\X86\\libgthread-2.0-0.dll',
                      'bin\\FluidSynth\\X86\\libinstpatch-2.dll',
+                     'bin\\FluidSynth\\libfluidsynth-3.dll',
+                     'bin\\FluidSynth\\SDL3.dll',
+                     'bin\\FluidSynth\\sndfile.dll',
                      'reference.txt',
                      'gpl-license.txt',
                      ]
@@ -118,9 +121,9 @@ else:
     includes = [
         # 'mechanize',
         # 'socket',
-        'urllib', 'win32api', 'win32process']
+        'urllib'] #, 'win32api', 'win32process']
 
-    # after running build.bat there should be no folders in build\exe.win32-3.8\lib
+    # after running build.bat there should be no folders in build\exe.win*\lib
     # if there are folders then add the names to the excludes because the packages are probably not necessary for EasyABC
     # the packages that are necessary should be in zip_include_pkgs to reduce files (the files will be included in library.zip)
     zip_include_pkgs = ['wx', 'xml', 'collections', 'ctypes', 'email', 'encodings', 'html', 'http', 'importlib', 'logging', 'midi', 'urllib']
