@@ -1,4 +1,4 @@
-% easyabc(1) easyabc 1.3.8.7
+% easyabc(1) easyabc 1.4.0.0
 % Bodo Meissner
 % May 2025
 
