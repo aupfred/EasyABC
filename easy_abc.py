@@ -1460,12 +1460,17 @@ def abc_to_midi(abc_code, settings, midi_file_name, add_follow_score_markers):
     input_abc = abc_code + os.linesep * 2
     stdout_value, stderr_value, returncode = get_output_from_process(cmd, input=input_abc)
     execmessages += '\n' + stdout_value + stderr_value
+    midi_exists = os.path.exists(midi_file_name)
     if stdout_value:
         stdout_value = re.sub(r'(?m)(writing MIDI file .*\r?\n?)', '', stdout_value)
     if returncode != 0:
         # 1.3.7.0 [SS] 2016-01-06
         execmessages += '\n' + _('%(program)s exited abnormally (errorcode %(error)#8x)') % { 'program': 'AbcToMidi', 'error': returncode & 0xffffffff }
-        return None
+        if not midi_exists:
+            execmessages += '\n' + _('No file created so cannot continue')
+            return None
+        execmessages += '\n' + _('Midi file exit so try to continue')
+        
 
     return midi_file_name
 
