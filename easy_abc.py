@@ -5053,11 +5053,20 @@ class MainFrame(wx.Frame):
 
         button_style = platebtn.PB_STYLE_DEFAULT | platebtn.PB_STYLE_NOBG
         image_path = self.get_image_path()
-        self.play_bitmap = wx.Image(os.path.join(image_path, 'toolbar_play.png')).ConvertToBitmap()
-        self.pause_bitmap = wx.Image(os.path.join(image_path, 'toolbar_pause.png')).ConvertToBitmap()
+
+        play_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-play.svg'), wx.Size(24, 24))
+        self.play_bitmap = play_svg_bundle.GetBitmap(wx.Size(24, 24))
+        pause_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-pause.svg'), wx.Size(24, 24))
+        self.pause_bitmap = play_svg_bundle.GetBitmap(wx.Size(24, 24))
         self.play_button = play = platebtn.PlateButton(self.toolbar, self.id_play, "", self.play_bitmap, style=button_style)
-        self.stop_button = stop = platebtn.PlateButton(self.toolbar, self.id_stop, "", wx.Image(os.path.join(image_path, 'toolbar_stop.png')).ConvertToBitmap(), style=button_style)
-        self.record_btn = record = platebtn.PlateButton(self.toolbar, self.id_record, "", wx.Image(os.path.join(image_path, 'toolbar_record.png')).ConvertToBitmap(), style=button_style)
+
+        stop_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-stop.svg'), wx.Size(24, 24))
+        stop_bmp = stop_svg_bundle.GetBitmap(wx.Size(24, 24))
+        self.stop_button = stop = platebtn.PlateButton(self.toolbar, self.id_stop, "", stop_bmp, style=button_style)
+
+        record_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-record.svg'), wx.Size(24, 24))
+        record_bmp = record_svg_bundle.GetBitmap(wx.Size(24, 24))
+        self.record_btn = record = platebtn.PlateButton(self.toolbar, self.id_record, "", record_bmp, style=button_style)
 
         play.SetHelpText('Play (F6)')
         record.SetMenu(record_popup)
@@ -5066,8 +5075,9 @@ class MainFrame(wx.Frame):
         self.toolbar.AddControl(record)
         self.toolbar.AddSeparator()
 
-        # 1.3.6.3 [JWdJ] 2015-04-26 turned off abc assist for it is not finished yet
-        abc_assist = platebtn.PlateButton(self.toolbar, self.id_abc_assist, "", wx.Image(os.path.join(image_path, 'bulb.png')).ConvertToBitmap(), style=button_style)
+        bulb_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-bulb.svg'), wx.Size(24, 24))
+        bulb_bmp = bulb_svg_bundle.GetBitmap(wx.Size(24, 24))
+        abc_assist = platebtn.PlateButton(self.toolbar, self.id_abc_assist, "", bulb_bmp, style=button_style)
         abc_assist.SetHelpText(_('ABC assist'))
         abc_assist.SetToolTip(wx.ToolTip(_('ABC assist'))) # 1.3.7.0 [JWdJ] 2015-12
         self.toolbar.AddControl(abc_assist, label=_('ABC assist'))
