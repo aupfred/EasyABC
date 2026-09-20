@@ -1466,6 +1466,8 @@ def abc_to_midi(abc_code, settings, midi_file_name, add_follow_score_markers):
     if returncode != 0:
         # 1.3.7.0 [SS] 2016-01-06
         execmessages += '\n' + _('%(program)s exited abnormally (errorcode %(error)#8x)') % { 'program': 'AbcToMidi', 'error': returncode & 0xffffffff }
+        # FAU see https://github.com/aupfred/EasyABC/issues/5
+        # Todo review the detail exit code list to enhance the check
         if not midi_exists:
             execmessages += '\n' + _('No file created so cannot continue')
             return None

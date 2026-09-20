@@ -653,3 +653,4 @@ different panes. Tie/untie option added for notes. Broken rhythm
 - Fixed: playing issue on selection when no extra header lines to be created by EasyABC (aupfred)
 - Fixed: Copy/Paste management in dialog (aupfred)
 - Fixed: Definition of font Helvetica-Oblique at beginning of incipit file (aupfred)
+- Fixed: abcmidi exit code no returns none 0 value even if some warning. Accept it if midi file exists (aupfred)
