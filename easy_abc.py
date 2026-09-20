@@ -7168,6 +7168,8 @@ class MainFrame(wx.Frame):
             #No need to continue as no Note
             return
         
+        musicpane_current_page = self.music_pane.current_page # 1.3.6.2 [JWdJ]
+
         caret_body_row = caret_current_row - tune_first_line_no - first_note_editor
         p1_body_row = max(line_p1 - tune_first_line_no - first_note_editor, 0)
         p2_body_row = max(line_p2 - tune_first_line_no - first_note_editor,0)
@@ -7204,9 +7206,11 @@ class MainFrame(wx.Frame):
             if select_closest_page and new_page_index is not None and new_page_index != self.current_page_index:
                 self.select_page(new_page_index)
         else:
+            musicpane_current_page.clear_note_selection()
+            if select_closest_note:
+                wx.CallAfter(self.music_pane.redraw)
             select_closest_note=False
             
-        musicpane_current_page = self.music_pane.current_page # 1.3.6.2 [JWdJ]
         if len(musicpane_current_page.notes) == 0:
             #FAU: at this point in time notes should be drawn already thus if no notes then remove flag select
             select_closest_note=False
