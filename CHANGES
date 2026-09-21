@@ -656,3 +656,4 @@ different panes. Tie/untie option added for notes. Broken rhythm
 - Fixed: Definition of font Helvetica-Oblique at beginning of incipit file (aupfred)
 - Fixed: abcmidi exit code no returns none 0 value even if some warning. Accept it if midi file exists (aupfred)
 - Fixed: Last note highlighted was keeping its highlight if caret not close to another note (aupfred)
+- Fixed: Menu item not following the definition of the id (aupfred)
