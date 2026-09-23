@@ -401,7 +401,13 @@ def get_output_from_process(cmd, input=None, creationflags=None, cwd=None, bufsi
         else:
             creationflags = 0
 
-    process = subprocess.Popen(cmd, stdin=stdin_pipe, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=creationflags, cwd=cwd, bufsize=bufsize)
+    try:
+        process = subprocess.Popen(cmd, stdin=stdin_pipe, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=creationflags, cwd=cwd, bufsize=bufsize)
+    except OSError as e:
+        if e.errno == 8 and sys.platform == "darwin":
+            process = subprocess.Popen(["/bin/sh"] + cmd, stdin=stdin_pipe, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=creationflags, cwd=cwd, bufsize=bufsize)
+        else:
+            raise
     stdout_value, stderr_value = process.communicate(input)
     returncode = process.returncode
 
