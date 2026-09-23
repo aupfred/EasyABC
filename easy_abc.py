@@ -7919,6 +7919,10 @@ class MainFrame(wx.Frame):
             return
         if evt.GetLinesAdded() != 0:
             wx.CallAfter(self.UpdateTuneListAndReselectTune)
+        if self.editor.GetModify():
+            self.SetTitle("%s - %s" % (program_name, self.document_name + "*"))
+        else:
+            self.SetTitle("%s - %s" % (program_name, self.document_name))
 
     def AutomaticUpdate(self, update_number):
         if self.queue_number_refresh_music == update_number:
