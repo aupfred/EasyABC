@@ -1,0 +1,40 @@
+name: Build macOS DMG for Apple Silicon
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install DMG Builder Tool
+        run: brew install create-dmg
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run: |
+           python3 -m venv venv
+           source venv/bin/activate
+           pip install --upgrade pip
+           pip install -r requirements.txt
+
+      - name: Build macOS Application and DMG for Apple Silicon
+        run: |
+          source venv/bin/activate
+          chmod +x build_mac_app-dmg_github.sh build.sh
+          
+          ./build_mac_app-dmg_github.sh arm64          
+
+      - name: Upload Finished DMG Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: EasyABC-macOS-AppleSilicon
+          path: ${{ env.DMG_NAME }}
