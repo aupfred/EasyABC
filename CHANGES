@@ -659,3 +659,4 @@ different panes. Tie/untie option added for notes. Broken rhythm
 - Fixed: Last note highlighted was keeping its highlight if caret not close to another note (aupfred)
 - Fixed: Menu item not following the definition of the id (aupfred)
 - Fixed: On mac OS a cosmopolitan binary for abcm2ps, abc2midi... as proposed on abcplus can only work if started in a Terminal
+- Fixed: Tied notes are not highlighted all at once any more (aupfred)

@@ -355,6 +355,112 @@ def read_abc_file(path):
     except UnicodeError:
         return file_as_bytes.decode('latin-1')
 
+def remove_ties_from_abc(abc_text: str) -> str:
+    """
+    Remove ties (-) in the ABC file :
+    - Ignore header lines (before X:).
+    - Ignore text blocs between %%begintext & %%endtext.
+    - Ignore commands/comments line (starting with %).
+    - Ignore ABC Instructions / field lines (X:, T:, M:, etc.).
+    - In other lines ignore all what is between ", !, +, and %.
+    - Replace ties (-) by space to keep same number of characters.
+    """
+    # Valid ABC field
+    valid_field_letters = {
+        'A', 'B', 'C', 'D', 'F', 'G', 'H', 'I', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Z',
+        'm', 'r', 's', 'w'
+    }
+
+    lines = abc_text.splitlines()
+    new_lines = []
+    in_text_block = False
+    found_x = False
+
+    for line in lines:
+        stripped_line = line.strip()
+
+        if stripped_line.startswith('%%begintext'):
+            in_text_block = True
+            new_lines.append(line)
+            continue
+        if stripped_line.startswith('%%endtext'):
+            in_text_block = False
+            new_lines.append(line)
+            continue
+        if in_text_block:
+            new_lines.append(line)
+            continue
+
+        if not found_x:
+            new_lines.append(line)
+            if stripped_line.startswith('X:'):
+                found_x = True
+            continue
+
+        if stripped_line.startswith('%'):
+            new_lines.append(line)
+            continue
+
+        if len(stripped_line) >= 2 and stripped_line[1] == ':' and stripped_line[0] in valid_field_letters:
+            new_lines.append(line)
+            continue
+
+        new_line = []
+        i = 0
+        n = len(line)
+
+        while i < n:
+            char = line[i]
+
+            if char == '"':
+                new_line.append(char)
+                i += 1
+                while i < n and line[i] != '"':
+                    new_line.append(line[i])
+                    i += 1
+                if i < n:
+                    new_line.append(line[i])
+                    i += 1
+                continue
+
+            if char == '!':
+                new_line.append(char)
+                i += 1
+                while i < n and line[i] != '!':
+                    new_line.append(line[i])
+                    i += 1
+                if i < n:
+                    new_line.append(line[i])
+                    i += 1
+                continue
+
+            if char == '+':
+                new_line.append(char)
+                i += 1
+                while i < n and line[i] != '+':
+                    new_line.append(line[i])
+                    i += 1
+                if i < n:
+                    new_line.append(line[i])
+                    i += 1
+                continue
+
+            if char == '%':
+                new_line.append(char)
+                new_line.extend(line[i:])
+                break
+
+            if char == '-':
+                new_line.append(' ')
+            else:
+                new_line.append(char)
+
+            i += 1
+
+        new_lines.append(''.join(new_line))
+
+    return '\n'.join(new_lines)
 
 # 1.3.6.3 [JWDJ] one function to determine font size
 def get_normal_fontsize():
@@ -8014,10 +8120,21 @@ class MainFrame(wx.Frame):
 
         tempo_multiplier = self.get_tempo_multiplier()
 
-        follow_score = not self.settings['midiplayer_path']
+        follow_score = not self.settings['midiplayer_path'] and self.settings.get('follow_score', False)
+        self.played_notes_timeline = None
+        if follow_score:
+            abc_for_ea = remove_ties_from_abc(abc)
+            try:
+                self.current_midi_tune = AbcToMidi(abc_for_ea, tune.header, self.cache_dir, self.settings, self.statusbar, tempo_multiplier, \
+                    add_follow_score_markers=follow_score)
+                self.played_notes_timeline = self.extract_note_timings(self.current_midi_tune, self.current_svg_tune)
+            except Exception as e:
+                error_msg = traceback.format_exc()
+                execmessages += error_msg
+
         # 1.3.6 [SS] 2014-11-15 2014-12-08
         self.current_midi_tune = AbcToMidi(abc, tune.header, self.cache_dir, self.settings, self.statusbar, tempo_multiplier, \
-            add_follow_score_markers=follow_score)
+            add_follow_score_markers=False)
         self.applied_tempo_multiplier = tempo_multiplier
         # 1.3.7 [SS] 2016-01-05 in case abc2midi crashes
         midi_file = None
@@ -8031,14 +8148,6 @@ class MainFrame(wx.Frame):
                 execmessages += '\ncalling ' + self.settings['midiplayer_path'] #1.3.6 [SS]
                 self.start_midi_out(midi_file)
             else:
-                self.played_notes_timeline = None
-                self.started_playing = False
-                if self.settings.get('follow_score', False):
-                    try:
-                        self.played_notes_timeline = self.extract_note_timings(self.current_midi_tune, self.current_svg_tune)
-                    except Exception as e:
-                        error_msg = traceback.format_exc()
-                        execmessages += error_msg
                 self.do_load_media_file(midi_file)
 
     def extract_note_timings(self, midi_tune, svg_tune):
