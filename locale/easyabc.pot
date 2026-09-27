@@ -3,34 +3,27 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: EasyABC 1.1\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-27 19:29+0200\n"
-"PO-Revision-Date: 2014-11-01 18:30+0100\n"
-"Last-Translator: Frédéric AUPEPIN <frederic.aupepin@gmail.com>\n"
-"Language-Team: EasyABC <info@nilsliberg.se>\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Poedit-Language: Swedish\n"
-"X-Poedit-Country: SWEDEN\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: ../../..\n"
 
 #: tune_actions.py:286
-#, fuzzy
 msgid "Less options"
-msgstr "ABC-inställningar"
+msgstr ""
 
 #: tune_actions.py:288
-#, fuzzy
 msgid "More options"
-msgstr "Anvisningar"
+msgstr ""
 
 #: tune_actions.py:427
 msgid "Convert to annotation"
@@ -137,9 +130,8 @@ msgid "sixteenth note"
 msgstr ""
 
 #: tune_actions.py:500 tune_actions.py:513
-#, fuzzy
 msgid "Change note length"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:505
 msgid "three quarter note"
@@ -150,14 +142,12 @@ msgid "three eighth note"
 msgstr ""
 
 #: tune_actions.py:518
-#, fuzzy
 msgid "Change second note length"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:523
-#, fuzzy
 msgid "Only name"
-msgstr "Låtnamn"
+msgstr ""
 
 #: tune_actions.py:524
 msgid "Only speed"
@@ -168,9 +158,8 @@ msgid "Name & speed"
 msgstr ""
 
 #: tune_actions.py:528
-#, fuzzy
 msgid "Change tempo notation"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:566
 msgid "Larghissimo"
@@ -229,18 +218,16 @@ msgid "Prestissimo"
 msgstr ""
 
 #: tune_actions.py:582
-#, fuzzy
 msgid "Change tempo name"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:587
 msgid "Note up"
 msgstr ""
 
 #: tune_actions.py:588
-#, fuzzy
 msgid "Note down"
-msgstr "Ornament"
+msgstr ""
 
 #: tune_actions.py:589
 msgid "Third up"
@@ -263,9 +250,8 @@ msgid "Change pitch"
 msgstr ""
 
 #: tune_actions.py:664
-#, fuzzy
 msgid "Change duration"
-msgstr "Lägg till &notlängder"
+msgstr ""
 
 #: tune_actions.py:791
 msgid "One measure"
@@ -292,19 +278,16 @@ msgid "Normal rest"
 msgstr ""
 
 #: tune_actions.py:807 tune_actions.py:821
-#, fuzzy
 msgid "Default length"
-msgstr "L: standardlängd på noter"
+msgstr ""
 
 #: tune_actions.py:808 tune_actions.py:822
-#, fuzzy
 msgid "Halve note length"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:809 tune_actions.py:823
-#, fuzzy
 msgid "Double note length"
-msgstr "L: standardlängd på noter"
+msgstr ""
 
 #: tune_actions.py:810 tune_actions.py:824
 msgid "Dotted note"
@@ -343,9 +326,8 @@ msgid "Ritenuto"
 msgstr ""
 
 #: tune_actions.py:841
-#, fuzzy
 msgid "Change annotation"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:847
 msgid "Above"
@@ -368,14 +350,12 @@ msgid "Auto"
 msgstr ""
 
 #: tune_actions.py:854
-#, fuzzy
 msgid "Position"
-msgstr "Spelposition:"
+msgstr ""
 
 #: tune_actions.py:859
-#, fuzzy
 msgid "Bar line"
-msgstr "Takter per rad"
+msgstr ""
 
 #: tune_actions.py:860
 msgid "Double bar line"
@@ -398,9 +378,8 @@ msgid "Start of repeated section"
 msgstr ""
 
 #: tune_actions.py:865
-#, fuzzy
 msgid "End of repeated section"
-msgstr "Ångra senaste åtgärd"
+msgstr ""
 
 #: tune_actions.py:866
 msgid "First ending"
@@ -505,12 +484,11 @@ msgstr ""
 #: tune_actions.py:955 tune_actions.py:1062 tune_actions.py:2162
 #: easy_abc.py:2925 easy_abc.py:2927
 msgid "None"
-msgstr "Ingen"
+msgstr ""
 
 #: tune_actions.py:958 easy_abc.py:3791
-#, fuzzy
 msgid "Key signature"
-msgstr "K: tonart"
+msgstr ""
 
 #: tune_actions.py:1006
 msgid "Major (Ionian)"
@@ -594,9 +572,8 @@ msgid "Octave lower (8va bassa)"
 msgstr ""
 
 #: tune_actions.py:1099
-#, fuzzy
 msgid "Staff transpose"
-msgstr "&Transponera"
+msgstr ""
 
 #: tune_actions.py:1109
 msgid "Playback transpose"
@@ -611,14 +588,12 @@ msgid "Change dynamics mark"
 msgstr ""
 
 #: tune_actions.py:1160
-#, fuzzy
 msgid "Change fingering"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:1165
-#, fuzzy
 msgid "Change ornament"
-msgstr "Ornament"
+msgstr ""
 
 #: tune_actions.py:1170
 msgid "Change direction marker"
@@ -629,9 +604,8 @@ msgid "Change articulation marker"
 msgstr ""
 
 #: tune_actions.py:1180
-#, fuzzy
 msgid "Change chord"
-msgstr "Spela ackord"
+msgstr ""
 
 #: tune_actions.py:1213
 msgid "Major"
@@ -718,14 +692,12 @@ msgid "Dominant 11th"
 msgstr ""
 
 #: tune_actions.py:1246
-#, fuzzy
 msgid "Change chord name"
-msgstr "Ange ditt namn"
+msgstr ""
 
 #: tune_actions.py:1254
-#, fuzzy
 msgid "Root position"
-msgstr "Spelposition:"
+msgstr ""
 
 #: tune_actions.py:1255
 msgid "First inversion"
@@ -736,9 +708,8 @@ msgid "Second inversion"
 msgstr ""
 
 #: tune_actions.py:1259
-#, fuzzy
 msgid "Change bass note"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:1267 tune_actions.py:2174
 msgid "Normal"
@@ -757,14 +728,12 @@ msgid "Change redefinable symbol"
 msgstr ""
 
 #: tune_actions.py:1302
-#, fuzzy
 msgid "Change instrument"
-msgstr "Standardinstrument: "
+msgstr ""
 
 #: tune_actions.py:1313
-#, fuzzy
 msgid "Change channel"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:1322
 msgid "High Q"
@@ -943,9 +912,8 @@ msgid "Maracas"
 msgstr ""
 
 #: tune_actions.py:1366
-#, fuzzy
 msgid "Short Whistle"
-msgstr "Sortera låtar"
+msgstr ""
 
 #: tune_actions.py:1367
 msgid "Long Whistle"
@@ -976,18 +944,16 @@ msgid "Mute Cuica"
 msgstr ""
 
 #: tune_actions.py:1374
-#, fuzzy
 msgid "Open Cuica"
-msgstr "Öppna ABC-fil"
+msgstr ""
 
 #: tune_actions.py:1375
 msgid "Mute Triangle"
 msgstr ""
 
 #: tune_actions.py:1376
-#, fuzzy
 msgid "Open Triangle"
-msgstr "Öppna ABC-fil"
+msgstr ""
 
 #: tune_actions.py:1377
 msgid "Shaker"
@@ -1022,9 +988,8 @@ msgid "Muted"
 msgstr ""
 
 #: tune_actions.py:1404
-#, fuzzy
 msgid "Change volume"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:1421 tune_actions.py:1422 tune_actions.py:1423
 #: tune_actions.py:1424 tune_actions.py:1425 tune_actions.py:1429
@@ -1054,9 +1019,8 @@ msgid "Rest"
 msgstr ""
 
 #: tune_actions.py:1455
-#, fuzzy
 msgid "Double duration"
-msgstr "Lägg till &notlängder"
+msgstr ""
 
 #: tune_actions.py:1456
 msgid "Fundamental plus chord"
@@ -1088,9 +1052,8 @@ msgid "Insert pattern"
 msgstr ""
 
 #: tune_actions.py:1472
-#, fuzzy
 msgid "Change time"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:1477
 msgid "Double time"
@@ -1114,14 +1077,13 @@ msgid "Full ABC specification"
 msgstr ""
 
 #: tune_actions.py:1605
-#, fuzzy
 msgid "New tune"
-msgstr "Lägg till ny låt"
+msgstr ""
 
 #: tune_actions.py:1614 tune_actions.py:2299 easy_abc.py:4351 easy_abc.py:4759
 #: easy_abc.py:6178
 msgid "Untitled"
-msgstr "Namnlös"
+msgstr ""
 
 #: tune_actions.py:1615
 msgid "Unknown composer"
@@ -1169,21 +1131,19 @@ msgstr ""
 
 #: tune_actions.py:1799 easy_abc.py:6973 tune_elements.py:850
 msgid "Dynamics"
-msgstr "Dynamik"
+msgstr ""
 
 #: tune_actions.py:1800 tune_elements.py:874
-#, fuzzy
 msgid "Ornament"
-msgstr "Ornament"
+msgstr ""
 
 #: tune_actions.py:1801 tune_elements.py:916
 msgid "Articulation"
 msgstr ""
 
 #: tune_actions.py:1802 tune_elements.py:892
-#, fuzzy
 msgid "Direction"
-msgstr "Anvisningar"
+msgstr ""
 
 #: tune_actions.py:1803
 msgid "Shortcut symbol"
@@ -1202,14 +1162,12 @@ msgid "Insert decoration"
 msgstr ""
 
 #: tune_actions.py:1819
-#, fuzzy
 msgid "Add slur"
-msgstr "Lägg till &taktstreck"
+msgstr ""
 
 #: tune_actions.py:1830
-#, fuzzy
 msgid "Add bar"
-msgstr "Lägg till &taktstreck"
+msgstr ""
 
 #: tune_actions.py:1872
 msgid "Combine using beam"
@@ -1220,9 +1178,8 @@ msgid "Combine to chord"
 msgstr ""
 
 #: tune_actions.py:1896
-#, fuzzy
 msgid "Make triplets"
-msgstr "Detektera trioler"
+msgstr ""
 
 #: tune_actions.py:1908
 msgid "Show single voice"
@@ -1273,9 +1230,8 @@ msgid "Discography"
 msgstr ""
 
 #: tune_actions.py:2104 tune_elements.py:83
-#, fuzzy
 msgid "File url"
-msgstr "&Arkiv"
+msgstr ""
 
 #: tune_actions.py:2105 tune_elements.py:84
 msgid "Group"
@@ -1298,23 +1254,20 @@ msgid "Parts"
 msgstr ""
 
 #: tune_actions.py:2110 easy_abc.py:5480 tune_elements.py:94
-#, fuzzy
 msgid "Tempo"
-msgstr "Tempo:"
+msgstr ""
 
 #: tune_actions.py:2111 tune_elements.py:95
-#, fuzzy
 msgid "Rhythm"
-msgstr "Låttyp"
+msgstr ""
 
 #: tune_actions.py:2112 tune_elements.py:97
 msgid "Source"
 msgstr ""
 
 #: tune_actions.py:2113 tune_elements.py:99
-#, fuzzy
 msgid "Tune title"
-msgstr "Låtar"
+msgstr ""
 
 #: tune_actions.py:2114 tune_elements.py:102
 msgid "Words (note aligned)"
@@ -1329,14 +1282,12 @@ msgid "Reference number"
 msgstr ""
 
 #: tune_actions.py:2117 tune_elements.py:105
-#, fuzzy
 msgid "Transcription"
-msgstr "Beskrivning"
+msgstr ""
 
 #: tune_actions.py:2120
-#, fuzzy
 msgid "Fields"
-msgstr "Fält"
+msgstr ""
 
 #: tune_actions.py:2147 tune_actions.py:2151 tune_actions.py:2152
 msgid "Page width"
@@ -1359,19 +1310,16 @@ msgid "Staff width"
 msgstr ""
 
 #: tune_actions.py:2154
-#, fuzzy
 msgid "Page orientation"
-msgstr "Spelposition:"
+msgstr ""
 
 #: tune_actions.py:2157
-#, fuzzy
 msgid "Change page format"
-msgstr "&Ändra editor-typsnitt..."
+msgstr ""
 
 #: tune_actions.py:2163
-#, fuzzy
 msgid "Start of every line"
-msgstr "Takter per rad"
+msgstr ""
 
 #: tune_actions.py:2164
 msgid "Every measure"
@@ -1410,9 +1358,8 @@ msgid "First measure number"
 msgstr ""
 
 #: tune_actions.py:2192
-#, fuzzy
 msgid "Title font"
-msgstr "Namn"
+msgstr ""
 
 #: tune_actions.py:2193
 msgid "Subtitle font"
@@ -1427,9 +1374,8 @@ msgid "Parts font"
 msgstr ""
 
 #: tune_actions.py:2196
-#, fuzzy
 msgid "Tempo font"
-msgstr "Tempo:"
+msgstr ""
 
 #: tune_actions.py:2197
 msgid "Guitar chord font"
@@ -1472,9 +1418,8 @@ msgid "Custom font 4"
 msgstr ""
 
 #: tune_actions.py:2209
-#, fuzzy
 msgid "Change font directive"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_actions.py:2214 tune_actions.py:2224
 msgid "Page scale factor"
@@ -1509,18 +1454,16 @@ msgid "Insert directive"
 msgstr ""
 
 #: tune_actions.py:2238 tune_elements.py:591
-#, fuzzy
 msgid "Chord instrument"
-msgstr "Standardinstrument: "
+msgstr ""
 
 #: tune_actions.py:2239
 msgid "Chord volume"
 msgstr ""
 
 #: tune_actions.py:2240 tune_elements.py:598
-#, fuzzy
 msgid "Bass instrument"
-msgstr "Standardinstrument: "
+msgstr ""
 
 #: tune_actions.py:2241
 msgid "Bass volume"
@@ -1531,14 +1474,12 @@ msgid "Accompaniment pattern (optional). Place after line with M:"
 msgstr ""
 
 #: tune_actions.py:2246 tune_elements.py:584
-#, fuzzy
 msgid "Instrument"
-msgstr "Standardinstrument: "
+msgstr ""
 
 #: tune_actions.py:2246
-#, fuzzy
 msgid "Set instrument"
-msgstr "Standardinstrument: "
+msgstr ""
 
 #: tune_actions.py:2247 tune_elements.py:622
 msgid "Volume"
@@ -1550,7 +1491,7 @@ msgstr ""
 
 #: tune_actions.py:2249 easy_abc.py:2517
 msgid "Play chords"
-msgstr "Spela ackord"
+msgstr ""
 
 #: tune_actions.py:2252
 msgid "Insert playback directive"
@@ -1581,9 +1522,8 @@ msgid "advances to the next bar"
 msgstr ""
 
 #: tune_actions.py:2265 tune_actions.py:2274
-#, fuzzy
 msgid "Insert align symbol"
-msgstr "&Infoga notsymbol"
+msgstr ""
 
 #: tune_actions.py:2270
 msgid "one note is skipped"
@@ -1623,7 +1563,7 @@ msgstr ""
 
 #: easy_abc.py:1042 easy_abc.py:5174 easy_abc.py:7094 easy_abc.py:9176
 msgid "Error"
-msgstr "Fel"
+msgstr ""
 
 #: easy_abc.py:1257 easy_abc.py:9198
 #, python-brace-format
@@ -1646,62 +1586,60 @@ msgstr ""
 #: easy_abc.py:1620
 #, python-format
 msgid "Error during conversion of %(filename)s: %(error)s"
-msgstr "Fel vid konvertering av %(filename)s: %(error)s"
+msgstr ""
 
 #: easy_abc.py:1641
-#, fuzzy
 msgid "EasyABC music"
-msgstr "&EasyABC-hjälp"
+msgstr ""
 
 #: easy_abc.py:2044
 msgid "Field"
-msgstr "Fält"
+msgstr ""
 
 #: easy_abc.py:2045
 msgid "Description"
-msgstr "Beskrivning"
+msgstr ""
 
 #: easy_abc.py:2070
 msgid "Generate incipits file..."
-msgstr "Skapa fil med låtstartsindex..."
+msgstr ""
 
 #: easy_abc.py:2074
 msgid "Number of bars to extract:"
-msgstr "Antal takter att extrahera:"
+msgstr ""
 
 #: easy_abc.py:2075
 msgid "Maximum number of repeats to extract:"
-msgstr "Maximalt antal repriser att extrahera:"
+msgstr ""
 
 #: easy_abc.py:2076
 msgid "Maximum number of titles/subtitles to extract:"
-msgstr "Maximalt antal titlar/undertitlar att extrahera:"
+msgstr ""
 
 #: easy_abc.py:2077
 msgid "Fields to sort by (eg. T):"
-msgstr "Fält att sortera efter (t ex. T):"
+msgstr ""
 
 #: easy_abc.py:2078
 msgid "Number of rows per column:"
-msgstr "Antal rader per kolumn:"
+msgstr ""
 
 #: easy_abc.py:2083
 msgid "&Two column output"
-msgstr "&Två kolumner"
+msgstr ""
 
 #: easy_abc.py:2102 easy_abc.py:2963 easy_abc.py:3809 easy_abc.py:3873
 #: easy_abc.py:9630
 msgid "&Ok"
-msgstr "&Ok"
+msgstr ""
 
 #: easy_abc.py:2103 easy_abc.py:2964 easy_abc.py:3810 easy_abc.py:3874
 msgid "&Cancel"
-msgstr "&Avbryt"
+msgstr ""
 
 #: easy_abc.py:2159
-#, fuzzy
 msgid "Abc settings"
-msgstr "ABC-inställningar"
+msgstr ""
 
 #: easy_abc.py:2171
 msgid "Abcm2ps"
@@ -1717,12 +1655,11 @@ msgstr ""
 
 #: easy_abc.py:2176 easy_abc.py:5962 easy_abc.py:6576
 msgid "MusicXML"
-msgstr "MusicXML"
+msgstr ""
 
 #: easy_abc.py:2177
-#, fuzzy
 msgid "File Settings"
-msgstr "&Inställningar"
+msgstr ""
 
 #: easy_abc.py:2178
 msgid "Colors"
@@ -1730,7 +1667,7 @@ msgstr ""
 
 #: easy_abc.py:2208
 msgid "abcm2ps executable:"
-msgstr "abcm2ps-program: "
+msgstr ""
 
 #: easy_abc.py:2208
 msgid "This executable is used to display the music"
@@ -1738,7 +1675,7 @@ msgstr ""
 
 #: easy_abc.py:2209
 msgid "abc2midi executable:"
-msgstr "abc2midi-program:"
+msgstr ""
 
 #: easy_abc.py:2209
 msgid "This executable is used to make the midi file"
@@ -1746,25 +1683,23 @@ msgstr ""
 
 #: easy_abc.py:2210
 msgid "abc2abc executable:"
-msgstr "abc2abc-program: "
+msgstr ""
 
 #: easy_abc.py:2210
 msgid "This executable is used to transpose the music"
 msgstr ""
 
 #: easy_abc.py:2212
-#, fuzzy
 msgid "midi2abc executable:"
-msgstr "abc2abc-program: "
+msgstr ""
 
 #: easy_abc.py:2212
 msgid "This executable is used to disassemble the output midi file"
 msgstr ""
 
 #: easy_abc.py:2213
-#, fuzzy
 msgid "ghostscript executable:"
-msgstr "ghostscript-program: "
+msgstr ""
 
 #: easy_abc.py:2213
 msgid "This executable is used to create PDF files"
@@ -1772,17 +1707,15 @@ msgstr ""
 
 #: easy_abc.py:2214
 msgid "nwc2xml executable:"
-msgstr "nwc2xml-program:"
+msgstr ""
 
 #: easy_abc.py:2214
-#, fuzzy
 msgid "For NoteWorthy Composer - Windows only"
-msgstr "Noteworthy Composer-fil"
+msgstr ""
 
 #: easy_abc.py:2215
-#, fuzzy
 msgid "ffmpeg executable:"
-msgstr "abcm2ps-program: "
+msgstr ""
 
 #: easy_abc.py:2215
 msgid "This executable is used to convert music to compressed formats"
@@ -1818,20 +1751,19 @@ msgstr ""
 
 #: easy_abc.py:2276 easy_abc.py:3044
 msgid "Browse..."
-msgstr "Bläddra..."
+msgstr ""
 
 #: easy_abc.py:2295
 msgid "Include file header when rendering tunes"
-msgstr "Inkludera abc-header vid visning av enskilda låtar"
+msgstr ""
 
 #: easy_abc.py:2298
 msgid "Extra MIDI player parameters"
 msgstr ""
 
 #: easy_abc.py:2306
-#, fuzzy
 msgid "Restore settings"
-msgstr "ABC-inställningar"
+msgstr ""
 
 #: easy_abc.py:2307
 msgid ""
@@ -1841,7 +1773,7 @@ msgstr ""
 
 #: easy_abc.py:2340
 msgid "Choose a file"
-msgstr "Välj en fil"
+msgstr ""
 
 #: easy_abc.py:2435
 msgid ""
@@ -1857,9 +1789,8 @@ msgid "Proceed?"
 msgstr ""
 
 #: easy_abc.py:2518
-#, fuzzy
 msgid "Ignore Dynamics"
-msgstr "Dynamik"
+msgstr ""
 
 #: easy_abc.py:2519
 msgid "Ignore Fermatas"
@@ -1882,37 +1813,32 @@ msgid "gchord pattern"
 msgstr ""
 
 #: easy_abc.py:2530
-#, fuzzy
 msgid "Instrument for playback"
-msgstr "Standardinstrument vid midi-uppspelning: "
+msgstr ""
 
 #: easy_abc.py:2534
-#, fuzzy
 msgid "Instrument for chord's playback"
-msgstr "Standardinstrument vid midi-uppspelning: "
+msgstr ""
 
 #: easy_abc.py:2538
-#, fuzzy
 msgid "Instrument for bass chord's playback"
-msgstr "Standardinstrument vid midi-uppspelning: "
+msgstr ""
 
 #: easy_abc.py:2544
 msgid "Default Tempo"
 msgstr ""
 
 #: easy_abc.py:2547
-#, fuzzy
 msgid "Transposition"
-msgstr "&Transponera"
+msgstr ""
 
 #: easy_abc.py:2550
 msgid "Tuning"
 msgstr ""
 
 #: easy_abc.py:2585
-#, fuzzy
 msgid "Quarter notes per minute"
-msgstr "Slag per minut (bpm)"
+msgstr ""
 
 #: easy_abc.py:2586
 msgid "Volume level for chordal accompaniment"
@@ -1981,7 +1907,7 @@ msgstr ""
 
 #: easy_abc.py:2754
 msgid "Default instrument:"
-msgstr "Standardinstrument: "
+msgstr ""
 
 #: easy_abc.py:2755
 msgid "Main Volume:"
@@ -2008,15 +1934,15 @@ msgstr ""
 
 #: easy_abc.py:2917
 msgid "Midi device settings"
-msgstr "Midi-inställningar"
+msgstr ""
 
 #: easy_abc.py:2922
 msgid "Input device"
-msgstr "Midi in-enhet"
+msgstr ""
 
 #: easy_abc.py:2923
 msgid "Output device"
-msgstr "Midi ut-enhet"
+msgstr ""
 
 #: easy_abc.py:3008
 msgid ""
@@ -2025,14 +1951,12 @@ msgid ""
 msgstr ""
 
 #: easy_abc.py:3011
-#, fuzzy
 msgid "No page settings"
-msgstr "ABC-inställningar"
+msgstr ""
 
 #: easy_abc.py:3012
-#, fuzzy
 msgid "EasyABC defaults"
-msgstr "&EasyABC-hjälp"
+msgstr ""
 
 #: easy_abc.py:3013
 msgid "Include bar numbers"
@@ -2083,9 +2007,8 @@ msgid "Extra parameters"
 msgstr ""
 
 #: easy_abc.py:3035
-#, fuzzy
 msgid "Format file"
-msgstr "abcm2ps-formatfil:"
+msgstr ""
 
 #: easy_abc.py:3054 easy_abc.py:3055 easy_abc.py:3056 easy_abc.py:3057
 #: easy_abc.py:3058 easy_abc.py:3059
@@ -2095,7 +2018,7 @@ msgstr ""
 
 #: easy_abc.py:3060
 msgid "Additional command line parameters to abcm2ps"
-msgstr "Ytterligare kommandoradsparametrar till abcm2ps"
+msgstr ""
 
 #: easy_abc.py:3061
 msgid "Right click the mouse to remove all choices"
@@ -2163,9 +2086,8 @@ msgid "Default color"
 msgstr ""
 
 #: easy_abc.py:3407
-#, fuzzy
 msgid "Color of chords"
-msgstr "Spela ackord"
+msgstr ""
 
 #: easy_abc.py:3408
 msgid "Color of bars"
@@ -2208,14 +2130,12 @@ msgid "Color of lyrics"
 msgstr ""
 
 #: easy_abc.py:3418
-#, fuzzy
 msgid "Color of ornament"
-msgstr "Ornament"
+msgstr ""
 
 #: easy_abc.py:3419
-#, fuzzy
 msgid "Color of ornament plus"
-msgstr "Ornament"
+msgstr ""
 
 #: easy_abc.py:3420
 msgid "Color of ornament excl"
@@ -2268,24 +2188,20 @@ msgid "characters/line"
 msgstr ""
 
 #: easy_abc.py:3652
-#, fuzzy
 msgid "bars per line"
-msgstr "Takter per rad"
+msgstr ""
 
 #: easy_abc.py:3653
-#, fuzzy
 msgid "credit filter"
-msgstr "Midi-fil"
+msgstr ""
 
 #: easy_abc.py:3654
-#, fuzzy
 msgid "unit length"
-msgstr "L: standardlängd på noter"
+msgstr ""
 
 #: easy_abc.py:3655
-#, fuzzy
 msgid "Page settings"
-msgstr "ABC-inställningar"
+msgstr ""
 
 #: easy_abc.py:3679
 msgid "When checked, abc2xml produces compressed xml files with extension mxl."
@@ -2351,96 +2267,87 @@ msgstr ""
 
 #: easy_abc.py:3786
 msgid "ABC Options"
-msgstr "ABC-inställningar"
+msgstr ""
 
 #: easy_abc.py:3792 easy_abc.py:5423
 msgid "Metre"
-msgstr "Taktart"
+msgstr ""
 
 #: easy_abc.py:3793
-#, fuzzy
 msgid "Default note length"
-msgstr "L: standardlängd på noter"
+msgstr ""
 
 #: easy_abc.py:3794 easy_abc.py:3987 easy_abc.py:4482
 msgid "Title"
-msgstr "Namn"
+msgstr ""
 
 #: easy_abc.py:3795
 msgid "Bars per line"
-msgstr "Takter per rad"
+msgstr ""
 
 #: easy_abc.py:3796
 msgid "Numbers of notes in anacrusis"
-msgstr "Antal noter i upptakt"
+msgstr ""
 
 #: easy_abc.py:3804
 msgid "Detect triplets"
-msgstr "Detektera trioler"
+msgstr ""
 
 #: easy_abc.py:3805
 msgid "Detect broken rythms"
-msgstr "Detektera vanliga och omvända punkteringar"
+msgstr ""
 
 #: easy_abc.py:3806
 msgid "Use slurs on triplets"
-msgstr "Använd bågar på trioler"
+msgstr ""
 
 #: easy_abc.py:3807
 msgid "Use slurs on eights (useful for some waltzes)"
-msgstr "Använd bågar på åttondelar (användbart för vissa valser)"
+msgstr ""
 
 #: easy_abc.py:3808
 msgid "Use slurs on first pair of sixteenth (useful for some 16th polskas)"
 msgstr ""
-"Använd bågar på varje första par sextondelar (användbart för många "
-"sextondelspolskor)"
 
 #: easy_abc.py:3863
 msgid "Errors"
-msgstr "Fel"
+msgstr ""
 
 #: easy_abc.py:3912
 msgid "Converting..."
-msgstr "Konverterar..."
+msgstr ""
 
 #: easy_abc.py:3980
-#, fuzzy
 msgid "Find what"
-msgstr "Sök"
+msgstr ""
 
 #: easy_abc.py:3987
 msgid "Lyrics"
 msgstr ""
 
 #: easy_abc.py:3995
-#, fuzzy
 msgid "Sort by title"
-msgstr "Sortera låtar"
+msgstr ""
 
 #: easy_abc.py:4000
 msgid "Look in"
 msgstr ""
 
 #: easy_abc.py:4011
-#, fuzzy
 msgid "Cancel"
-msgstr "&Avbryt"
+msgstr ""
 
 #: easy_abc.py:4013
-#, fuzzy
 msgid "Find All"
-msgstr "Sök"
+msgstr ""
 
 #: easy_abc.py:4036
-#, fuzzy
 msgid "When selecting"
-msgstr "Radera markeringen"
+msgstr ""
 
 #: easy_abc.py:4036
-#, fuzzy
 msgid "Open file"
-msgstr "Öppna ABC-fil"
+msgstr ""
 
 #: easy_abc.py:4036
 msgid "Copy tune to editor"
@@ -2470,29 +2377,28 @@ msgstr ""
 
 #: easy_abc.py:4481
 msgid "No."
-msgstr "Nr."
+msgstr ""
 
 #: easy_abc.py:4504 easy_abc.py:9334
 msgid "ABC errors"
-msgstr "ABC-fel"
+msgstr ""
 
 #: easy_abc.py:4511 easy_abc.py:5453 easy_abc.py:5454 easy_abc.py:5455
 #: easy_abc.py:9335
-#, fuzzy
 msgid "ABC assist"
-msgstr "ABC-inställningar"
+msgstr ""
 
 #: easy_abc.py:4515 easy_abc.py:9332
 msgid "Tune list"
-msgstr "Låtar"
+msgstr ""
 
 #: easy_abc.py:4516 easy_abc.py:9331
 msgid "ABC code"
-msgstr "ABC-kod"
+msgstr ""
 
 #: easy_abc.py:4517 easy_abc.py:9333
 msgid "Musical score"
-msgstr "Noter"
+msgstr ""
 
 #: easy_abc.py:4615
 msgid "This is the status bar. Check it occasionally."
@@ -2509,7 +2415,7 @@ msgstr ""
 
 #: easy_abc.py:4870
 msgid "EasyABC - print preview"
-msgstr "EasyABC - förhandsvisning"
+msgstr ""
 
 #: easy_abc.py:4882
 msgid ""
@@ -2524,25 +2430,23 @@ msgstr ""
 #: easy_abc.py:5173
 #, python-format
 msgid "Unable to load %s: Unsupported format?"
-msgstr "Kan ej öppna %s: Använder den ett format som ej stöds?"
+msgstr ""
 
 #: easy_abc.py:5422
 msgid "Beats per minute"
-msgstr "Slag per minut (bpm)"
+msgstr ""
 
 #: easy_abc.py:5468
-#, fuzzy
 msgid "Zoom"
-msgstr "Zoom:"
+msgstr ""
 
 #: easy_abc.py:5475
 msgid "Page"
-msgstr "Sida"
+msgstr ""
 
 #: easy_abc.py:5483
-#, fuzzy
 msgid "Play position"
-msgstr "Spelposition:"
+msgstr ""
 
 #: easy_abc.py:5485
 msgid "Loop"
@@ -2554,61 +2458,55 @@ msgstr ""
 
 #: easy_abc.py:5557 easy_abc.py:6874
 msgid "&Do-re-mi mode"
-msgstr "&Do-re-mi-läge"
+msgstr ""
 
 #: easy_abc.py:5692
 msgid "incipits"
-msgstr "låtstarter"
+msgstr ""
 
 #: easy_abc.py:5717 easy_abc.py:6533
 msgid "Error: there was some trouble saving the file."
-msgstr "Fel: det inträffade ett fel när filen skulle sparas."
+msgstr ""
 
 #: easy_abc.py:5717 easy_abc.py:6533
 msgid "File could not be saved properly"
-msgstr "Filen kunde ej sparas"
+msgstr ""
 
 #: easy_abc.py:5723
 msgid "Which field(s) do you want to sort the tunes by? (eg. T for title)"
 msgstr ""
-"Vilka fält vill du sortera låtarna efter? (t ex. T om du vill sortera efter "
-"titel)"
 
 #: easy_abc.py:5723
 msgid "Sort tunes"
-msgstr "Sortera låtar"
+msgstr ""
 
 #: easy_abc.py:5736
 msgid "Please specify the index of the first tune: "
-msgstr "Var god ange indexnumret för den första låten: "
+msgstr ""
 
 #: easy_abc.py:5736
 msgid "Renumber X: fields"
-msgstr "Numrera om X:-fält"
+msgstr ""
 
 #: easy_abc.py:5766 easy_abc.py:6982
-#, fuzzy
 msgid "Find in Files"
-msgstr "Sök MIDI player"
+msgstr ""
 
 #: easy_abc.py:5808 easy_abc.py:5812 easy_abc.py:6575
 msgid "Midi file"
-msgstr "Midi-fil"
+msgstr ""
 
 #: easy_abc.py:5830
-#, fuzzy
 msgid "MP3 file"
-msgstr "Midi-fil"
+msgstr ""
 
 #: easy_abc.py:5836
-#, fuzzy
 msgid "AAC file"
-msgstr "ABC-fil"
+msgstr ""
 
 #: easy_abc.py:5842
-#, fuzzy
 msgid "Wave file"
-msgstr "Spara ABC-filen %s"
+msgstr ""
 
 #: easy_abc.py:5847
 msgid ""
@@ -2647,28 +2545,25 @@ msgid "ghostscript was not found here. Go to settings and indicate the path"
 msgstr ""
 
 #: easy_abc.py:5935
-#, fuzzy
 msgid "PDF file"
-msgstr "ABC-fil"
+msgstr ""
 
 #: easy_abc.py:5938
-#, fuzzy
 msgid "SVG file"
-msgstr "ABC-fil"
+msgstr ""
 
 #: easy_abc.py:5965
 msgid "Compressed MusicXML"
 msgstr ""
 
 #: easy_abc.py:5980
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Error during conversion of X:{0} (\"{1}\"): {2}"
-msgstr "Fel vid konvertering av %(filename)s: %(error)s"
+msgstr ""
 
 #: easy_abc.py:5991 easy_abc.py:6060 easy_abc.py:6063
-#, fuzzy
 msgid "HTML file"
-msgstr "Midi-fil"
+msgstr ""
 
 #: easy_abc.py:5994
 msgid "HTML file (interactive)"
@@ -2676,7 +2571,7 @@ msgstr ""
 
 #: easy_abc.py:6075
 msgid "Export all tunes as ..."
-msgstr "Exportera alla låtar som..."
+msgstr ""
 
 #: easy_abc.py:6075
 msgid "Epub file"
@@ -2684,11 +2579,11 @@ msgstr ""
 
 #: easy_abc.py:6136 easy_abc.py:6557 easy_abc.py:6574 easy_abc.py:6728
 msgid "ABC file"
-msgstr "ABC-fil"
+msgstr ""
 
 #: easy_abc.py:6158
 msgid "Export tune as ..."
-msgstr "Exportera låt som..."
+msgstr ""
 
 #: easy_abc.py:6170
 #, python-brace-format
@@ -2697,7 +2592,7 @@ msgstr ""
 
 #: easy_abc.py:6214
 msgid "Choose a directory..."
-msgstr "Välj en mapp..."
+msgstr ""
 
 #: easy_abc.py:6226
 #, python-brace-format
@@ -2705,23 +2600,20 @@ msgid "{0} files to create"
 msgstr ""
 
 #: easy_abc.py:6232
-#, fuzzy
 msgid "Exporting"
-msgstr "Exportera &alla"
+msgstr ""
 
 #: easy_abc.py:6232
 msgid "Remaining time"
 msgstr ""
 
 #: easy_abc.py:6256
-#, fuzzy
 msgid "Export completed"
-msgstr "&Exportera markerad"
+msgstr ""
 
 #: easy_abc.py:6258
-#, fuzzy
 msgid "Export failed"
-msgstr "Exportera &alla"
+msgstr ""
 
 #: easy_abc.py:6415
 msgid ""
@@ -2736,23 +2628,23 @@ msgstr ""
 
 #: easy_abc.py:6558 easy_abc.py:6578
 msgid "Any file"
-msgstr "Alla filer"
+msgstr ""
 
 #: easy_abc.py:6560
 msgid "Open ABC file"
-msgstr "Öppna ABC-fil"
+msgstr ""
 
 #: easy_abc.py:6573
 msgid "Any music file"
-msgstr "Alla musikfiler"
+msgstr ""
 
 #: easy_abc.py:6577
 msgid "Noteworthy Composer file"
-msgstr "Noteworthy Composer-fil"
+msgstr ""
 
 #: easy_abc.py:6580
 msgid "Import and add tune"
-msgstr "Importera och lägg till låt"
+msgstr ""
 
 #: easy_abc.py:6603
 msgid ""
@@ -2761,18 +2653,12 @@ msgid ""
 "in order for you to load the file and safely save changes to it. Do you want "
 "EasyABC to add this for you automatically?"
 msgstr ""
-"Den här ABC-filen verkar använda teckenkodningen UTF-8 men innehåller inget "
-"som indikerar detta faktum. Det rekommenderas starkt att ett \"I:abc-"
-"charset\"-fält läggs till för att kunna öppna filen och på ett säkert sätt "
-"spara ändringar till den. Vill du att EasyABC ska lägga till detta för dig "
-"automatiskt?"
 
 #: easy_abc.py:6605 easy_abc.py:6616
 msgid "Add abc-charset field?"
-msgstr "Lägg till \"abc-charset\"-fält?"
+msgstr ""
 
 #: easy_abc.py:6614
-#, fuzzy
 msgid ""
 "This ABC file seems not to be encoded using UTF-8 but contains no indication "
 "of this fact. It is strongly recommended that an I:abc-charset field is "
@@ -2780,33 +2666,25 @@ msgid ""
 "EasyABC is about to continue with latin-1 encoding. Do you want EasyABC to "
 "add this for you automatically?"
 msgstr ""
-"Den här ABC-filen verkar använda teckenkodningen UTF-8 men innehåller inget "
-"som indikerar detta faktum. Det rekommenderas starkt att ett \"I:abc-"
-"charset\"-fält läggs till för att kunna öppna filen och på ett säkert sätt "
-"spara ändringar till den. Vill du att EasyABC ska lägga till detta för dig "
-"automatiskt?"
 
 #: easy_abc.py:6635
 msgid ""
 "Could not find file.\n"
 "It may have been moved or deleted. Choose File,Open to locate it."
 msgstr ""
-"Kunde ej finna filen.\n"
-"Den kan ha flyttats eller tagits bort. Välj Arkiv, Öppna för att leta upp "
-"den."
 
 #: easy_abc.py:6635
 msgid "File not found"
-msgstr "Filen kunde ej hittas"
+msgstr ""
 
 #: easy_abc.py:6681
 #, python-format
 msgid "Do you want to save your changes to %s?"
-msgstr "Vill du spara dina ändringar av %s?"
+msgstr ""
 
 #: easy_abc.py:6682
 msgid "Save changes?"
-msgstr "Spara ändringar?"
+msgstr ""
 
 #: easy_abc.py:6708
 #, python-format
@@ -2816,36 +2694,31 @@ msgid ""
 "to using UTF-8 as your character encoding (recommended)? (choosing No may "
 "cause some of these characters to be replaced by '?' when they are saved)"
 msgstr ""
-"Det här dokumentet innehåller tecken (t ex. %(ABC)s) som inte kan "
-"representeras med den nuvarande teckenuppsättningen (%(encoding)s). Vill du "
-"byta till att använda UTF-8 som din teckenkodning (rekommenderas)? (väljer "
-"du Nej kan det hända att några av dessa tecken ersätts med '?' när de sparas)"
 
 #: easy_abc.py:6712
 msgid "Switch to UTF-8 encoding?"
-msgstr "Byt till UTF-8 för teckenkodning?"
+msgstr ""
 
 #: easy_abc.py:6733
 #, python-format
 msgid "Save ABC file %s"
-msgstr "Spara ABC-filen %s"
+msgstr ""
 
 #: easy_abc.py:6741
 msgid "The file already exists. Do you want to overwrite the existing file?"
 msgstr ""
-"En fil med detta namn finns redan. Vill du skriva över den existerande filen?"
 
 #: easy_abc.py:6742
 msgid "Overwrite existing file?"
-msgstr "Skriv över existerande fil?"
+msgstr ""
 
 #: easy_abc.py:6766
 msgid "abc2abc error/warnings: "
-msgstr "abc2abc fel/varningar: "
+msgstr ""
 
 #: easy_abc.py:6767
 msgid "Abc2abc error message"
-msgstr "Abc2abc fel-meddelande"
+msgstr ""
 
 #: easy_abc.py:6831
 msgid "Move up"
@@ -2861,67 +2734,59 @@ msgstr ""
 
 #: easy_abc.py:6835
 msgid "Export to &MIDI..."
-msgstr "Exportera till &MIDI..."
+msgstr ""
 
 #: easy_abc.py:6836
 msgid "Export to &PDF..."
-msgstr "Exportera till &PDF..."
+msgstr ""
 
 #: easy_abc.py:6837
-#, fuzzy
 msgid "Export to &one PDF..."
-msgstr "Exportera till &PDF..."
+msgstr ""
 
 #: easy_abc.py:6838
 msgid "Export to &SVG..."
-msgstr "Exportera till &SVG..."
+msgstr ""
 
 #: easy_abc.py:6839
-#, fuzzy
 msgid "Export to &HTML..."
-msgstr "Exportera till &MIDI..."
+msgstr ""
 
 #: easy_abc.py:6840
-#, fuzzy
 msgid "Export to HTML (&interactive)..."
-msgstr "Exportera till &SVG (experimentell funktion)..."
+msgstr ""
 
 #: easy_abc.py:6841
-#, fuzzy
 msgid "Export to Music&XML..."
-msgstr "Exportera till &MIDI..."
+msgstr ""
 
 #: easy_abc.py:6842
-#, fuzzy
 msgid "Export to &ABC..."
-msgstr "Exportera till &PDF..."
+msgstr ""
 
 #: easy_abc.py:6843
-#, fuzzy
 msgid "Export to &Wave..."
-msgstr "Exportera till &PDF..."
+msgstr ""
 
 #: easy_abc.py:6844
-#, fuzzy
 msgid "Export to &MP3..."
-msgstr "Exportera till &PDF..."
+msgstr ""
 
 #: easy_abc.py:6845
-#, fuzzy
 msgid "Export to &AAC..."
-msgstr "Exportera till &PDF..."
+msgstr ""
 
 #: easy_abc.py:6871
 msgid "&Active"
-msgstr "&Aktiv"
+msgstr ""
 
 #: easy_abc.py:6873
 msgid "Automatic uppercase/lowercase"
-msgstr "Automatiskt val av stor/liten bokstav"
+msgstr ""
 
 #: easy_abc.py:6875
 msgid "Add note &durations"
-msgstr "Lägg till &notlängder"
+msgstr ""
 
 #: easy_abc.py:6878
 msgid "Disabled"
@@ -2937,45 +2802,45 @@ msgstr ""
 
 #: easy_abc.py:6881
 msgid "Add &bar"
-msgstr "Lägg till &taktstreck"
+msgstr ""
 
 #: easy_abc.py:6883
 msgid "Add &matching right symbol: ), ], } and \""
-msgstr "Lägg till &matchande högertecken: ), ], } och  \""
+msgstr ""
 
 #: easy_abc.py:6900
 #, python-format
 msgid "Down %d semitones"
-msgstr "Ner %d halvtoner"
+msgstr ""
 
 #: easy_abc.py:6904
 #, python-format
 msgid "Up %d semitones"
-msgstr "Upp %d halvtoner"
+msgstr ""
 
 #: easy_abc.py:6907
 msgid "&Refresh music"
-msgstr "&Uppdatera noter"
+msgstr ""
 
 #: easy_abc.py:6908
 msgid "&Automatically refresh music as I type"
-msgstr "&Uppdatera noterna automatiskt medan jag skriver"
+msgstr ""
 
 #: easy_abc.py:6910
 msgid "&Use reduced margins when displaying tunes on screen"
-msgstr "&Använd mindre marginaler vid visning av låtar på skärmen"
+msgstr ""
 
 #: easy_abc.py:6911
 msgid "&Change editor font..."
-msgstr "&Ändra editor-typsnitt..."
+msgstr ""
 
 #: easy_abc.py:6912
 msgid "&Use default editor font"
-msgstr "&Använd standardtypsnitt för editor"
+msgstr ""
 
 #: easy_abc.py:6914
 msgid "&Reset window layout to default"
-msgstr "&Återställ fönsterlayout till grundinställning"
+msgstr ""
 
 #: easy_abc.py:6916
 msgid "&Full screen"
@@ -2983,7 +2848,7 @@ msgstr ""
 
 #: easy_abc.py:6923
 msgid "&File"
-msgstr "&Arkiv"
+msgstr ""
 
 #: easy_abc.py:6924
 msgid "&New"
@@ -2991,103 +2856,93 @@ msgstr ""
 
 #: easy_abc.py:6924
 msgid "Create a new file"
-msgstr "Skapa en ny fil"
+msgstr ""
 
 #: easy_abc.py:6925
-#, fuzzy
 msgid "&Open..."
-msgstr "&Öppna...\tCtrl+O"
+msgstr ""
 
 #: easy_abc.py:6925
 msgid "Open an existing file"
-msgstr "Öppna en existerande fil"
+msgstr ""
 
 #: easy_abc.py:6926
 msgid "&Close"
-msgstr "S&täng"
+msgstr ""
 
 #: easy_abc.py:6926
 msgid "Close the current file"
-msgstr "Stäng aktuell fil"
+msgstr ""
 
 #: easy_abc.py:6928
 msgid "&Import and add..."
-msgstr "&Importera och lägg till..."
+msgstr ""
 
 #: easy_abc.py:6928
 msgid ""
 "Import a song in ABC, Midi or MusicXML format and add it to the current "
 "document."
 msgstr ""
-"Importera en låt i ABC-, Midi- eller MusicXML-format och lägg till den i "
-"nuvarande dokument."
 
 #: easy_abc.py:6930
 msgid "&Export selected"
-msgstr "&Exportera markerad"
+msgstr ""
 
 #: easy_abc.py:6931
 msgid "as &PDF..."
-msgstr "som &PDF..."
+msgstr ""
 
 #: easy_abc.py:6932
-#, fuzzy
 msgid "as one &PDF..."
-msgstr "som &PDF..."
+msgstr ""
 
 #: easy_abc.py:6933 easy_abc.py:6945
 msgid "as &MIDI..."
-msgstr "som &MIDI..."
+msgstr ""
 
 #: easy_abc.py:6934
 msgid "as &SVG..."
-msgstr "som &SVG..."
+msgstr ""
 
 #: easy_abc.py:6935 easy_abc.py:6946
 msgid "as &HTML..."
-msgstr "som &HTML..."
+msgstr ""
 
 #: easy_abc.py:6936 easy_abc.py:6947
 msgid "as HTML (&interactive)..."
 msgstr ""
 
 #: easy_abc.py:6937 easy_abc.py:6949
-#, fuzzy
 msgid "as Music&XML..."
-msgstr "som Music&XML..."
+msgstr ""
 
 #: easy_abc.py:6938
 msgid "as A&BC..."
 msgstr ""
 
 #: easy_abc.py:6939
-#, fuzzy
 msgid "as &Wave..."
-msgstr "som &PDF..."
+msgstr ""
 
 #: easy_abc.py:6940
-#, fuzzy
 msgid "as &MP3..."
-msgstr "som &PDF..."
+msgstr ""
 
 #: easy_abc.py:6941
-#, fuzzy
 msgid "as &AAC..."
-msgstr "som &PDF..."
+msgstr ""
 
 #: easy_abc.py:6942
 msgid "Export &all"
-msgstr "Exportera &alla"
+msgstr ""
 
 #: easy_abc.py:6943
-#, fuzzy
 msgid "as a &PDF Book..."
-msgstr "som &PDF..."
+msgstr ""
 
 #: easy_abc.py:6944
-#, fuzzy
 msgid "as PDF &Files..."
-msgstr "som &fil PDF..."
+msgstr ""
 
 #: easy_abc.py:6951
 msgid "&Save"
@@ -3095,38 +2950,35 @@ msgstr ""
 
 #: easy_abc.py:6951
 msgid "Save the active file"
-msgstr "Spara aktuell fil"
+msgstr ""
 
 #: easy_abc.py:6952
-#, fuzzy
 msgid "Save &As..."
-msgstr "Spara &som...\tShift+Ctrl+S"
+msgstr ""
 
 #: easy_abc.py:6952
 msgid "Save the active file with a new filename"
-msgstr "Spara aktuell fil under ett nytt namn"
+msgstr ""
 
 #: easy_abc.py:6954
-#, fuzzy
 msgid "&Print..."
-msgstr "S&kriv ut...\tCtrl+P"
+msgstr ""
 
 #: easy_abc.py:6954
 msgid "Print the selected tune"
-msgstr "Skriv ut den markerade låten"
+msgstr ""
 
 #: easy_abc.py:6955
-#, fuzzy
 msgid "&Print preview"
-msgstr "&Förhandsgranska\tCtrl+Shift+P"
+msgstr ""
 
 #: easy_abc.py:6956
 msgid "P&age Setup..."
-msgstr "&Utskriftsformat..."
+msgstr ""
 
 #: easy_abc.py:6956
 msgid "Change the printer and printing options"
-msgstr "Ändra skrivare och utskriftsinställningar"
+msgstr ""
 
 #: easy_abc.py:6958
 msgid "&Recent files"
@@ -3138,11 +2990,11 @@ msgstr ""
 
 #: easy_abc.py:6960
 msgid "Exit the application (prompt to save files)"
-msgstr "Avsluta programmet"
+msgstr ""
 
 #: easy_abc.py:6961
 msgid "&Edit"
-msgstr "&Redigera"
+msgstr ""
 
 #: easy_abc.py:6962
 msgid "&Undo"
@@ -3150,7 +3002,7 @@ msgstr ""
 
 #: easy_abc.py:6962
 msgid "Undo the last action"
-msgstr "Ångra senaste åtgärd"
+msgstr ""
 
 #: easy_abc.py:6963
 msgid "&Redo"
@@ -3158,7 +3010,7 @@ msgstr ""
 
 #: easy_abc.py:6963
 msgid "Redo the last action"
-msgstr "Gör om senaste åtgärd"
+msgstr ""
 
 #: easy_abc.py:6965
 msgid "&Cut"
@@ -3166,7 +3018,7 @@ msgstr ""
 
 #: easy_abc.py:6965
 msgid "Cut the selection and put it on the clipboard"
-msgstr "Klipp ut markeringen"
+msgstr ""
 
 #: easy_abc.py:6966
 msgid "&Copy"
@@ -3174,101 +3026,91 @@ msgstr ""
 
 #: easy_abc.py:6966
 msgid "Copy the selection and put it on the clipboard"
-msgstr "Kopiera markering"
+msgstr ""
 
 #: easy_abc.py:6967
-#, fuzzy
 msgid "&Paste"
-msgstr "&Klistra in\tCtrl+V"
+msgstr ""
 
 #: easy_abc.py:6967
 msgid "Paste clipboard contents"
-msgstr "Klista in"
+msgstr ""
 
 #: easy_abc.py:6968
-#, fuzzy
 msgid "&Delete"
-msgstr "&Radera\tDel"
+msgstr ""
 
 #: easy_abc.py:6968
 msgid "Delete the selection"
-msgstr "Radera markeringen"
+msgstr ""
 
 #: easy_abc.py:6970
 msgid "&Insert musical symbol"
-msgstr "&Infoga notsymbol"
+msgstr ""
 
 #: easy_abc.py:6971
 msgid "Note ornaments"
-msgstr "Ornament"
+msgstr ""
 
 #: easy_abc.py:6972
 msgid "Directions"
-msgstr "Anvisningar"
+msgstr ""
 
 #: easy_abc.py:6975
 msgid "&Transpose"
-msgstr "&Transponera"
+msgstr ""
 
 #: easy_abc.py:6976
 msgid "&Change note length"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: easy_abc.py:6977
-#, fuzzy
 msgid "Double note lengths"
-msgstr "Dubbla notlängder\tCtrl+Shift++"
+msgstr ""
 
 #: easy_abc.py:6978
-#, fuzzy
 msgid "Halve note lengths"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: easy_abc.py:6979
-#, fuzzy
 msgid "A&lign bars"
-msgstr "&Justera takter\tCtrl+Shift+A"
+msgstr ""
 
 #: easy_abc.py:6981
-#, fuzzy
 msgid "&Find..."
-msgstr "&Sök...\tCtrl+F"
+msgstr ""
 
 #: easy_abc.py:6983
-#, fuzzy
 msgid "Find &Next"
-msgstr "&Sök nästa\tF3"
+msgstr ""
 
 #: easy_abc.py:6984
-#, fuzzy
 msgid "&Replace..."
-msgstr "&Sök och ersätt...\tCtrl+H"
+msgstr ""
 
 #: easy_abc.py:6986
-#, fuzzy
 msgid "&Select all"
-msgstr "&Markera allt\tCtrl+A"
+msgstr ""
 
 #: easy_abc.py:6987
 msgid "&Settings"
-msgstr "&Inställningar"
+msgstr ""
 
 #: easy_abc.py:6988
 msgid "&ABC settings"
-msgstr "&ABC-inställningar"
+msgstr ""
 
 #: easy_abc.py:6989
 msgid "&Midi device settings"
-msgstr "&Midi-inställningar"
+msgstr ""
 
 #: easy_abc.py:6990
 msgid "ABC &typing assistance"
-msgstr "Inmatningsassistans"
+msgstr ""
 
 #: easy_abc.py:6992
-#, fuzzy
 msgid "&Clear cache"
-msgstr "Töm cache?"
+msgstr ""
 
 #: easy_abc.py:6993
 msgid "Cold &restart"
@@ -3276,27 +3118,27 @@ msgstr ""
 
 #: easy_abc.py:6994
 msgid "&Tools"
-msgstr "&Verktyg"
+msgstr ""
 
 #: easy_abc.py:6995
 msgid "Generate &incipits file..."
-msgstr "Skapa fil med &låtstartsindex..."
+msgstr ""
 
 #: easy_abc.py:6996
 msgid "&View incipits..."
-msgstr "&Visa låtstartsindex..."
+msgstr ""
 
 #: easy_abc.py:6998
 msgid "&Renumber X: fields..."
-msgstr "&Numrera om X:-fält..."
+msgstr ""
 
 #: easy_abc.py:6999
 msgid "&Sort tunes..."
-msgstr "&Sortera låtar..."
+msgstr ""
 
 #: easy_abc.py:7000
 msgid "&View"
-msgstr "&Visa"
+msgstr ""
 
 #: easy_abc.py:7001
 msgid "&Internals"
@@ -3311,18 +3153,16 @@ msgid "Show warnings and errors"
 msgstr ""
 
 #: easy_abc.py:7003
-#, fuzzy
 msgid "Input processed tune"
-msgstr "Skriv ut den markerade låten"
+msgstr ""
 
 #: easy_abc.py:7004
 msgid "List of Tunes"
 msgstr ""
 
 #: easy_abc.py:7005
-#, fuzzy
 msgid "Output midi file"
-msgstr "Midi ut-enhet"
+msgstr ""
 
 #: easy_abc.py:7006
 msgid "Show settings status"
@@ -3330,53 +3170,51 @@ msgstr ""
 
 #: easy_abc.py:7007
 msgid "&Help"
-msgstr "&Hjälp"
+msgstr ""
 
 #: easy_abc.py:7008
 msgid "&Show fields and commands reference"
-msgstr "&Visa fält- och kommando-referens"
+msgstr ""
 
 #: easy_abc.py:7010
 msgid "&EasyABC Help"
-msgstr "&EasyABC-hjälp"
+msgstr ""
 
 #: easy_abc.py:7010
 msgid "Link to EasyABC Website"
-msgstr "Länk till EasyABC-webbsajt"
+msgstr ""
 
 #: easy_abc.py:7011
 msgid "&ABC Standard Version 2.1"
-msgstr "&ABC Standard Version 2.1"
+msgstr ""
 
 #: easy_abc.py:7011
 msgid "Link to the ABC Standard version 2.1"
-msgstr "Länk till ABC Standarden version 2.1"
+msgstr ""
 
 #: easy_abc.py:7012
 msgid "&Learn ABC"
-msgstr "&Lär dig ABC"
+msgstr ""
 
 #: easy_abc.py:7012
 msgid "Link to the ABC notation website"
-msgstr "Länk till websajt med info om ABC-notation"
+msgstr ""
 
 #: easy_abc.py:7013
 msgid "&Abcm2ps help"
 msgstr ""
 
 #: easy_abc.py:7013
-#, fuzzy
 msgid "Link to the Abcm2ps website"
-msgstr "Länk till websajt med info om ABC-notation"
+msgstr ""
 
 #: easy_abc.py:7014
 msgid "&Abc2midi help"
 msgstr ""
 
 #: easy_abc.py:7014
-#, fuzzy
 msgid "Link to the Abc2midi website"
-msgstr "Länk till websajt med info om ABC-notation"
+msgstr ""
 
 #: easy_abc.py:7015
 msgid "ABC &Quick Reference Card"
@@ -3391,13 +3229,12 @@ msgid "&Check for update..."
 msgstr ""
 
 #: easy_abc.py:7017
-#, fuzzy
 msgid "Link to EasyABC download page"
-msgstr "Länk till EasyABC-webbsajt"
+msgstr ""
 
 #: easy_abc.py:7019 easy_abc.py:9627
 msgid "About EasyABC"
-msgstr "Om EasyABC"
+msgstr ""
 
 #: easy_abc.py:7094
 msgid "You need to create the midi file by playing the tune"
@@ -3405,25 +3242,25 @@ msgstr ""
 
 #: easy_abc.py:7158 easy_abc.py:7235 easy_abc.py:7261
 msgid "Find"
-msgstr "Sök"
+msgstr ""
 
 #: easy_abc.py:7163
 msgid "Find & Replace"
-msgstr "Sök & Ersätt"
+msgstr ""
 
 #: easy_abc.py:7210
 #, python-format
 msgid "%d occurrences successfully replaced."
-msgstr "%d förekomster ersatta."
+msgstr ""
 
 #: easy_abc.py:7212 easy_abc.py:7235 easy_abc.py:7261
 #, python-format
 msgid "Cannot find \"%s\""
-msgstr "Kan inte hitta \"%s\""
+msgstr ""
 
 #: easy_abc.py:7213
 msgid "Replace All"
-msgstr "Ersätt alla"
+msgstr ""
 
 #: easy_abc.py:7318
 #, python-format
@@ -3431,12 +3268,10 @@ msgid ""
 "This will remove %(count)s temporary files stored in the directory %(dir)s "
 "that in total use %(size).2f MB of your disk space. Proceed?"
 msgstr ""
-"Detta kommer att radera %(count)s temporärfiler lagrade i mappen %(dir)s som "
-"sammanlagt använder %(size).2f MB av ditt hårddiskutrymme. Fortsätt?"
 
 #: easy_abc.py:7319
 msgid "Clear cache?"
-msgstr "Töm cache?"
+msgstr ""
 
 #: easy_abc.py:7331
 msgid ""
@@ -3446,19 +3281,19 @@ msgstr ""
 
 #: easy_abc.py:7361
 msgid "Select a font for the ABC editor"
-msgstr "Välj ett typsnitt för ABC-editorn"
+msgstr ""
 
 #: easy_abc.py:7369
 msgid "ABC fields and commands reference"
-msgstr "Fält- och kommandoreferens"
+msgstr ""
 
 #: easy_abc.py:9154
 msgid "nwc2xml error"
-msgstr "nwc2xml-fel"
+msgstr ""
 
 #: easy_abc.py:9230
 msgid "Name of tune"
-msgstr "Låtnamn"
+msgstr ""
 
 #: easy_abc.py:9382
 msgid ""
@@ -3495,14 +3330,12 @@ msgid "The executable %s could not be found"
 msgstr ""
 
 #: easy_abc.py:9664
-#, fuzzy
 msgid "List of tunes"
-msgstr "Låtnamn"
+msgstr ""
 
 #: easy_abc.py:9715
-#, fuzzy
 msgid "Processed Abc Tune"
-msgstr "Skriv ut den markerade låten"
+msgstr ""
 
 #: tune_elements.py:78
 msgid "Staff layout"
@@ -3521,9 +3354,8 @@ msgid "Key"
 msgstr ""
 
 #: tune_elements.py:88
-#, fuzzy
 msgid "Unit note length"
-msgstr "&Ändra notlängd"
+msgstr ""
 
 #: tune_elements.py:89
 msgid "Meter"
@@ -3857,19 +3689,16 @@ msgid "A directive that gives instructions to player programs."
 msgstr ""
 
 #: tune_elements.py:584
-#, fuzzy
 msgid "Sets the instrument for a MIDI channel."
-msgstr "Standardinstrument vid midi-uppspelning par MIDI Channel %d: "
+msgstr ""
 
 #: tune_elements.py:591
-#, fuzzy
 msgid "Sets the instrument for playing chords."
-msgstr "Standardinstrument vid midi-uppspelning: "
+msgstr ""
 
 #: tune_elements.py:598
-#, fuzzy
 msgid "Sets the instrument for the base."
-msgstr "Standardinstrument vid midi-uppspelning: "
+msgstr ""
 
 #: tune_elements.py:606
 msgid "Channel"
@@ -3892,14 +3721,12 @@ msgid "Volume for current voice."
 msgstr ""
 
 #: tune_elements.py:630
-#, fuzzy
 msgid "Guitar chords"
-msgstr "Spela ackord"
+msgstr ""
 
 #: tune_elements.py:630
-#, fuzzy
 msgid "Play guitar chords"
-msgstr "Spela ackord"
+msgstr ""
 
 #: tune_elements.py:638
 msgid "Defines which staves are displayed."
@@ -3922,9 +3749,8 @@ msgid "Defines which fields should be shown."
 msgstr ""
 
 #: tune_elements.py:691
-#, fuzzy
 msgid "ABC version"
-msgstr "ABC-fel"
+msgstr ""
 
 #: tune_elements.py:691
 msgid ""
@@ -3946,9 +3772,8 @@ msgid ""
 msgstr ""
 
 #: tune_elements.py:730
-#, fuzzy
 msgid "Welcome to EasyABC"
-msgstr "Om EasyABC"
+msgstr ""
 
 #: tune_elements.py:731
 msgid ""
@@ -4000,9 +3825,8 @@ msgid ""
 msgstr ""
 
 #: tune_elements.py:786 tune_elements.py:1035
-#, fuzzy
 msgid "Annotation"
-msgstr "Lägg till &notlängder"
+msgstr ""
 
 #: tune_elements.py:793
 msgid "Chord symbol or annotation"
@@ -4116,107 +3940,3 @@ msgid ""
 "In abc music code, by default, line-breaks in the code generate line-breaks "
 "in the typeset score and these can be suppressed by using a backslash."
 msgstr ""
-
-#, fuzzy
-#~ msgid ""
-#~ "Ghostscript could not be found. You need to install Ghostscript and set "
-#~ "the path to the Ghostscript executable in order to use this feature."
-#~ msgstr ""
-#~ "Ghostscript kunde ej hittas. Du behöver installera Ghostscript först för "
-#~ "att kunna använda denna funktion."
-
-#~ msgid "Leave this field empty in order to use the default value"
-#~ msgstr "Lämna detta fält tomt för att använda grundinställningsvärdet"
-
-#~ msgid "Custom file paths (leave empty to use default)"
-#~ msgstr "Anpassade sökvägar (lämna tomt för att använda standardvärde)"
-
-#, fuzzy
-#~ msgid "ps2pdf  executable:"
-#~ msgstr "ps2pdf-program: "
-
-#~ msgid "M: Metre"
-#~ msgstr "M: takt"
-
-#~ msgid "T: Title"
-#~ msgstr "T: titel"
-
-#~ msgid ""
-#~ "Please enter your full name (your FolkWiki entries will henceforth be "
-#~ "associated with this name): "
-#~ msgstr ""
-#~ "Var god ange ditt fullständiga namn (dina FolkWiki-inlägg kommer från och "
-#~ "med nu att associeras med detta namn): "
-
-#~ msgid "Upload tune to FolkWiki"
-#~ msgstr "Ladda upp låten till FolkWiki"
-
-#~ msgid "Upload tune to Spillemandsportalen"
-#~ msgstr "Ladda upp låt till Spillemandsportalen"
-
-#~ msgid "Halve note lengths\tCtrl+Shift+-"
-#~ msgstr "Halvera notlängder\tCtrl+Shift+-"
-
-#~ msgid "&New\tCtrl+N"
-#~ msgstr "&Nytt\tCtrl+N"
-
-#~ msgid "&Save\tCtrl+S"
-#~ msgstr "&Spara\tCtrl+S"
-
-#~ msgid "&Quit\tCtrl+Q"
-#~ msgstr "&Avsluta\tCtrl+Q"
-
-#~ msgid "&Undo\tCtrl+Z"
-#~ msgstr "&Ångra\tCtrl+Z"
-
-#~ msgid "&Redo\tCtrl+Y"
-#~ msgstr "&Gör om\tCtrl+Y"
-
-#~ msgid "&Cut\tCtrl+X"
-#~ msgstr "&Klipp ut\tCtrl+X"
-
-#~ msgid "&Copy\tCtrl+C"
-#~ msgstr "&Kopiera\tCtrl+C"
-
-#~ msgid "&Clear cache..."
-#~ msgstr "&Töm cache..."
-
-#~ msgid "as Music&XML (alpha - experimental)..."
-#~ msgstr "som Music&XML (alfa - experimentellt)..."
-
-#~ msgid "as &MusicXML (alpha - experimental)..."
-#~ msgstr "som &MusicXML (alfa - experimentellt)..."
-
-#~ msgid "filename"
-#~ msgstr "filnamn"
-
-#~ msgid "abcm2ps abc_file.abc -O ps_file.ps "
-#~ msgstr "abcm2ps abc_file.abc -O ps_file.ps "
-
-#~ msgid "&Close\tCtrl+F4"
-#~ msgstr "&Stäng\tCtrl+F4"
-
-#~ msgid "&Quit\tAlt+F4"
-#~ msgstr "&Avsluta\tAlt+F4"
-
-#, fuzzy
-#~ msgid "as &MusicXML (alpha/experimental)..."
-#~ msgstr "som &SVG (experimentell funktion)..."
-
-#~ msgid "Export &all as PDF..."
-#~ msgstr "Exportera &alla låtar som PDF..."
-
-#~ msgid "Export &all as HTML..."
-#~ msgstr "Exportera alla låtar som &HTML..."
-
-#~ msgid "#"
-#~ msgstr "Nr."
-
-#~ msgid "Export to midi..."
-#~ msgstr "Exportera till midi..."
-
-#~ msgid "&Midi device settings...\tCtrl+D"
-#~ msgstr "&Midi-inställningar...\tCtrl+D"
-
-#~ msgid "&Midi"
-#~ msgstr "&Midi"
