@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-program_version = '1.4.0.0a'
+program_version = '1.4.0.0b'
 program_name = 'EasyABC ' + program_version
 
 # Copyright (C) 2011-2014 Nils Liberg (mail: kotorinl at yahoo.co.uk)
@@ -44,17 +44,14 @@ abcm2ps_default_encoding = 'utf-8'  ## 'latin-1'
 import codecs
 utf8_byte_order_mark = codecs.BOM_UTF8  # chr(0xef) + chr(0xbb) + chr(0xbf) #'\xef\xbb\xbf'
 
-if PY3:
-    unichr = chr
-    xrange = range
-    def unicode(s):
-        if isinstance(s, bytes):
-            return s.decode()  # assumes utf-8
-        return s
-    max_int = sys.maxsize
-    basestring = str
-else:
-    max_int = sys.maxint
+unichr = chr
+xrange = range
+def unicode(s):
+    if isinstance(s, bytes):
+        return s.decode()  # assumes utf-8
+    return s
+max_int = sys.maxsize
+basestring = str
 
 import os, os.path
 import wx
@@ -74,10 +71,7 @@ import re
 import subprocess
 import hashlib
 
-if sys.version_info >= (3,0,0):
-    import pickle as pickle # py3
-else:
-    import cPickle as pickle # py2
+import pickle as pickle
 
 import threading
 import shutil
@@ -172,46 +166,7 @@ class NWCConversionException(Exception): pass
 
 from abc_tune import *
 
-dialog_background_colour = wx.Colour(245, 244, 235)
-default_note_highlight_color = '#FF7F3F'
-default_note_highlight_follow_color = '#CC00FF'
-#default_style_color = {
-#    'style_default_color':'#000000',
-#    'style_chord_color':'#000000',
-#    'style_comment_color':'#AAAAAA',
-#    'style_specialcomment_color':'#888888',
-#    'style_bar_color':'#000099',
-#    'style_field_color':'#8C7853',
-#    'style_fieldvalue_color':'#8C7853',
-#    'style_embeddedfield_color':'#8C7853',
-#    'style_embeddedfieldvalue_color':'#8C7853',
-#    'style_fieldindex_color':'#000000',
-#    'style_string_color':'#7F7F7F',
-#    'style_lyrics_color':'#7F7F7F',
-#    'style_grace_color':'#5a3700',
-#    'style_ornament_color':'#777799',
-#    'style_ornamentplus_color':'#888888',
-#    'style_ornamentexcl_color':'#888888'
-#}
-default_style_color = {
-    'style_default_color':'#131415',
-    'style_chord_color':'#131415',
-    'style_comment_color':'#656E77',
-    'style_specialcomment_color':'#803378',
-#    'style_bar_color':'#535A60',
-    'style_bar_color':'#0000CC',
-    'style_field_color':'#B75501',
-    'style_fieldvalue_color':'#B75501',
-    'style_embeddedfield_color':'#B75501',
-    'style_embeddedfieldvalue_color':'#B75501',
-    'style_fieldindex_color':'#000000',
-    'style_string_color':'#2F6F44',
-    'style_lyrics_color':'#51774e',
-    'style_grace_color':'#5A3700',
-    'style_ornament_color':'#015692',
-    'style_ornamentplus_color':'#015692',
-    'style_ornamentexcl_color':'#015692'
-}
+import easyabc_colors
 
 control_margin = 6
 default_midi_volume = 96
@@ -319,7 +274,6 @@ class AbcTunes(object):
         if tune is not None:
             tune.cleanup()
         del self.__tunes[tune_id]
-
 
 
 #global variables
@@ -732,17 +686,13 @@ def process_MCM(abc):
     return abc
 
 
-
 def get_hash_code(*args):
     hash = hashlib.md5()
     for arg in args:
         if PY3 or type(arg) is unicode:
             arg = arg.encode('utf-8', 'ignore')
         hash.update(arg)
-        if PY3:
-            hash.update(program_name.encode('utf-8', 'ignore'))
-        else:
-            hash.update(program_name)
+        hash.update(program_name.encode('utf-8', 'ignore'))
     return hash.hexdigest()[:10]
 
 def change_abc_tempo(abc_code, tempo_multiplier):
@@ -1687,9 +1637,9 @@ myMUSICUPDATEDONE = wx.NewEventType()
 EVT_MUSIC_UPDATE_DONE = wx.PyEventBinder(myMUSICUPDATEDONE, 1)
 
 class MusicPrintout(wx.Printout):
-    def __init__(self, svg_files, zoom=1.0, title=None, painted_on_screen=False, can_draw_sharps_and_flats=True):
+    def __init__(self, svg_files, settings, zoom=1.0, title=None, painted_on_screen=False):
         wx.Printout.__init__(self, title=title or _('EasyABC music'))
-        self.can_draw_sharps_and_flats = can_draw_sharps_and_flats
+        self.settings = settings
         self.svg_files = svg_files
         self.zoom = zoom
         self.painted_on_screen = painted_on_screen
@@ -1713,7 +1663,7 @@ class MusicPrintout(wx.Printout):
         #new versions of abcm2ps adds a suffix 'in' to width and height
         #new versions of abcm2ps adds a suffix 'px' to width and height
         # 1.3.7.3 [JWDJ] use svg renderer to calculate width and height
-        renderer = SvgRenderer(self.can_draw_sharps_and_flats, highlight_color='#000000')
+        renderer = SvgRenderer(self.settings)
         try:
             page = renderer.svg_to_page(svg)
 
@@ -2118,7 +2068,7 @@ class IncipitsFrame(wx.Dialog):
     def __init__(self, parent, settings):
         self.settings = settings
         wx.Dialog.__init__(self, parent, wx.ID_ANY, _('Generate incipits file...'), wx.DefaultPosition, wx.Size(530, 260))
-        self.SetBackgroundColour(dialog_background_colour)
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour)
         border = control_margin
         sizer = box1 = wx.GridBagSizer()
         lb1 = wx.StaticText(self, wx.ID_ANY, _('Number of bars to extract:'))
@@ -2248,7 +2198,7 @@ class AbcFileSettingsFrame(wx.Panel):
         self.settings = settings
         self.statusbar = statusbar
         self.mc = mc
-        self.SetBackgroundColour(dialog_background_colour)
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour)
         border = control_margin
 
         PathEntry = namedtuple('PathEntry', 'name display_name tooltip add_default wildcard on_change')
@@ -2527,7 +2477,7 @@ class AbcFileSettingsFrame(wx.Panel):
 class MyChordPlayPage (wx.Panel):
     def __init__(self, parent, settings):
         wx.Panel.__init__(self, parent)
-        self.SetBackgroundColour(dialog_background_colour) # 1.3.6.3 [JWDJ] 2014-04-28 same background for all tabs
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour) # 1.3.6.3 [JWDJ] 2014-04-28 same background for all tabs
         gridsizer = wx.FlexGridSizer(20, 4, 2, 2)
         # midi_box to set default instrument for playback
         midi_box = wx.GridBagSizer()
@@ -2785,7 +2735,7 @@ class MyVoicePage(wx.Panel):
     def __init__(self, parent, settings):
         wx.Panel.__init__(self, parent)
         self.settings = settings
-        self.SetBackgroundColour(dialog_background_colour)
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour)
         border = control_margin
         channel = 1
         self.controls_initialized = False
@@ -2806,10 +2756,7 @@ class MyVoicePage(wx.Panel):
         midi_box.Add(wx.StaticText(self, wx.ID_ANY, _('L/R Balance:')), pos=(0,6), span=(0,2), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
 
         # For each of the 16th voice, instrument, volume and balance can be set separately
-        if PY3:
-            instrument_choices = []  # instruments fill be filled when tab is selected to speed up ABC settings
-        else:
-            instrument_choices = general_midi_instruments
+        instrument_choices = []  # instruments fill be filled when tab is selected to speed up ABC settings
         controls = []
         for channel in range(1, 16+1):
             cmbMidiProgram = wx.ComboBox(self, wx.ID_ANY, choices=instrument_choices, size=(200, 26),
@@ -2906,8 +2853,7 @@ class MyVoicePage(wx.Panel):
 
         instruments = general_midi_instruments
         for channel in range(1, 16+1):
-            if PY3:
-                self.cmbMidiProgramCh_list[channel].Append(instruments)
+            self.cmbMidiProgramCh_list[channel].Append(instruments)
             try:
                 setting_name = self.midi_program_ch_list[channel-1]
                 midi_info = self.settings.get(setting_name)
@@ -2970,7 +2916,7 @@ class MidiSettingsFrame(wx.Dialog):
     def __init__(self, parent, settings):
         wx.Dialog.__init__(self, parent, wx.ID_ANY, _('Midi device settings'), wx.DefaultPosition, wx.Size(130, 80))
         self.settings = settings
-        self.SetBackgroundColour(dialog_background_colour)
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour)
         border = control_margin
         sizer = wx.GridBagSizer(0, 0)
         sizer.Add(wx.StaticText(self, wx.ID_ANY, _('Input device')), wx.GBPosition(0, 0), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
@@ -3057,7 +3003,7 @@ class MyAbcm2psPage(wx.Panel):
         wx.Panel.__init__(self, parent)
         self.settings = settings
         self.abcsettingspage = abcsettingspage
-        self.SetBackgroundColour(dialog_background_colour)
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour)
         border = control_margin
         headingtxt = _('The options in this page controls how the music score is displayed.\n\n')
         heading = wx.StaticText(self, wx.ID_ANY, headingtxt)
@@ -3386,82 +3332,123 @@ class ColorSettingsFrame(wx.Panel):
     def __init__(self, parent, settings):
         wx.Panel.__init__(self, parent)
         self.settings = settings
-        self.SetBackgroundColour(dialog_background_colour)
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour)
         border = control_margin
 
         grid_sizer = wx.GridBagSizer()
 
+        mode_label = wx.StaticText(self, wx.ID_ANY, _('Configure colors for:'))
+        self.radio_light = wx.RadioButton(self, wx.ID_ANY, _('Light Mode'), style=wx.RB_GROUP)
+        self.radio_dark  = wx.RadioButton(self, wx.ID_ANY, _('Dark Mode'))
+        
+        if easyabc_colors.is_dark_mode:
+            self.radio_dark.SetValue(True)
+        else:
+            self.radio_light.SetValue(True)
+
+        self.radio_light.Bind(wx.EVT_RADIOBUTTON, self.OnConfigModeChanged)
+        self.radio_dark.Bind(wx.EVT_RADIOBUTTON, self.OnConfigModeChanged)
+
+        grid_sizer.Add(mode_label, pos=(0,0), span=(1,2), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(self.radio_light, pos=(0,2), span=(1,3), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(self.radio_dark, pos=(0,5), span=(1,4), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+
         notecolors    = wx.StaticText(self, wx.ID_ANY, _('Colors for note highlighting in music score'))
         editorcolors  = wx.StaticText(self, wx.ID_ANY, _('Colors of ABC code highlighting in editor'))
 
-        note_highlight_color = self.settings.get('note_highlight_color', default_note_highlight_color)
-        note_highlight_color_label = wx.StaticText(self, wx.ID_ANY, _("Note highlight color"))
-        if PY3:
-            self.note_highlight_color_picker = wx.ColourPickerCtrl(self, wx.ID_ANY, colour=wx.Colour(note_highlight_color))
-        else:
-            r = int(note_highlight_color[1:3], 16)
-            g = int(note_highlight_color[3:5], 16)
-            b = int(note_highlight_color[5:7], 16)
-            self.note_highlight_color_picker = wx.ColourPickerCtrl(self, wx.ID_ANY, wx.Colour(r, g, b))
+        # Determine active template map
+        #active_defaults = default_dark_style_color if is_dark_mode else default_style_color
+        active_defaults = easyabc_colors.get_effective_style_color(self.settings)
 
-        note_highlight_follow_color = self.settings.get('note_highlight_follow_color', default_note_highlight_follow_color)
+        note_hl_key = self._get_mode_key('note_highlight_color')
+        note_hl_default = active_defaults['note_highlight_color']
+        note_highlight_color = self.settings.get(note_hl_key, note_hl_default)
+        
+        note_highlight_color_label = wx.StaticText(self, wx.ID_ANY, _("Note highlight color"))
+        self.note_highlight_color_picker = wx.ColourPickerCtrl(self, wx.ID_ANY, colour=wx.Colour(note_highlight_color))
+        
+        note_follow_key = self._get_mode_key('note_highlight_follow_color')
+        note_follow_default = active_defaults['note_highlight_follow_color']
+        note_highlight_follow_color = self.settings.get(note_follow_key, note_follow_default)
+        
         note_highlight_follow_color_label = wx.StaticText(self, wx.ID_ANY, _("Note highlight color when follow score"))
         self.note_highlight_follow_color_picker = wx.ColourPickerCtrl(self, wx.ID_ANY, colour=wx.Colour(note_highlight_follow_color))
 
-        grid_sizer.Add(notecolors,pos=(0,0),span=(1,10), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
-        
-        grid_sizer.Add(note_highlight_color_label, pos=(1,1), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
-        grid_sizer.Add(self.note_highlight_color_picker, pos=(1,2), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
-        grid_sizer.Add(note_highlight_follow_color_label, pos=(1,4), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
-        grid_sizer.Add(self.note_highlight_follow_color_picker, pos=(1,5), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(notecolors, pos=(1,0), span=(1,10), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(note_highlight_color_label, pos=(2,1), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(self.note_highlight_color_picker, pos=(2,2), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(note_highlight_follow_color_label, pos=(2,4), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(self.note_highlight_follow_color_picker, pos=(2,5), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
 
-        note_highlight_color_tooltip = _('Color of selected note')
-        self.note_highlight_color_picker.SetToolTip(wx.ToolTip(note_highlight_color_tooltip))
         self.note_highlight_color_picker.Bind(wx.EVT_COLOURPICKER_CHANGED, self.OnNoteHighlightColorChanged)
-        note_highlight_follow_color_tooltip = _('Color of currently playing note')
-        self.note_highlight_follow_color_picker.SetToolTip(wx.ToolTip(note_highlight_follow_color_tooltip))
         self.note_highlight_follow_color_picker.Bind(wx.EVT_COLOURPICKER_CHANGED, self.OnNoteHighlightFollowColorChanged)
 
+        self.lock_music_light = self.settings.get('lock_music_light_mode', easyabc_colors.default_lock_music_light_mode)
+        self.music_bg_color = self.settings.get('music_light_bg_color', active_defaults['music_sepia_background'])
+
+        self.chk_lock_music = wx.CheckBox(self, wx.ID_ANY, _("Keep music score in warm light mode"))
+        self.chk_lock_music.SetValue(self.lock_music_light)
+        
+        self.music_bg_label = wx.StaticText(self, wx.ID_ANY, _("Custom background:"))
+        self.music_bg_picker = wx.ColourPickerCtrl(self, wx.ID_ANY, colour=wx.Colour(self.music_bg_color))
+        
+        self.music_bg_picker.Enable(self.lock_music_light)
+        self.music_bg_label.Enable(self.lock_music_light)
+
+        self.chk_lock_music.Bind(wx.EVT_CHECKBOX, self.OnLockMusicLightChanged)
+        self.music_bg_picker.Bind(wx.EVT_COLOURPICKER_CHANGED, self.OnMusicBgColorChanged)
+
+        grid_sizer.Add(self.chk_lock_music, pos=(3,1), span=(1,3), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(self.music_bg_label, pos=(3,4), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        grid_sizer.Add(self.music_bg_picker, pos=(3,5), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+
         self.style_labels = {
-            'style_default_color':_("Default color"),
-            'style_chord_color':_("Color of chords"),
-            'style_bar_color':_("Color of bars"),
-            'style_comment_color':_("Color of comment"),
-            'style_specialcomment_color':_("Color of instructions/commands"),
-            'style_fieldindex_color':_("Color of field index"),
-            'style_field_color':_("Color of ABC fields"),
-            'style_fieldvalue_color':_("Color of ABC fields value"),
-            'style_embeddedfield_color':_("Color of embedded ABC fields"),
-            'style_embeddedfieldvalue_color':_("Color of embedded ABC fields values"),
-            'style_string_color':_("Color of string"),
-            'style_lyrics_color':_("Color of lyrics"),
-            'style_ornament_color':_("Color of ornament"),
-            'style_ornamentplus_color':_("Color of ornament plus"),
-            'style_ornamentexcl_color':_("Color of ornament excl"),
-            'style_grace_color':_("Color of grace notes")
+            'style_default_color': _("Default color"),
+            'style_chord_color': _("Color of chords"),
+            'style_bar_color': _("Color of bars"),
+            'style_comment_color': _("Color of comment"),
+            'style_specialcomment_color': _("Color of instructions/commands"),
+            'style_fieldindex_color': _("Color of field index"),
+            'style_field_color': _("Color of ABC fields"),
+            'style_fieldvalue_color': _("Color of ABC fields value"),
+            'style_embeddedfield_color': _("Color of embedded ABC fields"),
+            'style_embeddedfieldvalue_color': _("Color of embedded ABC fields values"),
+            'style_string_color': _("Color of string"),
+            'style_lyrics_color': _("Color of lyrics"),
+            'style_ornament_color': _("Color of ornament"),
+            'style_ornamentplus_color': _("Color of ornament plus"),
+            'style_ornamentexcl_color': _("Color of ornament excl"),
+            'style_grace_color': _("Color of grace notes")
         }
         
-        grid_sizer.Add(editorcolors,pos=(3,0),span=(1,10), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
-        i=4
-        j=1
+        grid_sizer.Add(editorcolors, pos=(4,0), span=(1,10), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+        i = 5
+        j = 1
         self.color_picker = {}
-        for key, label in self.style_labels.items():
-            color = self.settings.get(key, default_style_color[key])
+        
+        for base_key, label in self.style_labels.items():
+            mode_key = self._get_mode_key(base_key)
+            color = self.settings.get(mode_key, active_defaults[base_key])
+            
             color_text_label = wx.StaticText(self, wx.ID_ANY, label)
-            self.color_picker[key] = wx.ColourPickerCtrl(self, wx.ID_ANY, colour=wx.Colour(color))
+            self.color_picker[base_key] = wx.ColourPickerCtrl(self, wx.ID_ANY, colour=wx.Colour(color))
+            
             grid_sizer.Add(color_text_label, pos=(i,j), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
-            grid_sizer.Add(self.color_picker[key], pos=(i,j+1), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
-            self.color_picker[key].Bind(wx.EVT_COLOURPICKER_CHANGED, lambda evt, temp=key: self.OnFontColorChanged(evt,temp))
-            if j>=7:
-                i+=1
-                j=1
+            grid_sizer.Add(self.color_picker[base_key], pos=(i,j+1), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
+            
+            # Pass both the base mapping and the target raw configuration key down
+            self.color_picker[base_key].Bind(
+                wx.EVT_COLOURPICKER_CHANGED, 
+                lambda evt, b_key=base_key: self.OnFontColorChanged(evt, b_key)
+            )
+            
+            if j >= 7:
+                i += 1
+                j = 1
             else:
-                j+=3
+                j += 3
         
         self.restore_color = wx.Button(self, wx.ID_ANY, _('Restore default colors'))
-        check_toolTip = _('Restore default colors')
-        self.restore_color.SetToolTip(wx.ToolTip(check_toolTip))
-        
         grid_sizer.Add(self.restore_color, pos=(i+1,7), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
         self.restore_color.Bind(wx.EVT_BUTTON, self.OnRestoreDefaultColors, self.restore_color)
 
@@ -3470,41 +3457,177 @@ class ColorSettingsFrame(wx.Panel):
         self.Fit()
         self.Layout()
 
+    def _get_mode_key(self, base_key):
+        """Helper to cleanly isolate settings schemas without overwriting configurations."""
+        return f"{base_key}_dark" if easyabc_colors.is_dark_mode else base_key
+
     def OnNoteHighlightColorChanged(self, evt):
         wxcolor = self.note_highlight_color_picker.GetColour()
         color = wxcolor.GetAsString(flags=wx.C2S_HTML_SYNTAX)
-        self.settings['note_highlight_color'] = color
+        target_key = self._get_mode_key('note_highlight_color')
+        self.settings[target_key] = color
         self.Parent.Parent.Parent.Parent.renderer.highlight_color = color
 
     def OnNoteHighlightFollowColorChanged(self, evt):
         wxcolor = self.note_highlight_follow_color_picker.GetColour()
         color = wxcolor.GetAsString(flags=wx.C2S_HTML_SYNTAX)
-        self.settings['note_highlight_follow_color'] = color
+        target_key = self._get_mode_key('note_highlight_follow_color')
+        self.settings[target_key] = color
         self.Parent.Parent.Parent.Parent.renderer.highlight_follow_color = color
 
+    def OnFontColorChanged(self, evt, base_key):
+        wxcolor = self.color_picker[base_key].GetColour()
+        color = wxcolor.GetAsString(flags=wx.C2S_HTML_SYNTAX)
+        target_key = self._get_mode_key(base_key)
+        self.settings[target_key] = color
+        self.UpdateEditor()
+
     def UpdateEditor(self):
+        # Update main window editor layout
+        main_frame = self.Parent.Parent.Parent.Parent
         font_info = self.settings.get('font')
         if font_info:
             face, size = font_info[-1], font_info[0]
-            self.Parent.Parent.Parent.Parent.InitEditor(face, size)
+            main_frame.InitEditor(face, size)
         else:
-            self.Parent.Parent.Parent.Parent.InitEditor()
+            main_frame.InitEditor()
 
-    def OnFontColorChanged(self, evt, settings_key):
-        wxcolor = self.color_picker[settings_key].GetColour()
-        color = wxcolor.GetAsString(flags=wx.C2S_HTML_SYNTAX)
-        self.settings[settings_key] = color
-        self.UpdateEditor()
-        
     def OnRestoreDefaultColors(self, evt):
-        self.settings['note_highlight_color'] = default_note_highlight_color
-        self.note_highlight_color_picker.SetColour(default_note_highlight_color)
-        self.settings['note_highlight_follow_color'] = default_note_highlight_follow_color
-        self.note_highlight_follow_color_picker.SetColour(default_note_highlight_follow_color)
-        for key, color in default_style_color.items():
-            self.settings[key] = color
-            self.color_picker[key].SetColour(color)
+        config_dark = self._get_config_is_dark()
+        
+        if config_dark:
+            self.settings['note_highlight_color_dark'] = default_dark_note_highlight_color
+            self.note_highlight_color_picker.SetColour(default_dark_note_highlight_color)
+            self.settings['note_highlight_follow_color_dark'] = default_dark_note_highlight_follow_color
+            self.note_highlight_follow_color_picker.SetColour(default_dark_note_highlight_follow_color)
+            for key, color in default_dark_style_color.items():
+                self.settings[f"{key}_dark"] = color
+                self.color_picker[key].SetColour(color)
+        else:
+            self.settings['note_highlight_color'] = default_note_highlight_color
+            self.note_highlight_color_picker.SetColour(default_note_highlight_color)
+            self.settings['note_highlight_follow_color'] = default_note_highlight_follow_color
+            self.note_highlight_follow_color_picker.SetColour(default_note_highlight_follow_color)
+            for key, color in default_style_color.items():
+                self.settings[key] = color
+                self.color_picker[key].SetColour(color)
+
         self.UpdateEditor()
+
+    def _get_config_is_dark(self):
+        return self.radio_dark.GetValue()
+
+    def _get_mode_key(self, base_key):
+        return f"{base_key}_dark" if self._get_config_is_dark() else base_key
+
+    def OnConfigModeChanged(self, evt):
+        config_dark = self._get_config_is_dark()
+        
+        active_defaults = default_dark_style_color if config_dark else default_style_color
+
+        note_hl_key = self._get_mode_key('note_highlight_color')
+        note_hl_default = active_defaults['note_highlight_color']
+        self.note_highlight_color_picker.SetColour(wx.Colour(self.settings.get(note_hl_key, note_hl_default)))
+        
+        note_follow_key = self._get_mode_key('note_highlight_follow_color')
+        note_follow_default = active_defaults['note_highlight_follow_color']
+        self.note_highlight_follow_color_picker.SetColour(wx.Colour(self.settings.get(note_follow_key, note_follow_default)))
+
+        active_defaults = default_dark_style_color if config_dark else default_style_color
+        
+        for base_key in self.style_labels.keys():
+            mode_key = self._get_mode_key(base_key)
+            color = self.settings.get(mode_key, active_defaults[base_key])
+            self.color_picker[base_key].SetColour(wx.Colour(color))
+            
+        self.Layout()
+
+    def OnLockMusicLightChanged(self, evt):
+        is_checked = self.chk_lock_music.GetValue()
+        self.settings['lock_music_light_mode'] = is_checked
+
+        self.music_bg_label.Enable(is_checked)
+        self.music_bg_picker.Enable(is_checked)
+
+        main_frame = self.Parent.Parent.Parent.Parent
+        if hasattr(main_frame, 'music_pane') and hasattr(main_frame, 'renderer'):
+            main_frame.renderer.lock_music_light_mode = is_checked
+            main_frame.music_pane.redraw()
+
+    def OnMusicBgColorChanged(self, evt):
+        wxcolor = self.music_bg_picker.GetColour()
+        color = wxcolor.GetAsString(flags=wx.C2S_HTML_SYNTAX)
+        self.settings['music_light_bg_color'] = color
+
+        main_frame = self.Parent.Parent.Parent.Parent
+        if hasattr(main_frame, 'music_pane') and hasattr(main_frame, 'renderer'):
+            main_frame.renderer.music_warm_light_bg_color = color
+            main_frame.music_pane.redraw()
+
+    def OnConfigModeChanged(self, evt):
+        config_dark = self._get_config_is_dark()
+        
+        # Temporary update the darkmode to get the corresponding colors
+        #global is_dark_mode
+        backup_mode = easyabc_colors.is_dark_mode
+        easyabc_colors.is_dark_mode = config_dark
+        
+        colors = easyabc_colors.get_effective_style_color(self.settings)
+        
+        # Recover the darkmode
+        easyabc_colors.is_dark_mode = backup_mode
+        
+        self.note_highlight_color_picker.SetColour(wx.Colour(colors['note_highlight_color']))
+        self.note_highlight_follow_color_picker.SetColour(wx.Colour(colors['note_highlight_follow_color']))
+        self.music_bg_picker.SetColour(wx.Colour(colors['music_sepia_background']))
+        
+        for base_key in self.style_labels.keys():
+            self.color_picker[base_key].SetColour(wx.Colour(colors[base_key]))
+            
+        self.Layout()
+
+    def OnRestoreDefaultColors(self, evt):
+        config_dark = self._get_config_is_dark()
+        
+        active_defaults = easyabc_colors.default_dark_style_color if config_dark else easyabc_colors.default_style_color
+        suffix = "_dark" if config_dark else ""
+        
+        keys_to_restore = ['note_highlight_color', 'note_highlight_follow_color', 'music_sepia_background']
+        for key in keys_to_restore:
+            self.settings[f"{key}{suffix}"] = active_defaults[key]
+            
+        self.note_highlight_color_picker.SetColour(wx.Colour(active_defaults['note_highlight_color']))
+        self.note_highlight_follow_color_picker.SetColour(wx.Colour(active_defaults['note_highlight_follow_color']))
+        self.music_bg_picker.SetColour(wx.Colour(active_defaults['music_sepia_background']))
+        
+        for key in self.style_labels.keys():
+            self.settings[f"{key}{suffix}"] = active_defaults[key]
+            self.color_picker[key].SetColour(wx.Colour(active_defaults[key]))
+            
+        main_frame = self.Parent.Parent.Parent.Parent
+        main_frame.InitEditor()
+        if hasattr(main_frame, 'UpdateMusicScoreAppearance'):
+            main_frame.UpdateMusicScoreAppearance()
+
+    def OnNoteHighlightColorChanged(self, evt):
+        wxcolor = self.note_highlight_color_picker.GetColour()
+        color = wxcolor.GetAsString(flags=wx.C2S_HTML_SYNTAX)
+        target_key = self._get_mode_key('note_highlight_color')
+        self.settings[target_key] = color
+        
+        main_frame = self.Parent.Parent.Parent.Parent
+        if hasattr(main_frame, 'UpdateMusicScoreAppearance'):
+            main_frame.UpdateMusicScoreAppearance()
+
+    def OnMusicBgColorChanged(self, evt):
+        wxcolor = self.music_bg_picker.GetColour()
+        color = wxcolor.GetAsString(flags=wx.C2S_HTML_SYNTAX)
+        target_key = self._get_mode_key('music_sepia_background')
+        self.settings[target_key] = color
+        
+        main_frame = self.Parent.Parent.Parent.Parent
+        if hasattr(main_frame, 'UpdateMusicScoreAppearance'):
+            main_frame.UpdateMusicScoreAppearance()
 
 # 1.3.6 [SS] 2014-12-01
 # For controlling the way xml2abc and abc2xml operate
@@ -3512,7 +3635,7 @@ class MusicXmlPage(wx.Panel):
     def __init__(self, parent, settings):
         wx.Panel.__init__(self,parent)
         self.settings = settings
-        self.SetBackgroundColour(dialog_background_colour)
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour)
         border = control_margin
 
         #headingtxt = _("The settings on this page control behaviour of the functions abc2xml and xml2abc.\nYou find these functions under Files/export and import. Hovering the mouse over\none of the checkboxes will provide more explanation. Further documentation can be found\nin the Readme.txt files which come with the abc2xml.py-??.zip and xml2abc.py-??.zip\ndistributions available from the Wim Vree's web site.\n\n")
@@ -3662,7 +3785,7 @@ class MidiOptionsFrame(wx.Dialog):
     def __init__(self, parent, ID=-1, title='', key='', metre='3/4', default_len='1/16'):
         wx.Dialog.__init__(self, parent, ID, _('ABC Options'), wx.DefaultPosition, wx.Size(300, 80))
 
-        self.SetBackgroundColour(dialog_background_colour)
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour)
         border = control_margin
         sizer = wx.GridBagSizer(control_margin, control_margin)
         sizer.Add(wx.StaticText(self, wx.ID_ANY, u'K: ' + _('Key signature')), wx.GBPosition(0, 0), flag=wx.EXPAND | wx.LEFT | wx.RIGHT, border=border)
@@ -3739,7 +3862,7 @@ class ErrorFrame(wx.Dialog):
     def __init__(self, parent, error_msg):
         wx.Dialog.__init__(self, parent, wx.ID_ANY, _('Errors'), wx.DefaultPosition, wx.Size(700, 80))
         border = 10
-        self.SetBackgroundColour(dialog_background_colour)
+        self.SetBackgroundColour(easyabc_colors.dialog_background_colour)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         font_size = get_normal_fontsize() # 1.3.6.3 [JWDJ] one function to set font size
@@ -4288,6 +4411,13 @@ class MainFrame(wx.Frame):
         else:
             self.manager = aui.AuiManager(self)
 
+        art = self.manager.GetArtProvider()
+        if art:
+            # FORCE METRICS TO ZERO for compatibility with dark mode (This drops the 1px margin rendering entirely)
+            # Removes the hardcoded 1px padding lines around docked toolbars
+            art.SetMetric(aui.AUI_DOCKART_PANE_BORDER_SIZE, 0)
+            art.SetMetric(aui.AUI_DOCKART_SASH_SIZE, 0)
+
         self.printData = wx.PrintData()
         self.printData.SetPrintMode(wx.PRINT_MODE_PRINTER)
 
@@ -4348,7 +4478,6 @@ class MainFrame(wx.Frame):
 
         # 1.3.7.3 [JWDJ] Removed wx.LC_SINGLE_SEL to enable multiselect tunes
         self.tune_list = FlexibleListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT) #wx.LC_NO_HEADER)
-
         self.tune_list.InsertColumn(0, _('No.'), wx.LIST_FORMAT_RIGHT)
         self.tune_list.InsertColumn(1, _('Title'))
 
@@ -4364,9 +4493,9 @@ class MainFrame(wx.Frame):
         self.editor.SetMarginType(1,stc.STC_MARGIN_NUMBER)
 
         # 1.3.6.2 [JWdJ] 2015-02
-        self.renderer = SvgRenderer(self.settings['can_draw_sharps_and_flats'], self.settings.get('note_highlight_color', default_note_highlight_color), self.settings.get('note_highlight_follow_color', default_note_highlight_follow_color))#'#FF0000')
+        self.renderer = SvgRenderer(self.settings)
         self.music_pane = MusicScorePanel(self, self.renderer)
-        self.music_pane.SetBackgroundColour((255, 255, 255))
+        #self.music_pane.SetBackgroundColour((255, 255, 255))
         self.music_pane.OnNoteSelectionChangedDesc = self.OnNoteSelectionChangedDesc
 
         error_font_size = get_normal_fontsize() # 1.3.6.3 [JWDJ] one function to set font size
@@ -4378,7 +4507,7 @@ class MainFrame(wx.Frame):
 
         # 1.3.6.3 [JWdJ] 2015-04-21 ABC Assist added
         from abc_assist_panel import AbcAssistPanel  # 1.3.7.1 [JWDJ] 2016-1 because of translation this import has to be done as late as possible
-        self.abc_assist_panel = AbcAssistPanel(self, self.editor, cwd, self.settings)
+        self.abc_assist_panel = AbcAssistPanel(self, self.editor, cwd, self.settings, is_dark_mode=easyabc_colors.is_dark_mode)
         self.assist_pane = aui.AuiPaneInfo().Name("abcassist").CaptionVisible(True).Caption(_("ABC assist")).\
             CloseButton(True).MinimizeButton(False).MaximizeButton(False).\
             Left().Layer(1).Position(1).BestSize(300, 600) # .PaneBorder(False) # Fixed()
@@ -4486,6 +4615,132 @@ class MainFrame(wx.Frame):
         self.statusbar.SetStatusText(_('This is the status bar. Check it occasionally.'))
         execmessages = _('You are running {0} on {1}').format(program_name, wx.Platform)
         execmessages += '\n' + _('You can get the latest version on') + ' https://sourceforge.net/projects/easyabc/'
+
+        self.theme_check_timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self.CheckThemePeriodically, self.theme_check_timer)
+        self.theme_check_timer.Start(500)
+
+    def CheckThemePeriodically(self, event):
+        """
+        Verify if need to align appearance mode to the one of the OS
+        Note:Triggered by a timer as the event doesn't seem to be distributed.
+        """
+        #global  is_dark_mode
+        try:
+            current_os_mode = wx.SystemSettings.GetAppearance().IsDark()
+        except AttributeError:
+            return
+
+        if current_os_mode == easyabc_colors.is_dark_mode:
+            return
+
+        easyabc_colors.is_dark_mode = current_os_mode
+        self.is_dark_mode = current_os_mode
+        
+        self._ApplyAppearance()
+
+    def _ApplyAppearance(self):
+        """
+        Apply appearance mode to the one of the OS
+        """
+        #global  is_dark_mode, dialog_background_colour
+        colors = easyabc_colors.get_effective_style_color(self.settings)
+
+        app_bg = wx.Colour(colors['app_background'])
+        easyabc_colors.dialog_background_colour = wx.Colour(colors['editor_background'])
+        dialog_background_colour = easyabc_colors.dialog_background_colour
+
+        self.SetBackgroundColour(app_bg)
+
+        art = self.manager.GetArtProvider()
+        if art:
+            caption_fg = wx.Colour(colors['style_default_color'])
+            
+            try:
+                art.SetColor(aui.AUI_DOCKART_BORDER_COLOR, dialog_background_colour)
+                art.SetColor(aui.AUI_DOCKART_SASH_COLOR, dialog_background_colour)
+                art.SetColor(aui.AUI_DOCKART_BACKGROUND_COLOR, dialog_background_colour)
+                art.SetColor(aui.AUI_DOCKART_GRIPPER_COLOR, dialog_background_colour)
+                
+                art.SetColor(aui.AUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOR, caption_fg)
+                art.SetColor(aui.AUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOR, caption_fg)
+                art.SetColor(aui.AUI_DOCKART_ACTIVE_CAPTION_COLOR, dialog_background_colour)
+                art.SetColor(aui.AUI_DOCKART_INACTIVE_CAPTION_COLOR, dialog_background_colour)
+                
+            except AttributeError:
+                art.SetColour(aui.AUI_DOCKART_BORDER_COLOUR, dialog_background_colour)
+                art.SetColour(aui.AUI_DOCKART_SASH_COLOUR, dialog_background_colour)
+                art.SetColour(aui.AUI_DOCKART_BACKGROUND_COLOUR, dialog_background_colour)
+                art.SetColour(aui.AUI_DOCKART_GRIPPER_COLOUR, dialog_background_colour)
+                
+                art.SetColour(aui.AUI_DOCKART_ACTIVE_CAPTION_TEXT_COLOUR, caption_fg)
+                art.SetColour(aui.AUI_DOCKART_INACTIVE_CAPTION_TEXT_COLOUR, caption_fg)
+                art.SetColour(aui.AUI_DOCKART_ACTIVE_CAPTION_COLOUR, dialog_background_colour)
+                art.SetColour(aui.AUI_DOCKART_INACTIVE_CAPTION_COLOUR, dialog_background_colour)
+
+
+        if hasattr(self, 'editor'):
+            self.InitEditor()
+
+        if hasattr(self, 'abc_assist_panel'):
+            self.abc_assist_panel.UpdateTheme(easyabc_colors.is_dark_mode)
+
+        self.UpdateMusicScoreAppearance()
+
+        if hasattr(self, 'tune_list') and self.tune_list:
+            list_bg = wx.Colour(colors.get('list_background', colors['editor_background']))
+            list_fg = wx.Colour(colors.get('list_foreground', colors['style_default_color']))
+            
+            self.tune_list.SetBackgroundColour(app_bg)
+            self.tune_list.SetForegroundColour(list_fg)
+            
+            #try:
+                #header_attr = wx.ItemAttr()
+                #header_attr.SetBackgroundColour(app_bg)
+                #header_attr.SetTextColour(list_fg)
+
+                #self.tune_list.SetHeaderAttr(header_attr)
+            #except AttributeError:
+                # pass
+            #try:
+            for child in self.tune_list.GetChildren():
+                if child and not isinstance(child, wx.ScrollBar):
+                    child.SetBackgroundColour(app_bg)
+                    child.SetForegroundColour(list_fg)
+                    child.Refresh()
+            #except:
+            #    pass
+
+            self.tune_list.Refresh()
+            self.tune_list.Update()
+
+        if hasattr(self, 'toolbar'):
+            self.toolbar.SetBackgroundColour(app_bg)
+            self.toolbar.Refresh()
+
+        self.manager.Update()
+        self.Refresh()
+
+    def UpdateMusicScoreAppearance(self):
+        if not hasattr(self, 'music_pane') or not hasattr(self, 'renderer'):
+            return
+
+        #global  is_dark_mode
+        colors = easyabc_colors.get_effective_style_color(self.settings)
+        lock_music_light = self.settings.get('lock_music_light_mode', easyabc_colors.default_lock_music_light_mode)
+
+        self.renderer.highlight_color = colors['note_highlight_color']
+        self.renderer.highlight_follow_color = colors['note_highlight_follow_color']
+        self.renderer.lock_music_light_mode = lock_music_light
+        self.renderer.music_warm_light_bg_color = colors['music_sepia_background']
+        self.renderer.is_dark_mode = easyabc_colors.is_dark_mode
+
+        if lock_music_light and easyabc_colors.is_dark_mode:
+            self.music_pane.SetBackgroundColour(wx.Colour(colors['music_sepia_background']))
+        else:
+            self.music_pane.SetBackgroundColour(wx.Colour(colors['music_background']))
+
+        self.music_pane.redraw()
 
     def update_controls_using_settings(self):
         # p09 Enable the play button if midiplayer_path is defined. 2014-10-14 [SS]
@@ -4597,9 +4852,9 @@ class MainFrame(wx.Frame):
         self.update_statusbar_and_messages()
         if svg_files:
             pdd = wx.PrintDialogData(self.printData)
-            printout = MusicPrintout(svg_files, zoom=10.0, title=title, can_draw_sharps_and_flats=self.settings['can_draw_sharps_and_flats'])
+            printout = MusicPrintout(svg_files, settings=self.settings, zoom=10.0, title=title)
             if only_preview:
-                printout_for_preview = MusicPrintout(svg_files, zoom=1.0, title=title, painted_on_screen=True, can_draw_sharps_and_flats=self.settings['can_draw_sharps_and_flats'])
+                printout_for_preview = MusicPrintout(svg_files, settings=self.settings, zoom=1.0, title=title, painted_on_screen=True)
                 self.preview = wx.PrintPreview(printout_for_preview, printout, pdd)
 
                 if wx.Platform == "__WXMAC__":
@@ -5131,16 +5386,20 @@ class MainFrame(wx.Frame):
         self.toolbar.Realize()
         self.manager.Update()
 
-
     def show_toolbar_panel(self, panel, visible):
         panel.Show(visible)
 
     def setup_toolbar(self):
-        self.toolbar = aui.AuiToolBar(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, style=aui.AUI_TB_NO_AUTORESIZE)#, agwStyle=aui.AUI_TB_DEFAULT_STYLE | aui.AUI_TB_OVERFLOW)
+        self.toolbar = aui.AuiToolBar(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, style=aui.AUI_TB_NO_AUTORESIZE)
+
+        if easyabc_colors.is_dark_mode:
+            self.toolbar.SetBackgroundColour(easyabc_colors.dialog_background_colour)
+
         try:
             self.toolbar.SetAGWWindowStyleFlag(aui.AUI_TB_PLAIN_BACKGROUND)
         except:
             pass
+
         self.id_play = 3000
         self.id_stop = 3001
         self.id_record = 3002
@@ -5165,17 +5424,16 @@ class MainFrame(wx.Frame):
 
         button_style = platebtn.PB_STYLE_DEFAULT | platebtn.PB_STYLE_NOBG
         image_path = self.get_image_path()
-
         play_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-play.svg'), wx.Size(24, 24))
         self.play_bitmap = play_svg_bundle.GetBitmap(wx.Size(24, 24))
+        #self.play_bitmap = wx.Image(os.path.join(image_path, 'toolbar_play.png')).ConvertToBitmap()
         pause_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-pause.svg'), wx.Size(24, 24))
         self.pause_bitmap = play_svg_bundle.GetBitmap(wx.Size(24, 24))
+        #self.pause_bitmap = wx.Image(os.path.join(image_path, 'toolbar_pause.png')).ConvertToBitmap()
         self.play_button = play = platebtn.PlateButton(self.toolbar, self.id_play, "", self.play_bitmap, style=button_style)
-
         stop_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-stop.svg'), wx.Size(24, 24))
         stop_bmp = stop_svg_bundle.GetBitmap(wx.Size(24, 24))
         self.stop_button = stop = platebtn.PlateButton(self.toolbar, self.id_stop, "", stop_bmp, style=button_style)
-
         record_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-record.svg'), wx.Size(24, 24))
         record_bmp = record_svg_bundle.GetBitmap(wx.Size(24, 24))
         self.record_btn = record = platebtn.PlateButton(self.toolbar, self.id_record, "", record_bmp, style=button_style)
@@ -5187,8 +5445,10 @@ class MainFrame(wx.Frame):
         self.toolbar.AddControl(record)
         self.toolbar.AddSeparator()
 
+        # 1.3.6.3 [JWdJ] 2015-04-26 turned off abc assist for it is not finished yet
         bulb_svg_bundle = wx.BitmapBundle.FromSVGFile(os.path.join(image_path, 'toolbar-bulb.svg'), wx.Size(24, 24))
         bulb_bmp = bulb_svg_bundle.GetBitmap(wx.Size(24, 24))
+
         abc_assist = platebtn.PlateButton(self.toolbar, self.id_abc_assist, "", bulb_bmp, style=button_style)
         abc_assist.SetHelpText(_('ABC assist'))
         abc_assist.SetToolTip(wx.ToolTip(_('ABC assist'))) # 1.3.7.0 [JWdJ] 2015-12
@@ -5249,7 +5509,8 @@ class MainFrame(wx.Frame):
 
         self.manager.AddPane(self.toolbar, aui.AuiPaneInfo().
                             Name("tb2").Caption("Toolbar2").
-                            ToolbarPane().Top().Floatable(True).Dockable(False))
+                            ToolbarPane().Top().Floatable(True).Dockable(False).
+                            PaneBorder(False))
 
     def add_slider_to_toolbar(self, label_text, show_value, *args, **kwargs):
         panel = wx.Panel(self.toolbar, -1)
@@ -5903,8 +6164,6 @@ class MainFrame(wx.Frame):
             finally:
                 dlg.Destroy() # 1.3.6.3 [JWDJ] 2015-04-21 always clean up dialog window
 
-        if not PY3:
-            filepath = filepath.encode('utf-8')
         if convert_func(tune, filepath):
             execmessages = execmessages + u'creating '+ filepath + u'\n'
             # 1.3.6 [SS] 2014-12-08
@@ -8088,6 +8347,8 @@ class MainFrame(wx.Frame):
         if wx.TheClipboard.Open():
             wx.TheClipboard.Flush()  # the text on the clipboard should be available after the app has closed
             wx.TheClipboard.Close()
+        if hasattr(self, 'theme_check_timer'):
+            self.theme_check_timer.Stop()
 
         self.music_update_thread.abort()
         if self.play_music_thread != None:
@@ -8134,7 +8395,7 @@ class MainFrame(wx.Frame):
 
         # 1.3.6 [SS] 2014-11-15 2014-12-08
         self.current_midi_tune = AbcToMidi(abc, tune.header, self.cache_dir, self.settings, self.statusbar, tempo_multiplier, \
-            add_follow_score_markers=False)
+            add_follow_score_markers=follow_score)
         self.applied_tempo_multiplier = tempo_multiplier
         # 1.3.7 [SS] 2016-01-05 in case abc2midi crashes
         midi_file = None
@@ -8623,9 +8884,6 @@ class MainFrame(wx.Frame):
     def OnTuneSelected(self, evt):
         global execmessages # [SS] 1.3.6 2014-11-11
 
-        # 1.3.6.4 [SS] 2015-06-11 -- to maintain consistency for different media players
-        # self.reset_BpmSlider()
-
         dt = datetime.now() - self.execmessage_time # 1.3.6 [SS] 2014-12-11
         dtime = dt.seconds*1000 + dt.microseconds // 1000
         if evt is not None and dtime > 20000:
@@ -8777,7 +9035,6 @@ class MainFrame(wx.Frame):
 
         if not font_face:
             fixedWidthFonts = ['Bitstream Vera Sans Mono', 'Courier New', 'Courier']
-            #fixedWidthFonts = ['Lucida Grande', 'Monaco' 'Inconsolata', 'Consolas', 'Deja Vu Sans Mono', 'Droid Sans Mono', 'Courier', 'Andale Mono', 'Monaco', 'Courier New', 'Courier']
             wantFonts = fixedWidthFonts[:]
             size = 16
             if wx.Platform == "__WXMSW__":
@@ -8799,33 +9056,52 @@ class MainFrame(wx.Frame):
 
         editor.SetProperty("fold", "0")
         set_style = editor.StyleSetSpec
-        set_style(self.styler.STYLE_DEFAULT, "fore:%s,face:%s,size:%d" % (self.settings.get('style_default_color',default_style_color['style_default_color']), font, size))
-        set_style(self.styler.STYLE_CHORD, "fore:%s,face:%s,size:%d" % (self.settings.get('style_chord_color',default_style_color['style_chord_color']), font, size))
-        # Comments
-        set_style(self.styler.STYLE_COMMENT_NORMAL, "fore:%s,face:%s,italic,size:%d" % (self.settings.get('style_comment_color',default_style_color['style_comment_color']), font, size))
-        set_style(self.styler.STYLE_COMMENT_SPECIAL, "fore:%s,face:%s,italic,size:%d" % (self.settings.get('style_specialcomment_color',default_style_color['style_specialcomment_color']), font, size))
-        # Bar
-        set_style(self.styler.STYLE_BAR, "fore:%s,face:%s,bold,size:%d" % (self.settings.get('style_bar_color',default_style_color['style_bar_color']), font, size))
-        # Field
-        set_style(self.styler.STYLE_FIELD,                "fore:%s,face:%s,bold,size:%d" % (self.settings.get('style_field_color',default_style_color['style_field_color']), font, size))
-        set_style(self.styler.STYLE_FIELD_VALUE,          "fore:%s,face:%s,italic,size:%d" % (self.settings.get('style_fieldvalue_color',default_style_color['style_fieldvalue_color']), font, size))
-        set_style(self.styler.STYLE_EMBEDDED_FIELD,       "fore:%s,face:%s,bold,size:%d" % (self.settings.get('style_embeddedfield_color',default_style_color['style_embeddedfield_color']), font, size))
-        set_style(self.styler.STYLE_EMBEDDED_FIELD_VALUE, "fore:%s,face:%s,italic,size:%d" % (self.settings.get('style_embeddedfieldvalue_color',default_style_color['style_embeddedfieldvalue_color']), font, size))
-        set_style(self.styler.STYLE_FIELD_INDEX,          "fore:%s,face:%s,bold,underline,size:%d" % (self.settings.get('style_fieldindex_color',default_style_color['style_fieldindex_color']), font, size))
-        # Single quoted string
-        set_style(self.styler.STYLE_STRING, "fore:%s,face:%s,italic,size:%d" % (self.settings.get('style_string_color',default_style_color['style_string_color']), font, size))
-        # Lyrics
-        set_style(self.styler.STYLE_LYRICS, "fore:%s,face:%s,italic,size:%d" % (self.settings.get('style_lyrics_color',default_style_color['style_lyrics_color']), font, size))
 
-        set_style(self.styler.STYLE_GRACE, "fore:%s,face:%s,italic,size:%d" % (self.settings.get('style_grace_color',default_style_color['style_grace_color']), font, size))
+        # Effective style colors enable to get the complete set of colors for the current mode (light or dark)
+        effective_colors = easyabc_colors.get_effective_style_color(self.settings)
+        
+        # Base colors
+        editor.StyleSetBackground(stc.STC_STYLE_DEFAULT, wx.Colour(effective_colors['editor_background']))
+        editor.StyleSetForeground(stc.STC_STYLE_DEFAULT, wx.Colour(effective_colors['editor_foreground']))
+        editor.SetCaretForeground(wx.Colour(effective_colors['editor_caret']))
+            
+        # Enforce to propagate the default style (if later might then cancel the other colors)
+        editor.StyleClearAll() 
 
-        set_style(self.styler.STYLE_ORNAMENT, "fore:%s,face:%s,bold,size:%d" % (self.settings.get('style_ornament_color',default_style_color['style_ornament_color']), font, size))
-        set_style(self.styler.STYLE_ORNAMENT_PLUS, "fore:%s,face:%s,size:%d" % (self.settings.get('style_ornamentplus_color',default_style_color['style_ornamentplus_color']), font, size))
-        set_style(self.styler.STYLE_ORNAMENT_EXCL, "fore:%s,face:%s,size:%d" % (self.settings.get('style_ornamentexcl_color',default_style_color['style_ornamentexcl_color']), font, size))
+        # Line numbers area
+        editor.StyleSetBackground(stc.STC_STYLE_LINENUMBER, wx.Colour(effective_colors['editor_linenumber_bg']))
+        editor.StyleSetForeground(stc.STC_STYLE_LINENUMBER, wx.Colour(effective_colors['editor_linenumber_fg']))
+        editor.StyleSetFont(stc.STC_STYLE_LINENUMBER, wx.Font(size, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, faceName=font))
+            
+        # Text selection
+        editor.SetSelBackground(True, wx.Colour(effective_colors['editor_selection_bg']))  
+        editor.SetSelForeground(True, wx.Colour(effective_colors['editor_selection_fg']))  
 
-        editor.SetModEventMask(wx.stc.STC_MODEVENTMASKALL & ~(wx.stc.STC_MOD_CHANGESTYLE | wx.stc.STC_PERFORMED_USER)) # [1.3.7.4] JWDJ: don't fire OnModified on style changes
+        # Specific ABC rules
+        set_style(self.styler.STYLE_DEFAULT, "fore:%s,face:%s,size:%d" % (effective_colors['style_default_color'], font, size))
+        set_style(self.styler.STYLE_CHORD, "fore:%s,face:%s,size:%d" % (effective_colors['style_chord_color'], font, size))
+        
+        set_style(self.styler.STYLE_COMMENT_NORMAL, "fore:%s,face:%s,italic,size:%d" % (effective_colors['style_comment_color'], font, size))
+        set_style(self.styler.STYLE_COMMENT_SPECIAL, "fore:%s,face:%s,italic,size:%d" % (effective_colors['style_specialcomment_color'], font, size))
+        
+        set_style(self.styler.STYLE_BAR, "fore:%s,face:%s,bold,size:%d" % (effective_colors['style_bar_color'], font, size))
+        
+        set_style(self.styler.STYLE_FIELD,                "fore:%s,face:%s,bold,size:%d" % (effective_colors['style_field_color'], font, size))
+        set_style(self.styler.STYLE_FIELD_VALUE,          "fore:%s,face:%s,italic,size:%d" % (effective_colors['style_fieldvalue_color'], font, size))
+        set_style(self.styler.STYLE_EMBEDDED_FIELD,       "fore:%s,face:%s,bold,size:%d" % (effective_colors['style_embeddedfield_color'], font, size))
+        set_style(self.styler.STYLE_EMBEDDED_FIELD_VALUE, "fore:%s,face:%s,italic,size:%d" % (effective_colors['style_embeddedfieldvalue_color'], font, size))
+        set_style(self.styler.STYLE_FIELD_INDEX,          "fore:%s,face:%s,bold,underline,size:%d" % (effective_colors['style_fieldindex_color'], font, size))
+        
+        set_style(self.styler.STYLE_STRING, "fore:%s,face:%s,italic,size:%d" % (effective_colors['style_string_color'], font, size))
+        set_style(self.styler.STYLE_LYRICS, "fore:%s,face:%s,italic,size:%d" % (effective_colors['style_lyrics_color'], font, size))
+
+        set_style(self.styler.STYLE_GRACE, "fore:%s,face:%s,italic,size:%d" % (effective_colors['style_grace_color'], font, size))
+        set_style(self.styler.STYLE_ORNAMENT, "fore:%s,face:%s,bold,size:%d" % (effective_colors['style_ornament_color'], font, size))
+        set_style(self.styler.STYLE_ORNAMENT_PLUS, "fore:%s,face:%s,size:%d" % (effective_colors['style_ornamentplus_color'], font, size))
+        set_style(self.styler.STYLE_ORNAMENT_EXCL, "fore:%s,face:%s,size:%d" % (effective_colors['style_ornamentexcl_color'], font, size))
+
+        editor.SetModEventMask(wx.stc.STC_MODEVENTMASKALL & ~(wx.stc.STC_MOD_CHANGESTYLE | wx.stc.STC_PERFORMED_USER))
         editor.Colourise(0, editor.GetLength())
-
 
     def OnDropFile(self, filename):
         global execmessages, visible_abc_code
@@ -9562,7 +9838,15 @@ class MyApp(wx.App):
             self.frame.load_or_import(recent_file)
 
     def OnInit(self):
+        #global  is_dark_mode, dialog_background_colour
         try:
+            # Detect dark mode early (wxPython 4.1+)
+            try:
+                easyabc_colors.is_dark_mode = wx.SystemSettings.GetAppearance().IsDark()
+            except AttributeError:
+                easyabc_colors.is_dark_mode = False
+            easyabc_colors.dialog_background_colour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
+
             self.SetAppName('EasyABC')
             #wx.SystemOptions.SetOptionInt('msw.window.no-clip-children', 1)
             app_dir = self.app_dir = wx.StandardPaths.Get().GetUserLocalDataDir()
@@ -9607,6 +9891,7 @@ class MyApp(wx.App):
             self.frame = self.NewMainFrame(options)
             self.frame.Show(True)
             self.SetTopWindow(self.frame)
+            #self.Bind(wx.EVT_SYS_COLOUR_CHANGED, self.OnGlobalThemeChanged)
 
             # 1.3.8.4 [mist] Load most recent file
             if not path:

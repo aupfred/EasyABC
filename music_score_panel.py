@@ -222,7 +222,8 @@ class MusicScorePanel(wx.ScrolledWindow):
             if self.highlighted_notes:
                 self.renderer.draw_notes(page=self.current_page, note_indices=self.highlighted_notes, highlight=True, dc=dc, highlight_follow=self.highlight_follow)
         else:
-            dc.SetBackground(wx.WHITE_BRUSH)
+            #dc.SetBackground(wx.WHITE_BRUSH)
+            dc.SetBackground(self.renderer.get_background_brush())
             dc.Clear()
 
     def set_page(self, page):
@@ -295,7 +296,8 @@ class MusicScorePanel(wx.ScrolledWindow):
         if not WX4:
             dc.BeginDrawing()
         try:
-            dc.SetBackground(wx.WHITE_BRUSH)
+            #dc.SetBackground(wx.WHITE_BRUSH)
+            dc.SetBackground(self.renderer.get_background_brush())
             dc.Clear()
             self.draw_drag_rect(dc)
             if self.current_page != self.renderer.empty_page:
