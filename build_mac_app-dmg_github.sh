@@ -36,15 +36,15 @@ mkdir "dist/EasyABC.app/Contents/Resources/English.lproj"
 echo "Copying binaries to Helpers"
 mkdir -p dist/EasyABC.app/Contents/Helpers
 #cp -f bin/$BIN_DIR/* dist/EasyABC.app/Contents/Helpers/
-#find bin/$BIN_DIR -maxdepth 1 -type f -exec cp {} dist/EasyABC.app/Contents/Helpers \;
-echo "Fusing architecture-specific helper binaries into Universal Binaries..."
-for file in bin/mac_arm64/*; do
-    filename=$(basename "$file")
-    if [ -f "bin/mac_x86_64/$filename" ]; then
-        lipo -create "bin/mac_arm64/$filename" "bin/mac_x86_64/$filename" -output "dist/EasyABC.app/Contents/Helpers/$filename"
-        echo "  Created universal binary for: $filename"
-    fi
-done
+find bin/$BIN_DIR -maxdepth 1 -type f -exec cp {} dist/EasyABC.app/Contents/Helpers \;
+#echo "Fusing architecture-specific helper binaries into Universal Binaries..."
+#for file in bin/mac_arm64/*; do
+#    filename=$(basename "$file")
+#    if [ -f "bin/mac_x86_64/$filename" ]; then
+#        lipo -create "bin/mac_arm64/$filename" "bin/mac_x86_64/$filename" -output "dist/EasyABC.app/Contents/Helpers/$filename"
+#        echo "  Created universal binary for: $filename"
+#    fi
+#done
 
 echo "Helpers content:"
 ls -lh dist/EasyABC.app/Contents/Helpers
