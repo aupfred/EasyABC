@@ -647,6 +647,8 @@ different panes. Tie/untie option added for notes. Broken rhythm
 - Improved: Enable Midi playback for Mac based on Apple DLS Synthetiser thanks to mplay library (aupfred)
 - Improved: Take care of abc charset instruction (revad)
 - Improved: Frame title identifies whether a change in the abc file was done (revad)
+- Improved: Graphic selection for multivoice and multi selection (revad + aupfred)
+- Improved: Selection of editor in case of graphical selection and multivoice (aupfred)
 - Updated: xml2abc, abc2xml (aupfred)
 - Updated: Adapt to new version of abcmidi output (aupfred)
 - Updated: Several fixes to support newer Python versions. (thanks aupfred and all that contributed)

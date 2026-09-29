@@ -198,6 +198,7 @@ class SvgTune(object):
 
     def render_page(self, page_index, renderer):
         if 0 <= page_index < self.page_count:
+            renderer.tune_with_multivoice = self.abc_tune.get_voice_count() > 1
             page = self.pages.get(page_index, None)
             if page is None:
                 page = renderer.svg_to_page(open(self.svg_files[page_index], 'rb').read())
@@ -4961,11 +4962,13 @@ class MainFrame(wx.Frame):
         num_header_lines += 0  # due to some oddity in newer versions of abcm2ps
         return (num_header_lines, first_note_line_index)
 
-    def OnNoteSelectionChangedDesc(self, selected_note_indices, close_note_index=None):
+    def OnNoteSelectionChangedDesc(self, selected_note_indices, close_note_index=None, active_note_index=None):
         self.Raise()
 
         self.selected_note_indices = selected_note_indices
         self.selected_note_descs = [self.music_pane.current_page.notes[i] for i in selected_note_indices]
+        allow_multiline_selection = self.current_svg_tune.abc_tune.get_voice_count() <=1
+
 
         self.editor.SetFocus()
         tune = self.GetSelectedTune()
@@ -5003,29 +5006,37 @@ class MainFrame(wx.Frame):
                 row2 += tune_start_line - num_header_lines - 1
                 p1 = self.editor.PositionFromLine(row1) + col1
                 p2 = self.editor.PositionFromLine(row2) + col2
+                
+                if allow_multiline_selection or row1 == row2:
 
-                # p2 is the start of the last note, now find the end of it
-                ##text = self.editor.GetTextRange(p2, p2+10)
-                text = ''.join([self.editor.GetTextRange(i, i+1) for i in range(p2, p2+10)]) # this way of retrieving the next 10 chars seem more reliable in case one starts on some utf-8 char boundary or something
+                    # p2 is the start of the last note, now find the end of it
+                    ##text = self.editor.GetTextRange(p2, p2+10)
+                    text = ''.join([self.editor.GetTextRange(i, i+1) for i in range(p2, p2+10)]) # this way of retrieving the next 10 chars seem more reliable in case one starts on some utf-8 char boundary or something
 
-                notes = get_notes_from_abc(text)
-                if notes:
-                    p2 += notes[0][1]  # end-offset of first note found
+                    notes = get_notes_from_abc(text)
+                    if notes:
+                        p2 += notes[0][1]  # end-offset of first note found
+                    else:
+                        p2 += 1
+
+                    # if the selection starts at a [ character and ends before the ] character, then extend it to the latter
+                    first_char = self.editor.GetTextRange(p1, p1+1)
+                    if first_char == '[' and ']' in text and text.index(']') >= p2-p1:
+                        p2 = p1 + text.index(']') + 1
+
+                    # clip the positions to the start and end of the tune (for safety)
+                    p1, p2 = [min(max(p, position), end_position) for p in (p1, p2)]
+
+                    # scroll whole selection into view (if possible)
+                    self.editor.GotoPos(p1)
+                    self.editor.GotoPos(p2)
+                    self.editor.SetSelection(p1, p2)
                 else:
-                    p2 += 1
-
-                # if the selection starts at a [ character and ends before the ] character, then extend it to the latter
-                first_char = self.editor.GetTextRange(p1, p1+1)
-                if first_char == '[' and ']' in text and text.index(']') >= p2-p1:
-                    p2 = p1 + text.index(']') + 1
-
-                # clip the positions to the start and end of the tune (for safety)
-                p1, p2 = [min(max(p, position), end_position) for p in (p1, p2)]
-
-                # scroll whole selection into view (if possible)
-                self.editor.GotoPos(p1)
-                self.editor.GotoPos(p2)
-                self.editor.SetSelection(p1, p2)
+                    active_desc = self.music_pane.current_page.notes[active_note_index]
+                    row, col = active_desc[2], active_desc[3]
+                    row += tune_start_line - num_header_lines - 1
+                    p = self.editor.PositionFromLine(row) + col
+                    self.editor.GotoPos(p)
             else:
                 self.editor.SetSelectionEnd(self.editor.GetSelectionStart())
 
