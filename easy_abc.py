@@ -4617,34 +4617,11 @@ class MainFrame(wx.Frame):
         execmessages = _('You are running {0} on {1}').format(program_name, wx.Platform)
         execmessages += '\n' + _('You can get the latest version on') + ' https://sourceforge.net/projects/easyabc/'
 
-        self.theme_check_timer = wx.Timer(self)
-        self.Bind(wx.EVT_TIMER, self.CheckThemePeriodically, self.theme_check_timer)
-        self.theme_check_timer.Start(500)
-
-    def CheckThemePeriodically(self, event):
-        """
-        Verify if need to align appearance mode to the one of the OS
-        Note:Triggered by a timer as the event doesn't seem to be distributed.
-        """
-        #global  is_dark_mode
-        try:
-            current_os_mode = wx.SystemSettings.GetAppearance().IsDark()
-        except AttributeError:
-            return
-
-        if current_os_mode == easyabc_colors.is_dark_mode:
-            return
-
-        easyabc_colors.is_dark_mode = current_os_mode
-        self.is_dark_mode = current_os_mode
-        
-        self._ApplyAppearance()
-
-    def _ApplyAppearance(self):
+    def ApplyAppearance(self):
         """
         Apply appearance mode to the one of the OS
         """
-        #global  is_dark_mode, dialog_background_colour
+        self.is_dark_mode = easyabc_colors.is_dark_mode
         colors = easyabc_colors.get_effective_style_color(self.settings)
 
         app_bg = wx.Colour(colors['app_background'])
@@ -9800,6 +9777,31 @@ class MyApp(wx.App):
         self._frames = []
         self.settings = {}
         wx.App.__init__(self, *args, **kargs)
+        self.theme_check_timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self.CheckThemePeriodically, self.theme_check_timer)
+        self.theme_check_timer.Start(500)
+
+    def CheckThemePeriodically(self, event):
+        """
+        Verify if need to align appearance mode to the one of the OS
+        Note:Triggered by a timer as the event doesn't seem to be distributed.
+        """
+        if not self._frames:
+            return
+        
+        try:
+            current_os_mode = wx.SystemSettings.GetAppearance().IsDark()
+        except AttributeError:
+            return
+
+        if current_os_mode == easyabc_colors.is_dark_mode:
+            return
+
+        easyabc_colors.is_dark_mode = current_os_mode
+        self.is_dark_mode = current_os_mode
+        
+        for frame in self.GetAllFrames():
+            frame.ApplyAppearance()
 
     def CheckCanDrawSharpFlat(self):
         dc = wx.MemoryDC(wx_bitmap(200, 200, 32))
