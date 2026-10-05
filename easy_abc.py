@@ -4373,7 +4373,8 @@ class MainFrame(wx.Frame):
         self.is_closed = False
         self.app_dir = app_dir
         self.cache_dir = os.path.join(self.app_dir, 'cache')
-        self.settings_file = os.path.join(self.app_dir, 'settings1.3.dat')
+        self.previous_settings_file = os.path.join(self.app_dir, 'settings1.3.dat')
+        self.settings_file = os.path.join(self.app_dir, 'settings1.4.dat')
         self.exclusive_file_mode = options.get('exclusive', False)
         self._current_file = None
         self.untitled_number = 1
@@ -7317,11 +7318,13 @@ class MainFrame(wx.Frame):
     # 1.3.6.1 [SS] 2014-12-28 2015-01-22
     def OnColdRestart(self, evt):
         result = wx.MessageBox(_("This will close EasyAbc and put it in a state so that it starts with default settings."
-        "i.e. the file settings1.3 will be deleted."),
+        "i.e. the file settings1.4 will be deleted."),
                                _("Proceed?"), wx.ICON_QUESTION | wx.OK | wx.CANCEL)
         if result == wx.OK:
-            f = os.path.join(self.app_dir, 'settings1.3.dat')
-            os.remove(f)
+            #f = os.path.join(self.app_dir, 'settings1.4.dat')
+            # FAU: write an empty settings to avoid to enforce migration from 1.3
+            with open(self.settings_file, "wb") as f:
+                pickle.dump({}, f)
             self.music_update_thread.abort()
             self.is_closed = True
             self.manager.UnInit()
@@ -9259,7 +9262,14 @@ class MainFrame(wx.Frame):
 
     def load_settings(self):
         try:
-            settings = pickle.load(open(self.settings_file, 'rb'))
+            with open(self.settings_file, 'rb') as f:
+                settings = pickle.load(f)
+        except FileNotFoundError:
+            try:
+                with open(self.previous_settings_file, 'rb') as f:
+                    settings = pickle.load(f)
+            except Exception:
+                settings = {}
         except Exception:
             settings = {} # ignore non-existant settings file (it will be created when the program exits)
         self.settings.update(settings)
