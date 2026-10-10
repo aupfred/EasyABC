@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-program_version = '1.4.0.0b'
-program_name = 'EasyABC ' + program_version
+from easyabc_version import program_version, program_name
 
 # Copyright (C) 2011-2014 Nils Liberg (mail: kotorinl at yahoo.co.uk)
 # Copyright (C) 2015-2024 Seymour Shlien (mail: fy733@ncf.ca), Jan Wybren de Jong (jw_de_jong at yahoo dot com)
+# Copyright (C) 2025-2026 Seymour Shlien (mail: fy733@ncf.ca), Jan Wybren de Jong (jw_de_jong at yahoo dot com), Frédéric Aupépin (frederic.aupepin at gmail)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -153,6 +153,8 @@ except ImportError:
         sys.stderr.write('Warning: pygame/pypm module not found. Recording midi will not work\n')
 finally:
     sys.stdout = old_stdout
+
+from easyabc_dialogs import WelcomeFrame, AboutFrame
 
 def str2fraction(s):
     parts = [int(x.strip()) for x in s.split('/')]
@@ -3572,7 +3574,6 @@ class ColorSettingsFrame(wx.Panel):
         config_dark = self._get_config_is_dark()
         
         # Temporary update the darkmode to get the corresponding colors
-        #global is_dark_mode
         backup_mode = easyabc_colors.is_dark_mode
         easyabc_colors.is_dark_mode = config_dark
         
@@ -4621,6 +4622,15 @@ class MainFrame(wx.Frame):
         execmessages = _('You are running {0} on {1}').format(program_name, wx.Platform)
         execmessages += '\n' + _('You can get the latest version on') + ' https://sourceforge.net/projects/easyabc/'
 
+
+    def ShowWelcomeFrame(self, event=None):
+        dlg = WelcomeFrame(self)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            self.settings['show_welcome_page'] = dlg.show_on_startup.GetValue()
+
+            dlg.Destroy()
+
     def ApplyAppearance(self):
         """
         Apply appearance mode to the one of the OS
@@ -4707,7 +4717,6 @@ class MainFrame(wx.Frame):
         if not hasattr(self, 'music_pane') or not hasattr(self, 'renderer'):
             return
 
-        #global  is_dark_mode
         colors = easyabc_colors.get_effective_style_color(self.settings)
         lock_music_light = self.settings.get('lock_music_light_mode', easyabc_colors.default_lock_music_light_mode)
 
@@ -7008,6 +7017,7 @@ class MainFrame(wx.Frame):
                 (),
                 (_("&Check for update..."), _("Link to EasyABC download page"), self.OnCheckLastestVersion),
                 (),
+                (_("Welcome to EasyABC"), _("Show the welcome page of EasyABC"), self.ShowWelcomeFrame),
                 (wx.ID_ABOUT, _("About EasyABC") + "...", '', self.OnAbout)
             ]),
         ], parent=self)
@@ -9560,103 +9570,6 @@ class MyFileDropTarget(wx.FileDropTarget):
             self.frame.tune_list.Select(self.frame.tune_list.GetItemCount()-1)
             self.frame.OnTuneSelected(None)
 
-class AboutFrame(wx.Dialog):
-    htmlpage = '''
-<html>
-<body bgcolor="#FAFAF0">
-<center><img src="img/abclogo.png"/>
-</center>
-<p><b>{0}</b><br/>
-an open source ABC editor for Windows, OSX and Linux. It is published under the <a href="https://www.gnu.org/licenses/gpl-2.0.html">GNU Public License</a>. </p>
-<p><center>initial repository was at <a href="https://www.nilsliberg.se/ksp/easyabc/">https://www.nilsliberg.se/ksp/easyabc/</a></center></p>
-<p><center>Now documentation available here<a href="https://easyabc.sourceforge.net">https://easyabc.sourceforge.net</a></center></p>
-<p><u>Features</u>:</p>
-<ul style="line-height: 150%; margin-top: 3px;">
-  <li> Good ABC standard coverage thanks to internal use of abcm2ps and abc2midi
-  <li> Syntax highlighting
-  <li> Zoom support
-  <li> Import MusicXML, MIDI and Noteworthy Composer files (the midi to abc translator is custom made in order to produce legible abc code with more sensible beams than the typical midi2abc output).
-  <li> Export to MIDI, SVG, PDF (single tune or whole tune book).
-  <li> Select notes by clicking on them and add music symbols by using drop-down menus in the toolbar.
-  <li> Play the active tune as midi
-  <li> Record songs from midi directly in the program (no OSX support at the moment).<br/>
-  Just press Rec, play on your midi keyboard and then press Stop.
-  <li> The musical score is automatically updated as you type in ABC code.
-  <li> Support for unicode (utf-8) and other encodings.
-  <li> Transpose and halve/double note length functionality (using abc2abc)
-  <li> An abcm2ps format file can easily be specified in the settings.
-  <li> ABC fields in the file header are applied to every single tune in a tune book.
-  <li> Automatic alignment of bars on different lines
-  <li> Available in <img src="img/new.gif"/>German, Dutch, Italian, French, Danish, Swedish, German and English</li>
-  <li> Functions to generate incipits, sort tunes and renumber X: fields.</li>
-  <li> Musical search function - search for note sequences irrespectively of key, etc. <img src="img/new.gif"/></li>
-</ul>
-
-<p><b>EasyABC</b> is brought to you by <b>Nils Liberg</b>, Copyright &copy; 2010-2012.</p>
-<p><b>EasyABC</b> is maintained by <b>Jan Wybren de Jong</b>, <b>Seymour Shlien</b> and  by <b>Fr&eacute;d&eacute;ric Aup&eacute;pin</b> for Mac adaptation</p>
-<p><b>Credits</b> - software components used by EasyABC:</p>
-<ul class="nicelist">
-<li><a href="http://moinejf.free.fr/">abcm2ps</a> for converting ABC code to note images (developed/maintained by Jean-Fran&ccedil;ois Moine)</li>
-<li><a href="http://abc.sourceforge.net/abcMIDI/">abc2midi</a> for converting ABC code to midi (by James Allwright, maintained by Seymour Shlien)</li>
-<li><a href="https://wim.vree.org/svgParse/xml2abc.html">xml2abc</a> for converting from MusicXML to ABC (by Willem Vree)</li>
-<li><a href="https://sites.google.com/site/juria90/nwc">nwc2xml</a> for converting from Noteworthy Composer format to ABC via XML (by James Lee)</li>
-<li><a href="https://www.wxpython.org/">wxPython</a> cross-platform user-interface framework</li>
-<li><a href="https://www.scintilla.org/">scintilla</a> for the text editor used for ABC code</li>
-<li><a href="https://www.mxm.dk/products/public/pythonmidi">python midi package</a> for the initial parsing of midi files to be imported</li>
-<li><a href="https://www.pygame.org/download.shtml">pygame</a> (which wraps <a href="https://sourceforge.net/apps/trac/portmedia/wiki/portmidi">portmidi</a>) for real-time midi input</li>
-<li><a href="https://www.fluidsynth.org/">FluidSynth</a> for playing midi (and made fit for Python with a <a href="https://wim.vree.org/svgParse/testplayer.html">player</a> by <a href="https://wim.vree.org/svgParse/">Willem Vree</a>)</li>
-<li><a href="https://github.com/jheinen/mplay">Python MIDI Player</a> for playing midi on Mac</li>
-<li>Thanks to Guido Gonzato for providing the fields and command reference extracted from his <a href="https://abcplus.sourceforge.net/#ABCGuide">Making music with ABC guide</a>.</li>
-<li><br>Many thanks to the translators: Valerio&nbsp;Pelliccioni, Guido&nbsp;Gonzato&nbsp;(italian), Bendix&nbsp;R&oslash;dgaard&nbsp;(danish), Fr&eacute;d&eacute;ric&nbsp;Aup&eacute;pin&nbsp;(french), Bernard&nbsp;Weichel&nbsp;(german), Jan&nbsp;Wybren&nbsp;de&nbsp;Jong&nbsp;(dutch) and Wu&nbsp;Xiaotian&nbsp;(chinese).</li>
-<li>Universal binaries of <a href="https://abcplus.sourceforge.net/#abcm2ps">abcm2ps</a> and <a href="https://abcplus.sourceforge.net/#abcmidi">abc2midi</a> for OSX are available thanks to Chuck&nbsp;Boody and Guido Gonzato</li>
-</ul>
-
-<p><b>Links</b></p>
-<ul class="nicelist">
-<li><a href="https://abcnotation.com/">abcnotation.com</a></li>
-<li><a href="http://abcplus.sourceforge.net/">abcplus.sourceforge.net</a></li>
-<li><a href="http://moinejf.free.fr/">Jef Moine's abcm2ps page</a></li>
-<li><a href="https://abcmidi.sourceforge.io/">Seymour Shlien's abcMIDI page</a></li>
-<li><a href="http://www.folkwiki.se/">folkwiki.se - Swedish folk music</a> (initial involvement of Nils here is the reason why he implemented the program)</li>
-</ul>
-</body>
-</html>
-'''.format(program_name)
-
-    def __init__(self, parent):
-        wx.Dialog.__init__(self, parent, wx.ID_ANY, _('About EasyABC'), size=(900, 600) )
-        about_html = wx.html.HtmlWindow(self, -1)
-        about_html.SetPage(self.htmlpage)
-        button = wx.Button(self, wx.ID_OK, _('&Ok'))
-        button.SetDefault()
-
-        # Definition of the padding of the window
-        lc = wx.LayoutConstraints()
-        lc.top.SameAs(self, wx.Top, 5)
-        lc.left.SameAs(self, wx.Left, 5)
-        lc.bottom.SameAs(button, wx.Top, 5)
-        lc.right.SameAs(self, wx.Right, 5)
-        about_html.SetConstraints(lc)
-
-        # Definition of the position of the OK button
-        lc = wx.LayoutConstraints()
-        lc.bottom.SameAs(self, wx.Bottom, 5)
-        lc.centreX.SameAs(self, wx.CentreX)
-        lc.width.AsIs()
-        lc.height.AsIs()
-        button.SetConstraints(lc)
-
-        about_html.Bind(wx.html.EVT_HTML_LINK_CLICKED, self.OnLinkClicked)
-
-        self.SetAutoLayout(True)
-        self.Layout()
-        self.CentreOnParent(wx.BOTH)
-
-    def OnLinkClicked(self, evt):
-        webbrowser.open(evt.GetLinkInfo().GetHref())
-        return wx.html.HTML_BLOCK
-
-
 class MyTunesListFrame(wx.Frame):
     ''' Creates the TextCtrl for displaying the tunes list'''
     def __init__(self):
@@ -9863,7 +9776,6 @@ class MyApp(wx.App):
             self.frame.load_or_import(recent_file)
 
     def OnInit(self):
-        #global  is_dark_mode, dialog_background_colour
         try:
             # Detect dark mode early (wxPython 4.1+)
             try:
@@ -9927,6 +9839,9 @@ class MyApp(wx.App):
             #FAU: on Mac the sys.frozen is set by py2app and pyinstaller and is unset otherwise getattr( sys, 'frozen', False)
             if path and wx.Platform != "__WXMAC__":
                 self.frame.load_or_import(path)
+
+            if self.frame.settings.get('show_welcome_page', True):
+                wx.CallAfter(self.frame.ShowWelcomeFrame)
         except:
             sys.stdout.write(traceback.format_exc())
         return True
