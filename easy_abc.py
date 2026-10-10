@@ -2527,6 +2527,9 @@ class MyChordPlayPage (wx.Panel):
         self.gchordcombo = wx.ComboBox(self, wx.ID_ANY, 'default', (-1, -1), (128, -1), [], wx.CB_DROPDOWN)
         gchordchoices = ['default', 'f', 'fzfz', 'gi', 'gihi', 'f4c2', 'ghihgh', 'g2hg2h']
         self.SetGchordChoices(gchordchoices)
+        self.gchordcombo.SetValue(
+            self.settings.get('gchord', 'default')
+        )
 
         midi_box.Add(wx.StaticText(self, wx.ID_ANY, _('Instrument for playback') + ': '), pos=(0,0), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
         midi_box.Add(self.sliderVol, pos=(0,2), flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, border=border)
@@ -9486,7 +9489,8 @@ class MainFrame(wx.Frame):
                         ('abcm2ps_defaults', True), ('abcm2ps_pagewidth', '21.59'),
                         ('abcm2ps_pageheight', '27.94'), ('midiplayer_parameters', ''),
                         ('bpmtempo', 120), ('chordvol', default_midi_volume), ('bassvol', default_midi_volume),
-                        ('melodyvol', default_midi_volume), ('midi_intro', 0), ('version', program_version)
+                        ('melodyvol', default_midi_volume), ('midi_intro', 0), ('version', program_version),
+                        ('gchord', 'default')
                        ]
 
         # 1.3.6 [SS] 2014-12-16
@@ -9497,8 +9501,6 @@ class MainFrame(wx.Frame):
                 pass
             else:
                 self.settings[term] = value
-
-        self.settings['gchord'] = 'default' # 1.3.6 [SS] 2014-11-26
 
     def update_recent_files_menu(self):
         if self.exclusive_file_mode:
