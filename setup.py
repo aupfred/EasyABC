@@ -46,7 +46,7 @@ if sys.platform == "darwin":
         #                 'optimize'       : 1,  #2
                          'compressed'     : True,
         #                 'excludes': ['Tkinter','tcl','tk','_ssl', 'email'],
-                         'excludes': ['Tkinter','tcl','tk','_ssl', 'pygame', 'pygame.pypm'],
+                         'excludes': ['Tkinter','tcl','tk','_ssl'], #'pygame', 'pygame.pypm'],
         #                 'includes': ['mechanize', 'urllib', 'socket', 'pygame.pypm' ],
                          'includes': ['urllib', 'socket' ],
                          'packages': ['wx'],

@@ -1,0 +1,168 @@
+name: Build macOS DMGs
+
+on:
+  workflow_dispatch:
+    inputs:
+      helpers_source:
+        description: 'Source of the ABC helper binaries'
+        type: choice
+        default: abcplus
+        options: [abcplus, repo]
+      abcmidi_ver:
+        description: 'abcMIDI version (abcplus cosmopolitan build)'
+        type: string
+        default: '20250101'
+      abcm2ps_ver:
+        description: 'abcm2ps version (abcplus cosmopolitan build)'
+        type: string
+        default: '9.1.5'
+#  push:
+#    tags: ['v*']
+
+env:
+  PY_MAJOR: '3.10'
+  PY_FULL: '3.10.11'
+  MACOSX_DEPLOYMENT_TARGET: '11.0'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: universal2
+            runs-on: macos-15        # arm64 runner + Rosetta for the x86_64 slice
+            bin: bin_universal
+          - arch: arm64
+            runs-on: macos-15
+            bin: bin/mac_arm64
+          - arch: x86_64
+            runs-on: macos-15-intel   # last GitHub-hosted Intel image (EOL Aug 2027)
+            bin: bin/mac_x86_64
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Cosmopolitan x86_64 slices need Rosetta on the arm64 runner
+      - name: Install Rosetta 2 (universal2 build only)
+        if: matrix.arch == 'universal2'
+        run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
+
+      - name: Install python.org universal2 framework build
+        run: |
+          curl -sL --fail -o /tmp/python.pkg \
+            "https://www.python.org/ftp/python/${PY_FULL}/python-${PY_FULL}-macos11.pkg"
+          sudo installer -pkg /tmp/python.pkg -target /
+          /Library/Frameworks/Python.framework/Versions/${PY_MAJOR}/bin/python3 --version
+
+      - name: Create venv and install Python dependencies
+        env:
+          ARCHFLAGS: ${{ matrix.arch == 'universal2' && '-arch arm64 -arch x86_64' || format('-arch {0}', matrix.arch) }}
+          _PYTHON_HOST_PLATFORM: ${{ matrix.arch == 'universal2' && 'macosx-11.0-universal2' || format('macosx-11.0-{0}', matrix.arch) }}
+        run: |
+          export PY=/Library/Frameworks/Python.framework/Versions/${PY_MAJOR}/bin/python3
+          $PY -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip setuptools wheel py2app
+          if [ "${{ matrix.arch }}" = "universal2" ]; then
+            # wxPython has no universal2 wheel: install the other deps,
+            # then stitch a universal2 wxPython from the two native wheels.
+            grep -iv '^[[:space:]]*wx' requirements.txt | xargs -r python -m pip install
+            chmod +x build_stitch_wxpython.sh
+            ./build_stitch_wxpython.sh
+          else
+            # Native wheels exist for arm64 and x86_64
+            python -m pip install -r requirements.txt
+            python -m pip install pygame
+          fi
+
+      - name: Fetch abcplus cosmopolitan helpers, assimilate and fuse
+        if: inputs.helpers_source != 'repo'
+        env:
+          ABCMIDI_VER: ${{ inputs.abcmidi_ver || '20261023-cosmo' }}
+          ABCM2PS_VER: ${{ inputs.abcm2ps_ver || '8.14.18-2-cosmo' }}
+        run: |
+          set -euo pipefail
+          mkdir -p helpers_src
+          cd helpers_src
+          curl -sL --fail -o abcmidi.zip \
+            "https://downloads.sourceforge.net/project/abcplus/abcMIDI/${ABCMIDI_VER}/abcMIDI-${ABCMIDI_VER}.zip"
+          curl -sL --fail -o abcm2ps.zip \
+            "https://downloads.sourceforge.net/project/abcplus/abcm2ps/abcm2ps-${ABCM2PS_VER}.zip"
+          unzip -o abcmidi.zip >/dev/null
+          unzip -o abcm2ps.zip >/dev/null
+          cd ..
+
+          # assimilate <binary> <arch> <dest_dir>: copy the APE binary into dest_dir
+          # and convert it to a native Mach-O slice of the given arch.
+          assimilate() {
+            src=$(find helpers_src -name "$1" -type f | head -1)
+            [ -n "$src" ] || { echo "ERROR: $1 not found in abcplus archives" >&2; exit 1; }
+            mkdir -p "$3"
+            cp "$src" "$3/$1"
+            (cd "$3" && arch -"$2" ./"$1" --assimilate)
+            (cd "$3" && arch -"$2" ./"$1" -V >/dev/null 2>&1 && echo "$1 [$2]: OK") \
+              || echo "WARNING: $1 [$2] does not run after assimilation" >&2
+            (cd "$3" && file "$1")
+          }
+
+          if [ "${{ matrix.arch }}" = "x86_64" ]; then
+            # Intel runner: assimilate natively into bin/mac_x86_64
+            for b in abcm2ps abc2abc abc2midi midi2abc; do assimilate "$b" x86_64 bin/mac_x86_64; done
+            # nwc2xml: keep the repo binary (x86_64 only, no cosmo build)
+            [ -f bin/mac_x86_64/nwc2xml ] || echo "nwc2xml not in repo: NWC import unavailable"
+          else
+            # arm64 runner: arm64 slice natively, x86_64 slice via Rosetta
+            for b in abcm2ps abc2abc abc2midi midi2abc; do assimilate "$b" arm64   bin/mac_arm64;   done
+            for b in abcm2ps abc2abc abc2midi midi2abc; do assimilate "$b" x86_64 bin/mac_x86_64; done
+            if [ "${{ matrix.arch }}" = "universal2" ]; then
+              mkdir -p bin_universal
+              for b in abcm2ps abc2abc abc2midi midi2abc; do
+                lipo -create "bin/mac_arm64/$b" "bin/mac_x86_64/$b" -output "bin_universal/$b"
+              done
+              # nwc2xml: x86_64 only, copied as-is (mono-slice in the universal DMG)
+              [ -f bin/mac_x86_64/nwc2xml ] && cp bin/mac_x86_64/nwc2xml bin_universal/ \
+                && echo "nwc2xml: included (x86_64 slice only)"
+              echo "Quality check:"
+              file bin_universal/*
+              lipo -info bin_universal/*
+            fi
+          fi
+
+      - name: Build app bundle
+        env:
+          ARCHFLAGS: ${{ matrix.arch == 'universal2' && '-arch arm64 -arch x86_64' || format('-arch {0}', matrix.arch) }}
+          _PYTHON_HOST_PLATFORM: ${{ matrix.arch == 'universal2' && 'macosx-11.0-universal2' || format('macosx-11.0-{0}', matrix.arch) }}
+          HELPER_DIR: ${{ matrix.bin }}
+        run: |
+          source venv/bin/activate
+          chmod +x build_mac_app.sh build_make_dmg.sh
+          ./build_mac_app.sh "${{ matrix.arch }}"
+
+      - name: Create DMG
+        run: |
+          brew install create-dmg
+          VERSION=$(grep "^program_version[[:space:]]*=" easyabc_version.py | sed -E "s/.*'([^']+)'.*/\1/")
+          ./build_make_dmg.sh "dist/EasyABC_${VERSION}_${{ matrix.arch }}.dmg"
+          hdiutil imageinfo "dist/EasyABC_${VERSION}_${{ matrix.arch }}.dmg" | head -20
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: EasyABC-${{ matrix.arch }}-DMG
+          path: dist/*.dmg
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          path: dist
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.dmg
