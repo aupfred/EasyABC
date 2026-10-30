@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-program_version = '1.4.0.0b'
-program_name = 'EasyABC ' + program_version
+from easyabc_version import program_version, program_name
 
 # Copyright (C) 2011-2014 Nils Liberg (mail: kotorinl at yahoo.co.uk)
 # Copyright (C) 2015-2024 Seymour Shlien (mail: fy733@ncf.ca), Jan Wybren de Jong (jw_de_jong at yahoo dot com)
+# Copyright (C) 2025-2026 Seymour Shlien (mail: fy733@ncf.ca), Jan Wybren de Jong (jw_de_jong at yahoo dot com), Frédéric Aupépin (frederic.aupepin at gmail)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -154,6 +154,8 @@ except ImportError:
 finally:
     sys.stdout = old_stdout
 
+from easyabc_dialogs import WelcomeFrame, AboutFrame, EasyAbcDocFrame
+
 def str2fraction(s):
     parts = [int(x.strip()) for x in s.split('/')]
     return Fraction(parts[0], parts[1])
@@ -198,6 +200,7 @@ class SvgTune(object):
 
     def render_page(self, page_index, renderer):
         if 0 <= page_index < self.page_count:
+            renderer.tune_with_multivoice = self.abc_tune.get_voice_count() > 1
             page = self.pages.get(page_index, None)
             if page is None:
                 page = renderer.svg_to_page(open(self.svg_files[page_index], 'rb').read())
@@ -1533,7 +1536,7 @@ def abc_to_midi(abc_code, settings, midi_file_name, add_follow_score_markers):
         if not midi_exists:
             execmessages += '\n' + _('No file created so cannot continue')
             return None
-        execmessages += '\n' + _('Midi file exit so try to continue')
+        execmessages += '\n' + _('Abc2midi reported an error. As Midi file exist, continue...')
         
 
     return midi_file_name
@@ -2526,6 +2529,9 @@ class MyChordPlayPage (wx.Panel):
         self.gchordcombo = wx.ComboBox(self, wx.ID_ANY, 'default', (-1, -1), (128, -1), [], wx.CB_DROPDOWN)
         gchordchoices = ['default', 'f', 'fzfz', 'gi', 'gihi', 'f4c2', 'ghihgh', 'g2hg2h']
         self.SetGchordChoices(gchordchoices)
+        self.gchordcombo.SetValue(
+            self.settings.get('gchord', 'default')
+        )
 
         midi_box.Add(wx.StaticText(self, wx.ID_ANY, _('Instrument for playback') + ': '), pos=(0,0), flag=wx.ALL | wx.ALIGN_CENTER_VERTICAL, border=border)
         midi_box.Add(self.sliderVol, pos=(0,2), flag=wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_VERTICAL, border=border)
@@ -3568,7 +3574,6 @@ class ColorSettingsFrame(wx.Panel):
         config_dark = self._get_config_is_dark()
         
         # Temporary update the darkmode to get the corresponding colors
-        #global is_dark_mode
         backup_mode = easyabc_colors.is_dark_mode
         easyabc_colors.is_dark_mode = config_dark
         
@@ -4372,7 +4377,8 @@ class MainFrame(wx.Frame):
         self.is_closed = False
         self.app_dir = app_dir
         self.cache_dir = os.path.join(self.app_dir, 'cache')
-        self.settings_file = os.path.join(self.app_dir, 'settings1.3.dat')
+        self.previous_settings_file = os.path.join(self.app_dir, 'settings1.3.dat')
+        self.settings_file = os.path.join(self.app_dir, 'settings1.4.dat')
         self.exclusive_file_mode = options.get('exclusive', False)
         self._current_file = None
         self.untitled_number = 1
@@ -4616,34 +4622,26 @@ class MainFrame(wx.Frame):
         execmessages = _('You are running {0} on {1}').format(program_name, wx.Platform)
         execmessages += '\n' + _('You can get the latest version on') + ' https://sourceforge.net/projects/easyabc/'
 
-        self.theme_check_timer = wx.Timer(self)
-        self.Bind(wx.EVT_TIMER, self.CheckThemePeriodically, self.theme_check_timer)
-        self.theme_check_timer.Start(500)
 
-    def CheckThemePeriodically(self, event):
-        """
-        Verify if need to align appearance mode to the one of the OS
-        Note:Triggered by a timer as the event doesn't seem to be distributed.
-        """
-        #global  is_dark_mode
-        try:
-            current_os_mode = wx.SystemSettings.GetAppearance().IsDark()
-        except AttributeError:
-            return
+    def ShowWelcomeFrame(self, event=None):
+        dlg = WelcomeFrame(self)
 
-        if current_os_mode == easyabc_colors.is_dark_mode:
-            return
+        if dlg.ShowModal() == wx.ID_OK:
+            self.settings['show_welcome_page'] = dlg.show_on_startup.GetValue()
 
-        easyabc_colors.is_dark_mode = current_os_mode
-        self.is_dark_mode = current_os_mode
-        
-        self._ApplyAppearance()
+            dlg.Destroy()
 
-    def _ApplyAppearance(self):
+    def ShowEasyAbcDocFrame(self, event=None):
+        dlg = EasyAbcDocFrame(self)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            dlg.Destroy()
+
+    def ApplyAppearance(self):
         """
         Apply appearance mode to the one of the OS
         """
-        #global  is_dark_mode, dialog_background_colour
+        self.is_dark_mode = easyabc_colors.is_dark_mode
         colors = easyabc_colors.get_effective_style_color(self.settings)
 
         app_bg = wx.Colour(colors['app_background'])
@@ -4725,7 +4723,6 @@ class MainFrame(wx.Frame):
         if not hasattr(self, 'music_pane') or not hasattr(self, 'renderer'):
             return
 
-        #global  is_dark_mode
         colors = easyabc_colors.get_effective_style_color(self.settings)
         lock_music_light = self.settings.get('lock_music_light_mode', easyabc_colors.default_lock_music_light_mode)
 
@@ -4961,11 +4958,13 @@ class MainFrame(wx.Frame):
         num_header_lines += 0  # due to some oddity in newer versions of abcm2ps
         return (num_header_lines, first_note_line_index)
 
-    def OnNoteSelectionChangedDesc(self, selected_note_indices, close_note_index=None):
+    def OnNoteSelectionChangedDesc(self, selected_note_indices, close_note_index=None, active_note_index=None):
         self.Raise()
 
         self.selected_note_indices = selected_note_indices
         self.selected_note_descs = [self.music_pane.current_page.notes[i] for i in selected_note_indices]
+        allow_multiline_selection = self.current_svg_tune.abc_tune.get_voice_count() <=1
+
 
         self.editor.SetFocus()
         tune = self.GetSelectedTune()
@@ -5003,29 +5002,37 @@ class MainFrame(wx.Frame):
                 row2 += tune_start_line - num_header_lines - 1
                 p1 = self.editor.PositionFromLine(row1) + col1
                 p2 = self.editor.PositionFromLine(row2) + col2
+                
+                if allow_multiline_selection or row1 == row2:
 
-                # p2 is the start of the last note, now find the end of it
-                ##text = self.editor.GetTextRange(p2, p2+10)
-                text = ''.join([self.editor.GetTextRange(i, i+1) for i in range(p2, p2+10)]) # this way of retrieving the next 10 chars seem more reliable in case one starts on some utf-8 char boundary or something
+                    # p2 is the start of the last note, now find the end of it
+                    ##text = self.editor.GetTextRange(p2, p2+10)
+                    text = ''.join([self.editor.GetTextRange(i, i+1) for i in range(p2, p2+10)]) # this way of retrieving the next 10 chars seem more reliable in case one starts on some utf-8 char boundary or something
 
-                notes = get_notes_from_abc(text)
-                if notes:
-                    p2 += notes[0][1]  # end-offset of first note found
+                    notes = get_notes_from_abc(text)
+                    if notes:
+                        p2 += notes[0][1]  # end-offset of first note found
+                    else:
+                        p2 += 1
+
+                    # if the selection starts at a [ character and ends before the ] character, then extend it to the latter
+                    first_char = self.editor.GetTextRange(p1, p1+1)
+                    if first_char == '[' and ']' in text and text.index(']') >= p2-p1:
+                        p2 = p1 + text.index(']') + 1
+
+                    # clip the positions to the start and end of the tune (for safety)
+                    p1, p2 = [min(max(p, position), end_position) for p in (p1, p2)]
+
+                    # scroll whole selection into view (if possible)
+                    self.editor.GotoPos(p1)
+                    self.editor.GotoPos(p2)
+                    self.editor.SetSelection(p1, p2)
                 else:
-                    p2 += 1
-
-                # if the selection starts at a [ character and ends before the ] character, then extend it to the latter
-                first_char = self.editor.GetTextRange(p1, p1+1)
-                if first_char == '[' and ']' in text and text.index(']') >= p2-p1:
-                    p2 = p1 + text.index(']') + 1
-
-                # clip the positions to the start and end of the tune (for safety)
-                p1, p2 = [min(max(p, position), end_position) for p in (p1, p2)]
-
-                # scroll whole selection into view (if possible)
-                self.editor.GotoPos(p1)
-                self.editor.GotoPos(p2)
-                self.editor.SetSelection(p1, p2)
+                    active_desc = self.music_pane.current_page.notes[active_note_index]
+                    row, col = active_desc[2], active_desc[3]
+                    row += tune_start_line - num_header_lines - 1
+                    p = self.editor.PositionFromLine(row) + col
+                    self.editor.GotoPos(p)
             else:
                 self.editor.SetSelectionEnd(self.editor.GetSelectionStart())
 
@@ -6723,6 +6730,7 @@ class MainFrame(wx.Frame):
             f.close()
             self.add_recent_file(self.current_file)
             self.editor.SetSavePoint()
+            self.SetTitle("%s - %s" % (program_name, self.document_name))
     
     def save_as(self, directory=None):
         wildcard = _('ABC file') + " (*.abc)|*.abc"
@@ -6743,7 +6751,6 @@ class MainFrame(wx.Frame):
                         return wx.ID_CANCEL
                 self.current_file = dlg.GetPath()
                 self.document_name = os.path.basename(self.current_file)
-                self.SetTitle('%s - %s' % (program_name, self.document_name))
                 self.save()
         finally:
             dlg.Destroy() # 1.3.6.3 [JWDJ] 2015-04-21 always clean up dialog window
@@ -7005,6 +7012,7 @@ class MainFrame(wx.Frame):
                 (_("Output midi file"), '', self.OnShowMidiFile),
                 (_("Show settings status"), '', self.OnShowSettings)]),
             (_("&Help")     , [
+                (_("EasyABC Documentation"), _("Open EasyABC offline documentation"), self.ShowEasyAbcDocFrame),
                 (_("&Show fields and commands reference"), '', self.OnViewFieldReference),
                 (),
                 (_("&EasyABC Help"), _("Link to EasyABC Website"), self.OnEasyABCHelp),
@@ -7016,6 +7024,7 @@ class MainFrame(wx.Frame):
                 (),
                 (_("&Check for update..."), _("Link to EasyABC download page"), self.OnCheckLastestVersion),
                 (),
+                (_("Welcome to EasyABC"), _("Show the welcome page of EasyABC"), self.ShowWelcomeFrame),
                 (wx.ID_ABOUT, _("About EasyABC") + "...", '', self.OnAbout)
             ]),
         ], parent=self)
@@ -7329,11 +7338,13 @@ class MainFrame(wx.Frame):
     # 1.3.6.1 [SS] 2014-12-28 2015-01-22
     def OnColdRestart(self, evt):
         result = wx.MessageBox(_("This will close EasyAbc and put it in a state so that it starts with default settings."
-        "i.e. the file settings1.3 will be deleted."),
+        "i.e. the file settings1.4 will be deleted."),
                                _("Proceed?"), wx.ICON_QUESTION | wx.OK | wx.CANCEL)
         if result == wx.OK:
-            f = os.path.join(self.app_dir, 'settings1.3.dat')
-            os.remove(f)
+            #f = os.path.join(self.app_dir, 'settings1.4.dat')
+            # FAU: write an empty settings to avoid to enforce migration from 1.3
+            with open(self.settings_file, "wb") as f:
+                pickle.dump({}, f)
             self.music_update_thread.abort()
             self.is_closed = True
             self.manager.UnInit()
@@ -9271,7 +9282,14 @@ class MainFrame(wx.Frame):
 
     def load_settings(self):
         try:
-            settings = pickle.load(open(self.settings_file, 'rb'))
+            with open(self.settings_file, 'rb') as f:
+                settings = pickle.load(f)
+        except FileNotFoundError:
+            try:
+                with open(self.previous_settings_file, 'rb') as f:
+                    settings = pickle.load(f)
+            except Exception:
+                settings = {}
         except Exception:
             settings = {} # ignore non-existant settings file (it will be created when the program exits)
         self.settings.update(settings)
@@ -9488,7 +9506,8 @@ class MainFrame(wx.Frame):
                         ('abcm2ps_defaults', True), ('abcm2ps_pagewidth', '21.59'),
                         ('abcm2ps_pageheight', '27.94'), ('midiplayer_parameters', ''),
                         ('bpmtempo', 120), ('chordvol', default_midi_volume), ('bassvol', default_midi_volume),
-                        ('melodyvol', default_midi_volume), ('midi_intro', 0), ('version', program_version)
+                        ('melodyvol', default_midi_volume), ('midi_intro', 0), ('version', program_version),
+                        ('gchord', 'default')
                        ]
 
         # 1.3.6 [SS] 2014-12-16
@@ -9499,8 +9518,6 @@ class MainFrame(wx.Frame):
                 pass
             else:
                 self.settings[term] = value
-
-        self.settings['gchord'] = 'default' # 1.3.6 [SS] 2014-11-26
 
     def update_recent_files_menu(self):
         if self.exclusive_file_mode:
@@ -9559,103 +9576,6 @@ class MyFileDropTarget(wx.FileDropTarget):
             self.frame.UpdateTuneList()
             self.frame.tune_list.Select(self.frame.tune_list.GetItemCount()-1)
             self.frame.OnTuneSelected(None)
-
-class AboutFrame(wx.Dialog):
-    htmlpage = '''
-<html>
-<body bgcolor="#FAFAF0">
-<center><img src="img/abclogo.png"/>
-</center>
-<p><b>{0}</b><br/>
-an open source ABC editor for Windows, OSX and Linux. It is published under the <a href="https://www.gnu.org/licenses/gpl-2.0.html">GNU Public License</a>. </p>
-<p><center>initial repository was at <a href="https://www.nilsliberg.se/ksp/easyabc/">https://www.nilsliberg.se/ksp/easyabc/</a></center></p>
-<p><center>Now documentation available here<a href="https://easyabc.sourceforge.net">https://easyabc.sourceforge.net</a></center></p>
-<p><u>Features</u>:</p>
-<ul style="line-height: 150%; margin-top: 3px;">
-  <li> Good ABC standard coverage thanks to internal use of abcm2ps and abc2midi
-  <li> Syntax highlighting
-  <li> Zoom support
-  <li> Import MusicXML, MIDI and Noteworthy Composer files (the midi to abc translator is custom made in order to produce legible abc code with more sensible beams than the typical midi2abc output).
-  <li> Export to MIDI, SVG, PDF (single tune or whole tune book).
-  <li> Select notes by clicking on them and add music symbols by using drop-down menus in the toolbar.
-  <li> Play the active tune as midi
-  <li> Record songs from midi directly in the program (no OSX support at the moment).<br/>
-  Just press Rec, play on your midi keyboard and then press Stop.
-  <li> The musical score is automatically updated as you type in ABC code.
-  <li> Support for unicode (utf-8) and other encodings.
-  <li> Transpose and halve/double note length functionality (using abc2abc)
-  <li> An abcm2ps format file can easily be specified in the settings.
-  <li> ABC fields in the file header are applied to every single tune in a tune book.
-  <li> Automatic alignment of bars on different lines
-  <li> Available in <img src="img/new.gif"/>German, Dutch, Italian, French, Danish, Swedish, German and English</li>
-  <li> Functions to generate incipits, sort tunes and renumber X: fields.</li>
-  <li> Musical search function - search for note sequences irrespectively of key, etc. <img src="img/new.gif"/></li>
-</ul>
-
-<p><b>EasyABC</b> is brought to you by <b>Nils Liberg</b>, Copyright &copy; 2010-2012.</p>
-<p><b>EasyABC</b> is maintained by <b>Jan Wybren de Jong</b>, <b>Seymour Shlien</b> and  by <b>Fr&eacute;d&eacute;ric Aup&eacute;pin</b> for Mac adaptation</p>
-<p><b>Credits</b> - software components used by EasyABC:</p>
-<ul class="nicelist">
-<li><a href="http://moinejf.free.fr/">abcm2ps</a> for converting ABC code to note images (developed/maintained by Jean-Fran&ccedil;ois Moine)</li>
-<li><a href="http://abc.sourceforge.net/abcMIDI/">abc2midi</a> for converting ABC code to midi (by James Allwright, maintained by Seymour Shlien)</li>
-<li><a href="https://wim.vree.org/svgParse/xml2abc.html">xml2abc</a> for converting from MusicXML to ABC (by Willem Vree)</li>
-<li><a href="https://sites.google.com/site/juria90/nwc">nwc2xml</a> for converting from Noteworthy Composer format to ABC via XML (by James Lee)</li>
-<li><a href="https://www.wxpython.org/">wxPython</a> cross-platform user-interface framework</li>
-<li><a href="https://www.scintilla.org/">scintilla</a> for the text editor used for ABC code</li>
-<li><a href="https://www.mxm.dk/products/public/pythonmidi">python midi package</a> for the initial parsing of midi files to be imported</li>
-<li><a href="https://www.pygame.org/download.shtml">pygame</a> (which wraps <a href="https://sourceforge.net/apps/trac/portmedia/wiki/portmidi">portmidi</a>) for real-time midi input</li>
-<li><a href="https://www.fluidsynth.org/">FluidSynth</a> for playing midi (and made fit for Python with a <a href="https://wim.vree.org/svgParse/testplayer.html">player</a> by <a href="https://wim.vree.org/svgParse/">Willem Vree</a>)</li>
-<li><a href="https://github.com/jheinen/mplay">Python MIDI Player</a> for playing midi on Mac</li>
-<li>Thanks to Guido Gonzato for providing the fields and command reference extracted from his <a href="https://abcplus.sourceforge.net/#ABCGuide">Making music with ABC guide</a>.</li>
-<li><br>Many thanks to the translators: Valerio&nbsp;Pelliccioni, Guido&nbsp;Gonzato&nbsp;(italian), Bendix&nbsp;R&oslash;dgaard&nbsp;(danish), Fr&eacute;d&eacute;ric&nbsp;Aup&eacute;pin&nbsp;(french), Bernard&nbsp;Weichel&nbsp;(german), Jan&nbsp;Wybren&nbsp;de&nbsp;Jong&nbsp;(dutch) and Wu&nbsp;Xiaotian&nbsp;(chinese).</li>
-<li>Universal binaries of <a href="https://abcplus.sourceforge.net/#abcm2ps">abcm2ps</a> and <a href="https://abcplus.sourceforge.net/#abcmidi">abc2midi</a> for OSX are available thanks to Chuck&nbsp;Boody and Guido Gonzato</li>
-</ul>
-
-<p><b>Links</b></p>
-<ul class="nicelist">
-<li><a href="https://abcnotation.com/">abcnotation.com</a></li>
-<li><a href="http://abcplus.sourceforge.net/">abcplus.sourceforge.net</a></li>
-<li><a href="http://moinejf.free.fr/">Jef Moine's abcm2ps page</a></li>
-<li><a href="https://abcmidi.sourceforge.io/">Seymour Shlien's abcMIDI page</a></li>
-<li><a href="http://www.folkwiki.se/">folkwiki.se - Swedish folk music</a> (initial involvement of Nils here is the reason why he implemented the program)</li>
-</ul>
-</body>
-</html>
-'''.format(program_name)
-
-    def __init__(self, parent):
-        wx.Dialog.__init__(self, parent, wx.ID_ANY, _('About EasyABC'), size=(900, 600) )
-        about_html = wx.html.HtmlWindow(self, -1)
-        about_html.SetPage(self.htmlpage)
-        button = wx.Button(self, wx.ID_OK, _('&Ok'))
-        button.SetDefault()
-
-        # Definition of the padding of the window
-        lc = wx.LayoutConstraints()
-        lc.top.SameAs(self, wx.Top, 5)
-        lc.left.SameAs(self, wx.Left, 5)
-        lc.bottom.SameAs(button, wx.Top, 5)
-        lc.right.SameAs(self, wx.Right, 5)
-        about_html.SetConstraints(lc)
-
-        # Definition of the position of the OK button
-        lc = wx.LayoutConstraints()
-        lc.bottom.SameAs(self, wx.Bottom, 5)
-        lc.centreX.SameAs(self, wx.CentreX)
-        lc.width.AsIs()
-        lc.height.AsIs()
-        button.SetConstraints(lc)
-
-        about_html.Bind(wx.html.EVT_HTML_LINK_CLICKED, self.OnLinkClicked)
-
-        self.SetAutoLayout(True)
-        self.Layout()
-        self.CentreOnParent(wx.BOTH)
-
-    def OnLinkClicked(self, evt):
-        webbrowser.open(evt.GetLinkInfo().GetHref())
-        return wx.html.HTML_BLOCK
-
 
 class MyTunesListFrame(wx.Frame):
     ''' Creates the TextCtrl for displaying the tunes list'''
@@ -9789,6 +9709,31 @@ class MyApp(wx.App):
         self._frames = []
         self.settings = {}
         wx.App.__init__(self, *args, **kargs)
+        self.theme_check_timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self.CheckThemePeriodically, self.theme_check_timer)
+        self.theme_check_timer.Start(500)
+
+    def CheckThemePeriodically(self, event):
+        """
+        Verify if need to align appearance mode to the one of the OS
+        Note:Triggered by a timer as the event doesn't seem to be distributed.
+        """
+        if not self._frames:
+            return
+        
+        try:
+            current_os_mode = wx.SystemSettings.GetAppearance().IsDark()
+        except AttributeError:
+            return
+
+        if current_os_mode == easyabc_colors.is_dark_mode:
+            return
+
+        easyabc_colors.is_dark_mode = current_os_mode
+        self.is_dark_mode = current_os_mode
+        
+        for frame in self.GetAllFrames():
+            frame.ApplyAppearance()
 
     def CheckCanDrawSharpFlat(self):
         dc = wx.MemoryDC(wx_bitmap(200, 200, 32))
@@ -9838,7 +9783,6 @@ class MyApp(wx.App):
             self.frame.load_or_import(recent_file)
 
     def OnInit(self):
-        #global  is_dark_mode, dialog_background_colour
         try:
             # Detect dark mode early (wxPython 4.1+)
             try:
@@ -9902,6 +9846,9 @@ class MyApp(wx.App):
             #FAU: on Mac the sys.frozen is set by py2app and pyinstaller and is unset otherwise getattr( sys, 'frozen', False)
             if path and wx.Platform != "__WXMAC__":
                 self.frame.load_or_import(path)
+
+            if self.frame.settings.get('show_welcome_page', True):
+                wx.CallAfter(self.frame.ShowWelcomeFrame)
         except:
             sys.stdout.write(traceback.format_exc())
         return True

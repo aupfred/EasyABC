@@ -293,7 +293,7 @@ class SvgPage(object):
         selected_offsets = set((abc_row, abc_col) for (x, y, abc_row, abc_col, desc) in self.notes if in_selection((int(x), int(y))))
         list_of_sets = [self.indices_per_row_col[row][col] for row, col in selected_offsets]
         selected_indices = set().union(*list_of_sets)
-        if selected_indices:
+        if selected_indices and not self.renderer.tune_with_multivoice:
             selected_indices = set(range(min(selected_indices), max(selected_indices) + 1))
         self.selected_indices = selected_indices
         return selected_indices
@@ -350,6 +350,7 @@ class SvgRenderer(object):
             self.transform_point = self.transform_point_osx
         else:
             self.transform_point = self.transform_point_normal
+        self.tune_with_multivoice = False
 
     def get_background_brush(self):
         """Return appropriate background brush based on dark mode."""
