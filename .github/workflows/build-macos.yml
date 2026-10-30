@@ -34,7 +34,6 @@ jobs:
         run: |
           curl -sL --fail -o /tmp/python.pkg \
             "https://www.python.org/ftp/python/${PY_FULL}/python-${PY_FULL}-macos11.pkg"
-          echo "Python ${PY_FULL} downloaded"
           sudo installer -pkg /tmp/python.pkg -target /
           /Library/Frameworks/Python.framework/Versions/${PY_MAJOR}/bin/python3 --version
 
@@ -50,8 +49,6 @@ jobs:
           # wxPython has no universal2 wheel: install the other deps,
           # then stitch a universal2 wxPython from the two native wheels.
           grep -iv '^[[:space:]]*wx' requirements.txt | xargs -r python -m pip install
-          echo "Requirements other than wxpython installed"
-          echo "adding wxpython"
           chmod +x build_stitch_wxpython.sh
           ./build_stitch_wxpython.sh
 
@@ -68,17 +65,30 @@ jobs:
             "https://sourceforge.net/projects/abcplus/files/Abctools/abctools-${ABCTOOLS_VER}.zip/download"
           unzip -o abctools.zip -d helpers_src >/dev/null
 
-          # assimilate <binary> <arch> <dest_dir>: copy the APE binary into dest_dir
-          # and convert it to a native Mach-O slice of the given arch.
+          # assimilate <binary> <arch> <dest_dir>: copy the cosmo binary into dest_dir
+          # and make sure it ends up as a native Mach-O slice of the given arch.
+          # The --assimilate flag is unreliable on recent cosmocc builds (it can
+          # fall through to the program's own option parser, or return 1 when the
+          # binary is already native), so we verify the actual file format.
           assimilate() {
             src=$(find helpers_src -name "$1" -type f | head -1)
             [ -n "$src" ] || { echo "ERROR: $1 not found in abcplus archives" >&2; exit 1; }
             mkdir -p "$3"
             cp "$src" "$3/$1"
-            (cd "$3" && arch -"$2" ./"$1" --assimilate)
-            (cd "$3" && arch -"$2" ./"$1" -V >/dev/null 2>&1 && echo "$1 [$2]: OK") \
+            chmod +x "$3/$1"   # archives abcplus store binaries without the x bit
+            pushd "$3" >/dev/null
+            if file "$1" | grep -q "Mach-O"; then
+              echo "$1 [OLD $2]: already native Mach-O"
+            else
+              echo "$1 [COSMO $2]: APE format, assimilating..."
+              arch -"$2" ./"$1" --assimilate || true
+            fi
+            file "$1"
+            file "$1" | grep -q "Mach-O" \
+              || { echo "ERROR: $1 not assimilated to Mach-O (arch $2)" >&2; popd >/dev/null; exit 1; }
+            arch -"$2" ./"$1" -V >/dev/null 2>&1 && echo "$1 [$2]: OK" \
               || echo "WARNING: $1 [$2] does not run after assimilation" >&2
-            (cd "$3" && file "$1")
+            popd >/dev/null
           }
 
           # arm64 slice natively, x86_64 slice via Rosetta
