@@ -75,10 +75,14 @@ jobs:
             src=$(find helpers_src -name "$1" -type f | head -1)
             [ -n "$src" ] || { echo "ERROR: $1 not found in abcplus archive" >&2; exit 1; }
             mkdir -p "$3"
+            echo "working on $3 / $1"
             cp "$src" "$3/$1"
             chmod +x "$3/$1"
             # Force shell interpretation so the APE header handles --assimilate
-            (cd "$3" && $2 sh -c "./$1 --assimilate") || true
+            echo "executing command assimilate on $1 for arch $2"
+            file "$3/$1"
+            #(cd "$3" && $2 sh -c "./$1 --assimilate") || true
+            $2 sh -c "$3/$1 --assimilate" || true
             file "$3/$1"
             file "$3/$1" | grep -q "Mach-O" \
               || { echo "ERROR: $1 not assimilated to Mach-O (slice $3)" >&2; exit 1; }
