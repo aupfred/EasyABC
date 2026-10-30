@@ -22,11 +22,11 @@ env:
 
 jobs:
   build:
-    runs-on: macos-15   # arm64 runner + Rosetta for the x86_64 slice
+    runs-on: macos-15   # arm64 runner
     steps:
       - uses: actions/checkout@v4
 
-      # Cosmopolitan x86_64 slices need Rosetta on the arm64 runner
+      # Rosetta is needed to run an x86_64 shell (for the x86_64 assimilation)
       - name: Install Rosetta 2
         run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
 
@@ -52,6 +52,12 @@ jobs:
           chmod +x build_stitch_wxpython.sh
           ./build_stitch_wxpython.sh
 
+      # NOTE: the --assimilate flag is handled by the APE shell-script HEADER,
+      # so the binary must be INTERPRETED BY A SHELL (ENOEXEC fallback), not
+      # exec'd directly. On arm64 macOS the ape-m1 loader intercepts a direct
+      # exec and passes the flag to the program (which rejects it). Hence the
+      # explicit `sh -c`. The header assimilates to the arch of the shell that
+      # runs it: native sh -> arm64, sh under Rosetta (arch -x86_64) -> x86_64.
       - name: Fetch abcplus cosmopolitan helpers, assimilate and fuse
         if: inputs.helpers_source != 'repo'
         env:
@@ -65,35 +71,21 @@ jobs:
             "https://sourceforge.net/projects/abcplus/files/Abctools/abctools-${ABCTOOLS_VER}.zip/download"
           unzip -o abctools.zip -d helpers_src >/dev/null
 
-          # assimilate <binary> <arch> <dest_dir>: copy the cosmo binary into dest_dir
-          # and make sure it ends up as a native Mach-O slice of the given arch.
-          # The --assimilate flag is unreliable on recent cosmocc builds (it can
-          # fall through to the program's own option parser, or return 1 when the
-          # binary is already native), so we verify the actual file format.
-          assimilate() {
+          assimilate_slice() { # $1=binary  $2=shell prefix ("" | "arch -x86_64")  $3=dest dir
             src=$(find helpers_src -name "$1" -type f | head -1)
-            [ -n "$src" ] || { echo "ERROR: $1 not found in abcplus archives" >&2; exit 1; }
+            [ -n "$src" ] || { echo "ERROR: $1 not found in abcplus archive" >&2; exit 1; }
             mkdir -p "$3"
             cp "$src" "$3/$1"
-            chmod +x "$3/$1"   # archives abcplus store binaries without the x bit
-            pushd "$3" >/dev/null
-            if file "$1" | grep -q "Mach-O"; then
-              echo "$1 [OLD $2]: already native Mach-O"
-            else
-              echo "$1 [COSMO $2]: APE format, assimilating..."
-              arch -"$2" ./"$1" --assimilate || true
-            fi
-            file "$1"
-            file "$1" | grep -q "Mach-O" \
-              || { echo "ERROR: $1 not assimilated to Mach-O (arch $2)" >&2; popd >/dev/null; exit 1; }
-            arch -"$2" ./"$1" -V >/dev/null 2>&1 && echo "$1 [$2]: OK" \
-              || echo "WARNING: $1 [$2] does not run after assimilation" >&2
-            popd >/dev/null
+            chmod +x "$3/$1"
+            # Force shell interpretation so the APE header handles --assimilate
+            (cd "$3" && $2 sh -c "./$1 --assimilate") || true
+            file "$3/$1"
+            file "$3/$1" | grep -q "Mach-O" \
+              || { echo "ERROR: $1 not assimilated to Mach-O (slice $3)" >&2; exit 1; }
           }
 
-          # arm64 slice natively, x86_64 slice via Rosetta
-          for b in abcm2ps abc2abc abc2midi midi2abc; do assimilate "$b" arm64   bin/mac_arm64;   done
-          for b in abcm2ps abc2abc abc2midi midi2abc; do assimilate "$b" x86_64 bin/mac_x86_64; done
+          for b in abcm2ps abc2abc abc2midi midi2abc; do assimilate_slice "$b" ""              bin/mac_arm64;   done
+          for b in abcm2ps abc2abc abc2midi midi2abc; do assimilate_slice "$b" "arch -x86_64"  bin/mac_x86_64; done
 
           mkdir -p bin_universal
           for b in abcm2ps abc2abc abc2midi midi2abc; do
@@ -106,6 +98,12 @@ jobs:
           echo "Quality check:"
           file bin_universal/*
           lipo -info bin_universal/*
+          # Smoke test: run each helper (arm64 natively on this runner)
+          for b in abcm2ps abc2abc abc2midi midi2abc; do
+            arch -arm64 "bin_universal/$b" -V >/dev/null 2>&1 \
+              && echo "$b [run test]: OK" \
+              || echo "WARNING: $b failed the arm64 run test" >&2
+          done
 
       - name: Build app bundle
         env:
@@ -131,7 +129,7 @@ jobs:
           if-no-files-found: error
 
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name != 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/v')
     needs: build
     runs-on: ubuntu-latest
     permissions:
