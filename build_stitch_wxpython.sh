@@ -20,8 +20,18 @@ trap 'rm -rf "$T"' EXIT
 python -m pip download "wxPython==${WX}" --platform macosx_11_0_arm64    --only-binary=:all: --dest "$T/arm"
 python -m pip download "wxPython==${WX}" --platform macosx_10_10_x86_64 --only-binary=:all: --dest "$T/intel"
 
-unzip -o "$T"/arm/*wxPython*.whl   -d "$T/a" >/dev/null
-unzip -o "$T"/intel/*wxPython*.whl -d "$T/i" >/dev/null
+# Resolve wheel paths explicitly (unzip globs are unreliable via /var symlinks)
+arm_whl=$(find "$T/arm" -iname '*wxpython*.whl' | head -1)
+intel_whl=$(find "$T/intel" -iname '*wxpython*.whl' | head -1)
+if [ -z "$arm_whl" ] || [ -z "$intel_whl" ]; then
+    echo "ERROR: wxPython wheel not found after download" >&2
+    echo "--- $T/arm:";   ls -la "$T/arm"   >&2 || true
+    echo "--- $T/intel:"; ls -la "$T/intel" >&2 || true
+    exit 1
+fi
+
+unzip -o "$arm_whl"   -d "$T/a" >/dev/null
+unzip -o "$intel_whl" -d "$T/i" >/dev/null
 
 SITE=$(python -c "import site; print(site.getsitepackages()[0])")
 

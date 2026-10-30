@@ -34,6 +34,7 @@ jobs:
         run: |
           curl -sL --fail -o /tmp/python.pkg \
             "https://www.python.org/ftp/python/${PY_FULL}/python-${PY_FULL}-macos11.pkg"
+          echo "Python ${PY_FULL} downloaded"
           sudo installer -pkg /tmp/python.pkg -target /
           /Library/Frameworks/Python.framework/Versions/${PY_MAJOR}/bin/python3 --version
 
@@ -49,6 +50,8 @@ jobs:
           # wxPython has no universal2 wheel: install the other deps,
           # then stitch a universal2 wxPython from the two native wheels.
           grep -iv '^[[:space:]]*wx' requirements.txt | xargs -r python -m pip install
+          echo "Requirements other than wxpython installed"
+          echo "adding wxpython"
           chmod +x build_stitch_wxpython.sh
           ./build_stitch_wxpython.sh
 
