@@ -6,12 +6,20 @@ on:
       helpers_source:
         description: 'Source of the ABC helper binaries'
         type: choice
-        default: abcplus
-        options: [abcplus, repo]
+        default: source
+        options: [source, abcplus, repo]
       abctools_ver:
         description: 'abctools version (abcplus cosmopolitan bundle: abcm2ps + abcmidi + abcpp + abc2prt)'
         type: string
         default: '20261023-cosmo'
+      abcm2ps_ver:
+        description: 'abcm2ps fossil version (tag e.g. v8.14.18, or trunk)'
+        type: string
+        default: 'v8.14.18'
+      abcmidi_ver:
+        description: 'abcMIDI version (archive date on ifdo.ca/~seymour/runabc)'
+        type: string
+        default: '2026.10.23'
 #  push:
 #    tags: ['v*']
 
@@ -52,14 +60,96 @@ jobs:
           chmod +x build_stitch_wxpython.sh
           ./build_stitch_wxpython.sh
 
-      # NOTE: the --assimilate flag is handled by the APE shell-script HEADER,
+      - name: Build ABC helpers from source (universal2)
+        if: inputs.helpers_source == 'source'
+        env:
+          ABCM2PS_VER: ${{ inputs.abcm2ps_ver || 'v8.14.18' }}
+          ABCMIDI_VER: ${{ inputs.abcmidi_ver || '2026.10.23' }}
+        run: |
+          set -euo pipefail
+          brew install fossil
+          mkdir -p helpers_build && cd helpers_build
+
+          # abcm2ps: official fossil repository on chiselapp (tag or trunk)
+          fossil clone https://chiselapp.com/user/moinejf/repository/abcm2ps abcm2ps.fossil
+          mkdir abcm2ps && (cd abcm2ps \
+            && fossil open ../abcm2ps.fossil "${ABCM2PS_VER}") \
+            || { echo "ERROR: abcm2ps version ${ABCM2PS_VER} not found"; \
+                 fossil tag list --repo abcm2ps.fossil | head -20; exit 1; }
+
+          # abcMIDI: release archive from ifdo.ca (Seymour Shlien)
+          curl -sL --fail -o abcmidi.zip "https://ifdo.ca/~seymour/runabc/abcMIDI-${ABCMIDI_VER}.zip"
+          unzip -o abcmidi.zip >/dev/null
+          ABCMIDI_DIR=$(find . -maxdepth 1 -type d -name 'abcMIDI*' | head -1)
+          [ -n "$ABCMIDI_DIR" ] || { echo "ERROR: abcMIDI archive not extracted"; exit 1; }
+          cd ..
+
+          # Two-pass build then lipo (robust with any Makefile).
+          # abcMIDI uses out-of-tree autoconf builds (one build dir per arch)
+          # so ./configure does not conflict between the two passes.
+          build_slice() { # $1=arch
+            ARCH="$1"
+            make -C helpers_build/abcm2ps clean >/dev/null 2>&1 || true
+            make -C helpers_build/abcm2ps CC=clang CFLAGS="-arch ${ARCH} -O2"
+
+            ABCMIDI_SRC="helpers_build/${ABCMIDI_DIR}"
+            mkdir -p "helpers_build/abcmidi_${ARCH}"
+            (cd "helpers_build/abcmidi_${ARCH}" \
+              && "${GITHUB_WORKSPACE}/${ABCMIDI_SRC}/configure" CFLAGS="-arch ${ARCH} -O2" \
+              && make abc2midi abc2abc midi2abc)
+
+            mkdir -p "helpers_build/out_${ARCH}"
+            cp helpers_build/abcm2ps/abcm2ps \
+               "helpers_build/abcmidi_${ARCH}/abc2abc" \
+               "helpers_build/abcmidi_${ARCH}/abc2midi" \
+               "helpers_build/abcmidi_${ARCH}/midi2abc" \
+               "helpers_build/out_${ARCH}/"
+            file "helpers_build/out_${ARCH}"/*
+          }
+          build_slice arm64
+          build_slice x86_64
+
+          mkdir -p bin_universal
+          for b in abcm2ps abc2abc abc2midi midi2abc; do
+            lipo -create "helpers_build/out_arm64/$b" "helpers_build/out_x86_64/$b" -output "bin_universal/$b"
+          done
+          # nwc2xml: x86_64 only, copied as-is (mono-slice in the universal DMG)
+          [ -f bin/mac_x86_64/nwc2xml ] && cp bin/mac_x86_64/nwc2xml bin_universal/ \
+            && echo "nwc2xml: included (x86_64 slice only)"
+
+          echo "Quality check:"
+          file bin_universal/*
+          lipo -info bin_universal/*
+          # Smoke test: run each helper (arm64 natively on this runner)
+          for b in abcm2ps abc2abc abc2midi midi2abc; do
+            arch -arm64 "bin_universal/$b" -V >/dev/null 2>&1 \
+              && echo "$b [run test]: OK" \
+              || echo "WARNING: $b failed the arm64 run test" >&2
+          done
+
+      # NOTE: the --assimilate flag of the abcplus cosmopolitan binaries does
+      # NOT work on Apple Silicon (the ape-m1 loader passes the flag to the
+      # program instead of intercepting it; verified 2026-10). Kept for the
+      # x86_64-only slice / future cosmocc fixes. Prefer helpers_source: source.
       # so the binary must be INTERPRETED BY A SHELL (ENOEXEC fallback), not
       # exec'd directly. On arm64 macOS the ape-m1 loader intercepts a direct
       # exec and passes the flag to the program (which rejects it). Hence the
       # explicit `sh -c`. The header assimilates to the arch of the shell that
       # runs it: native sh -> arm64, sh under Rosetta (arch -x86_64) -> x86_64.
+      - name: Fuse universal helpers from repo binaries
+        if: inputs.helpers_source == 'repo'
+        run: |
+          set -euo pipefail
+          mkdir -p bin_universal
+          for b in abcm2ps abc2abc abc2midi midi2abc; do
+            lipo -create "bin/mac_arm64/$b" "bin/mac_x86_64/$b" -output "bin_universal/$b"
+          done
+          [ -f bin/mac_x86_64/nwc2xml ] && cp bin/mac_x86_64/nwc2xml bin_universal/
+          file bin_universal/*
+          lipo -info bin_universal/*
+
       - name: Fetch abcplus cosmopolitan helpers, assimilate and fuse
-        if: inputs.helpers_source != 'repo'
+        if: inputs.helpers_source == 'abcplus'
         env:
           ABCTOOLS_VER: ${{ inputs.abctools_ver || '20261023-cosmo' }}
         run: |
@@ -75,14 +165,10 @@ jobs:
             src=$(find helpers_src -name "$1" -type f | head -1)
             [ -n "$src" ] || { echo "ERROR: $1 not found in abcplus archive" >&2; exit 1; }
             mkdir -p "$3"
-            echo "working on $3 / $1"
             cp "$src" "$3/$1"
             chmod +x "$3/$1"
             # Force shell interpretation so the APE header handles --assimilate
-            echo "executing command assimilate on $1 for arch $2"
-            file "$3/$1"
-            #(cd "$3" && $2 sh -c "./$1 --assimilate") || true
-            $2 sh -c "$3/$1 --assimilate" || true
+            (cd "$3" && $2 sh -c "./$1 --assimilate") || true
             file "$3/$1"
             file "$3/$1" | grep -q "Mach-O" \
               || { echo "ERROR: $1 not assimilated to Mach-O (slice $3)" >&2; exit 1; }
