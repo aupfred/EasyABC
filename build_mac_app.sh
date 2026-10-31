@@ -45,6 +45,8 @@ for h in "${REQUIRED_HELPERS[@]}"; do
     cp "${BIN_DIR}/$h" "$APP/Contents/Helpers/"
 done
 
+lipo -info "${BIN_DIR}/$h" | grep -q "arm64" && lipo -info "${BIN_DIR}/$h" | grep -q "x86_64"
+
 # Optional: NWC import only, not available on Apple Silicon
 if [ -f "${BIN_DIR}/nwc2xml" ]; then
     cp "${BIN_DIR}/nwc2xml" "$APP/Contents/Helpers/"
