@@ -17,8 +17,8 @@ echo "Building universal2 wxPython ${WX}"
 T=$(mktemp -d)
 trap 'rm -rf "$T"' EXIT
 
-python -m pip download "wxPython==${WX}" --platform macosx_11_0_arm64    --only-binary=:all: --dest "$T/arm"
-python -m pip download "wxPython==${WX}" --platform macosx_10_10_x86_64 --only-binary=:all: --dest "$T/intel"
+python -m pip download "wxPython==${WX}" --platform macosx_11_0_arm64    --only-binary=:all: --no-deps --dest "$T/arm"
+python -m pip download "wxPython==${WX}" --platform macosx_10_10_x86_64 --only-binary=:all: --no-deps --dest "$T/intel"
 
 # Resolve wheel paths explicitly (unzip globs are unreliable via /var symlinks)
 arm_whl=$(find "$T/arm" -iname '*wxpython*.whl' | head -1)

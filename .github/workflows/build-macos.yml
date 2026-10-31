@@ -23,9 +23,13 @@ on:
 #  push:
 #    tags: ['v*']
 
+#env:
+#  PY_MAJOR: '3.10'
+#  PY_FULL: '3.10.11'
+#  MACOSX_DEPLOYMENT_TARGET: '11.0'
 env:
-  PY_MAJOR: '3.10'
-  PY_FULL: '3.10.11'
+  PY_MAJOR: '3.12'
+  PY_FULL: '3.12.7'
   MACOSX_DEPLOYMENT_TARGET: '11.0'
 
 jobs:
