@@ -11,7 +11,7 @@ if [ -z "${VIRTUAL_ENV:-}" ]; then
     exit 1
 fi
 
-WX=$(python -c "import importlib.metadata as m; print(m.version('wxPython'))" 2>/dev/null || echo 4.2.4)
+WX=$(python -c "import importlib.metadata as m; print(m.version('wxPython'))" 2>/dev/null || echo 4.2.2)
 echo "Building universal2 wxPython ${WX}"
 
 T=$(mktemp -d)
