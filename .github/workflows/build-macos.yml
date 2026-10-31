@@ -61,9 +61,11 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel py2app
           # wxPython has no universal2 wheel: install the other deps,
           # then stitch a universal2 wxPython from the two native wheels.
-          grep -iv '^[[:space:]]*wx' requirements.txt | xargs -r python -m pip install
-          chmod +x build_stitch_wxpython.sh
-          ./build_stitch_wxpython.sh
+          #grep -iv '^[[:space:]]*wx' requirements.txt | xargs -r python -m pip install
+          #chmod +x build_stitch_wxpython.sh
+          #./build_stitch_wxpython.sh
+          # wxpython for python 3.12 seems already a universal binary so installing from requirements.txt
+          python -m pip install -r requirements.txt
 
       # ------------------------------------------------------------------
       # Helpers, default path: universal2 binaries committed in the repo
