@@ -70,16 +70,24 @@ jobs:
         if: inputs.helpers_source == 'repo'
         run: |
           set -euo pipefail
-          cp -v bin/mac_universal2/* bin/
-          echo "Quality check:"
-          file bin/*
-          lipo -info bin/*
+          SRC="bin/mac_universal2"
+          echo "Quality check (in ${SRC}):"
+          for b in abcm2ps abc2abc abc2midi midi2abc; do
+            [ -f "$SRC/$b" ] || { echo "ERROR: $SRC/$b missing" >&2; exit 1; }
+            file "$SRC/$b"
+            lipo -info "$SRC/$b"
+            # must be a fat binary with both slices
+            lipo -info "$SRC/$b" | tr ' ' '\n' | grep -qx arm64 \
+              && lipo -info "$SRC/$b" | tr ' ' '\n' | grep -qx x86_64 \
+              || { echo "ERROR: $SRC/$b is not universal2" >&2; exit 1; }
+          done
           # Smoke test: run each helper (arm64 natively on this runner)
           for b in abcm2ps abc2abc abc2midi midi2abc; do
-            arch -arm64 "bin/$b" -V >/dev/null 2>&1 \
+            arch -arm64 "$SRC/$b" -V >/dev/null 2>&1 \
               && echo "$b [run test]: OK" \
               || echo "WARNING: $b failed the arm64 run test" >&2
           done
+          cp -v "$SRC"/abcm2ps "$SRC"/abc2abc "$SRC"/abc2midi "$SRC"/midi2abc bin/
 
       # ------------------------------------------------------------------
       # Helpers, maintenance path: rebuild from official sources in CI.
