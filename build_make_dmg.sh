@@ -14,8 +14,8 @@ OUT="$1"
 VERSION=$(grep "^program_version[[:space:]]*=" easyabc_version.py | sed -E "s/.*'([^']+)'.*/\1/")
 VOL_NAME="EasyABC ${VERSION}"
 
-if [ ! -f dist/EasyABC.app ]; then
-    echo "ERROR: dist/EasyABC.app missing. Run build_app.sh first." >&2
+if [ ! -d dist/EasyABC.app ]; then
+    echo "ERROR: dist/EasyABC.app missing. Run build_mac_app.sh first." >&2
     exit 1
 fi
 
