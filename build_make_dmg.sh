@@ -19,9 +19,7 @@ if [ ! -d dist/EasyABC.app ]; then
     exit 1
 fi
 
-# Background image: keep ONE canonical filename in img/ (fixes the old
-# Fond-DMG.png / Background-DMG.png mismatch in the interactive script).
-BACKGROUND="img/Fond-DMG.png"
+BACKGROUND="img/Background-DMG.png"
 if [ ! -f "$BACKGROUND" ]; then
     echo "ERROR: Background image missing: $BACKGROUND" >&2
     exit 1
@@ -56,6 +54,7 @@ create-dmg \
     --icon "README" 670 250 \
     --icon "Ghostscript.pkg" 420 420 \
     --icon "Install_Ghostscript.webloc" 170 420 \
+    --icon "Fix_EasyABC_damaged.scpt" 670 420 \
     --no-internet-enable \
     "$OUT" "$STAGING"
 
