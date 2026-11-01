@@ -23,6 +23,7 @@ on:
 #  push:
 #    tags: ['v*']
 
+#Python 3.10 need to stitch wxPython and include type_extensions Switching to 3.12
 #env:
 #  PY_MAJOR: '3.10'
 #  PY_FULL: '3.10.11'
@@ -88,8 +89,14 @@ jobs:
               || { echo "ERROR: $SRC/$b is not universal2" >&2; exit 1; }
           done
           # Smoke test: run each helper (arm64 natively on this runner)
-          for b in abcm2ps abc2abc abc2midi midi2abc; do
+          # NOTE: abcm2ps takes -V, the abcMIDI tools take -ver.
+          for b in abcm2ps; do
             arch -arm64 "$SRC/$b" -V >/dev/null 2>&1 \
+              && echo "$b [run test]: OK" \
+              || echo "WARNING: $b failed the arm64 run test" >&2
+          done
+          for b in abc2abc abc2midi midi2abc; do
+            arch -arm64 "$SRC/$b" -ver >/dev/null 2>&1 \
               && echo "$b [run test]: OK" \
               || echo "WARNING: $b failed the arm64 run test" >&2
           done
@@ -167,8 +174,14 @@ jobs:
           file bin/abcm2ps bin/abc2abc bin/abc2midi bin/midi2abc
           lipo -info bin/abcm2ps bin/abc2abc bin/abc2midi bin/midi2abc
           # Smoke test: run each helper (arm64 natively on this runner)
-          for b in abcm2ps abc2abc abc2midi midi2abc; do
-            arch -arm64 "bin/$b" -V >/dev/null 2>&1 \
+          # NOTE: abcm2ps takes -V, the abcMIDI tools take -ver.
+          for b in abcm2ps; do
+            arch -arm64 "$SRC/$b" -V >/dev/null 2>&1 \
+              && echo "$b [run test]: OK" \
+              || echo "WARNING: $b failed the arm64 run test" >&2
+          done
+          for b in abc2abc abc2midi midi2abc; do
+            arch -arm64 "$SRC/$b" -ver >/dev/null 2>&1 \
               && echo "$b [run test]: OK" \
               || echo "WARNING: $b failed the arm64 run test" >&2
           done
