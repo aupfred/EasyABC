@@ -9769,20 +9769,41 @@ class MyApp(wx.App):
         L.sort(key=lambda f: not f.IsActive()) # make sure an active frame comes first in the list
         return L
 
-    def MacOpenFile(self, filename):	# [EPO] 2018-11-20 TODO  dup open file creates two frames (why?)
+    def MacOpenFile(self, filename):
         """Called for files dropped on dock icon, or opened via finders context menu"""
-        if not self.frame.editor.GetModify() and not self.frame.current_file:     # if a new unmodified document
-            self.frame.load(filename)
+        frames = self.GetAllFrames()
+
+        # 1st case no frame open
+        if not frames:
+            frame = self.NewMainFrame()
+            frame.load(filename)
+            frame.Show(True)
+            return
+
+        active_frame = frames[0]
+
+        # 2nd case: GetAllFrames and if active is not modified reuse it
+        if not active_frame.editor.GetModify() and not active_frame.current_file:
+            active_frame.load(filename)
+            active_frame.Raise()
         else:
-            self.frame = self.NewMainFrame()
-            self.frame.load(filename)
+            # 3rd case: open in a new frame.
+            new_frame = self.NewMainFrame()
+            new_frame.load(filename)
+            new_frame.Show(True)
             
     def MacNewFile(self):
-        """Called on startup, loads last recent file"""
-        #Todo need to rework the recent file management to manage closure of last file.
+        """Called on startup, if no file is specified and loads last recent file"""
+        # in case already a new frame created then nothing to do
+        if self.GetAllFrames():
+            return
+
+        # Open last recent file
         recent_file = self.settings.get('recentfiles', '').split('|')[0]
         if recent_file and os.path.exists(recent_file):
-            self.frame.load_or_import(recent_file)
+            frame = self.NewMainFrame()
+            frame.load_or_import(recent_file)
+            frame.Show(True)
 
     def OnInit(self):
         try:
