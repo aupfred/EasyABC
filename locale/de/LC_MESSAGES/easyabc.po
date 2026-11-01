@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: EasyABC 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-25 21:26+0100\n"
-"PO-Revision-Date: 2025-05-27 17:16+0200\n"
+"PO-Revision-Date: 2026-10-30 15:15+0100\n"
 "Last-Translator: Bodo Meißner <bomm@users.sourceforge.net>\n"
 "Language-Team: EasyABC <info@nilsliberg.se>\n"
 "Language: de_DE\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: easy_abc.py\n"
 "X-Poedit-SearchPath-1: tune_actions.py\n"
@@ -29,32 +29,28 @@ msgid "&Ok"
 msgstr "&OK"
 
 #: easyabc_dialogs.py:86
-#, fuzzy
 msgid "Welcome to EasyABC 1.4"
-msgstr "Willkommen bei EasyABC"
+msgstr "Willkommen bei EasyABC 1.4"
 
 #: easyabc_dialogs.py:115
 msgid "Show this welcome page at startup"
-msgstr ""
+msgstr "Zeige diese Wilkommensseite beim Start"
 
 #: easyabc_dialogs.py:121
-#, fuzzy
 msgid "Open Documentation"
-msgstr "Seitenausrichtung"
+msgstr "Öffne Dokumentation"
 
 #: easyabc_dialogs.py:127 easyabc_dialogs.py:230
 msgid "OK"
 msgstr ""
 
 #: easyabc_dialogs.py:195
-#, fuzzy
 msgid "EasyABC 1.4 help page"
-msgstr "&EasyABC-Hilfe"
+msgstr "EasyABC 1.4 Hilfeseite"
 
 #: easyabc_dialogs.py:224
-#, fuzzy
 msgid "Open Documentation on Sourceforge"
-msgstr "Seitenausrichtung"
+msgstr "Öffne Dokumentation auf Sourceforge"
 
 #: tune_actions.py:286
 msgid "Less options"
@@ -1780,13 +1776,12 @@ msgid "File paths to required executables"
 msgstr "Dateipfade zu den notwendigen Programmen"
 
 #: easy_abc.py:2259 easy_abc.py:2387
-#, fuzzy
 msgid "[default]"
 msgstr "Vorgabe"
 
 #: easy_abc.py:2275
 msgid "If empty, reset to default"
-msgstr ""
+msgstr "Auf Vorgabe setzen, falls leer"
 
 #: easy_abc.py:2279 easy_abc.py:3050
 msgid "Browse..."
@@ -2122,17 +2117,15 @@ msgstr "Suche die PostScript-Formatdatei"
 
 #: easy_abc.py:3346
 msgid "Configure colors for:"
-msgstr ""
+msgstr "Farben einstellen für:"
 
 #: easy_abc.py:3347
-#, fuzzy
 msgid "Light Mode"
-msgstr "achtel Note"
+msgstr "Hellen Modus"
 
 #: easy_abc.py:3348
-#, fuzzy
 msgid "Dark Mode"
-msgstr "Barfly Modus"
+msgstr "Dunklen Modus"
 
 #: easy_abc.py:3362
 msgid "Colors for note highlighting in music score"
@@ -2153,11 +2146,11 @@ msgstr "Farbe für aktuelle Note bei Folgen in Partitur"
 
 #: easy_abc.py:3395
 msgid "Keep music score in warm light mode"
-msgstr ""
+msgstr "Notenblatt in warm-hellem Modus lassen"
 
 #: easy_abc.py:3398
 msgid "Custom background:"
-msgstr ""
+msgstr "Wählbarer Hintergrund:"
 
 #: easy_abc.py:3412
 msgid "Default color"
@@ -2662,14 +2655,14 @@ msgid "Warning"
 msgstr "Warnung"
 
 #: easy_abc.py:5934
-#, fuzzy
 msgid ""
 "EasyABC needs an external program called GhostScript to generate PDFs. You "
 "can get it from https://www.ghostscript.com/download/ or on macOS from "
 "https://pages.uoregon.edu/koch/ or with homebrew"
 msgstr ""
 "EasyABC benötigt das Programm GhostScript, um PDFs zu erzeugen. Es ist auf "
-"https://www.ghostscript.com/download/ erhältlich"
+"https://www.ghostscript.com/download/ erhältlich. Für MacOS auf https://"
+"pages.uoregon.edu/koch/ oder mittels homebrew"
 
 #: easy_abc.py:5938
 msgid "ghostscript was not found here. Go to settings and indicate the path"
@@ -2800,7 +2793,6 @@ msgid "Add abc-charset field?"
 msgstr "Füge abc-charset hinzu?"
 
 #: easy_abc.py:6621
-#, fuzzy
 msgid ""
 "This ABC file seems not to be encoded using UTF-8 but contains no indication "
 "of this fact. It is strongly recommended that an I:abc-charset field is "
@@ -2808,10 +2800,11 @@ msgid ""
 "EasyABC is about to continue with latin-1 encoding. Do you want EasyABC to "
 "add this for you automatically?"
 msgstr ""
-"Diese ABC-Datei ist anscheinend in UTF-8 codiert, enthält aber keine "
+"Diese ABC-Datei ist anscheinend nicht in UTF-8 codiert, enthält aber keine "
 "entsprechende Kennzeichnung. Es wird sehr empfohlen, eine I:abc-charset - "
 "Kopfzeile einzufügen, damit die Datei sicher geladen und gespeichert werden "
-"kann. Möchten Sie, dass EasyABC diese Zeile automatisch einfügt?"
+"kann. EasyABC wird mit Zeichencodierung latin-1 weiterarbeiten. Möchten Sie, "
+"dass EasyABC diese Zeile automatisch einfügt?"
 
 #: easy_abc.py:6642
 msgid ""
@@ -3185,7 +3178,6 @@ msgid "Copy the selection and put it on the clipboard"
 msgstr "Aktuelle Auswahl kopieren und in die Zwischenablage legen"
 
 #: easy_abc.py:6974
-#, fuzzy
 msgid "&Paste"
 msgstr "&Einfügen"
 
@@ -3194,7 +3186,6 @@ msgid "Paste clipboard contents"
 msgstr "Inhalt der Zwischenablage einfügen"
 
 #: easy_abc.py:6975
-#, fuzzy
 msgid "&Delete"
 msgstr "&Löschen"
 
@@ -3223,17 +3214,14 @@ msgid "&Change note length"
 msgstr "&Notenlänge ändern"
 
 #: easy_abc.py:6984
-#, fuzzy
 msgid "Double note lengths"
-msgstr "Notenwert verdoppeln"
+msgstr "Notenwerte verdoppeln"
 
 #: easy_abc.py:6985
-#, fuzzy
 msgid "Halve note lengths"
-msgstr "Notenwert halbieren"
+msgstr "Notenwerte halbieren"
 
 #: easy_abc.py:6986
-#, fuzzy
 msgid "A&lign bars"
 msgstr "&Taktstriche ausrichten"
 
@@ -3242,7 +3230,6 @@ msgid "&Find..."
 msgstr "&Suchen..."
 
 #: easy_abc.py:6990
-#, fuzzy
 msgid "Find &Next"
 msgstr "&Nächstes suchen"
 
@@ -3251,7 +3238,6 @@ msgid "&Replace..."
 msgstr "&Ersetzen..."
 
 #: easy_abc.py:6993
-#, fuzzy
 msgid "&Select all"
 msgstr "&Alles auswählen"
 
@@ -3317,9 +3303,8 @@ msgstr "Zeige Warnungen und Fehler"
 
 # Don’t really know what it means. Does it specife the processed tune which was used as Input?
 #: easy_abc.py:7010
-#, fuzzy
 msgid "Input processed tune"
-msgstr "Eingabe verarbeitetes Stück"
+msgstr "Verarbeitete ABC-Noteneingabe"
 
 #: easy_abc.py:7011
 msgid "List of Tunes"
@@ -3338,14 +3323,12 @@ msgid "&Help"
 msgstr "&Hilfe"
 
 #: easy_abc.py:7015
-#, fuzzy
 msgid "EasyABC Documentation"
-msgstr "Seitenausrichtung"
+msgstr "EasyABC-Dokumentation"
 
 #: easy_abc.py:7015
-#, fuzzy
 msgid "Open EasyABC offline documentation"
-msgstr "Seitenausrichtung"
+msgstr "Öffne die Offline-Dokumentation  für EasyABC"
 
 #: easy_abc.py:7016
 msgid "&Show fields and commands reference"
@@ -3412,9 +3395,8 @@ msgid "Welcome to EasyABC"
 msgstr "Willkommen bei EasyABC"
 
 #: easy_abc.py:7027
-#, fuzzy
 msgid "Show the welcome page of EasyABC"
-msgstr "Willkommen bei EasyABC"
+msgstr "Zeige die Willkommensseite von EasyABC"
 
 #: easy_abc.py:7103
 msgid "You need to create the midi file by playing the tune"
@@ -3456,13 +3438,12 @@ msgid "Clear cache?"
 msgstr "Cache (Zwischenspeicher) löschen?"
 
 #: easy_abc.py:7340
-#, fuzzy
 msgid ""
 "This will close EasyAbc and put it in a state so that it starts with default "
 "settings.i.e. the file settings1.4 will be deleted."
 msgstr ""
 "Dies wird EasyABC schließen und so einstellen, dass es mit den "
-"Standardeinstellungen startet. Das heißt, dass die Datei settings1.3 "
+"Standardeinstellungen startet. Das bedeutet, dass die Datei settings1.4 "
 "gelöscht wird."
 
 #: easy_abc.py:7372
