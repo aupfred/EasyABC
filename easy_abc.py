@@ -9756,12 +9756,21 @@ class MyMidiTextTree(wx.Frame):
 
 class MyApp(wx.App):
     def __init__(self, *args, **kargs):
+        self._startup = True
         self._frames = []
         self.settings = {}
         wx.App.__init__(self, *args, **kargs)
         self.theme_check_timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.CheckThemePeriodically, self.theme_check_timer)
         self.theme_check_timer.Start(500)
+        self.Bind(wx.EVT_IDLE, self.OnFirstIdle)
+
+    def EndStartup(self):
+        self._startup = False
+
+    def OnFirstIdle(self, event):
+        self.Unbind(wx.EVT_IDLE, handler=self.OnFirstIdle)
+        self.EndStartup()
 
     def CheckThemePeriodically(self, event):
         """
@@ -9817,41 +9826,44 @@ class MyApp(wx.App):
         L.sort(key=lambda f: not f.IsActive()) # make sure an active frame comes first in the list
         return L
 
+    def FindFrameForFile(self, path):
+        if not path:
+            return None
+        target = os.path.normcase(os.path.abspath(path))
+        for f in self._frames:
+            if f.current_file and os.path.normcase(os.path.abspath(f.current_file)) == target:
+                return f
+        return None
+
+    def OpenOrActivate(self, filename):
+        """Open File or activate the frame containing the file."""
+        frame = self.FindFrameForFile(filename)
+        if frame:
+            frame.Raise()
+            return frame
+        for f in self.GetAllFrames():
+            if (not f.editor.GetModify() and not f.current_file) or self._startup:
+                f.load(filename)
+                f.Raise()
+                return f
+        new_frame = self.NewMainFrame()
+        new_frame.load(filename)
+        new_frame.Show(True)
+        return new_frame
+
     def MacOpenFile(self, filename):
         """Called for files dropped on dock icon, or opened via finders context menu"""
-        frames = self.GetAllFrames()
-
-        # 1st case no frame open
-        if not frames:
-            frame = self.NewMainFrame()
-            frame.load(filename)
-            frame.Show(True)
-            return
-
-        active_frame = frames[0]
-
-        # 2nd case: GetAllFrames and if active is not modified reuse it
-        if not active_frame.editor.GetModify() and not active_frame.current_file:
-            active_frame.load(filename)
-            active_frame.Raise()
-        else:
-            # 3rd case: open in a new frame.
-            new_frame = self.NewMainFrame()
-            new_frame.load(filename)
-            new_frame.Show(True)
+        self.OpenOrActivate(filename)
+        self._startup = False
             
     def MacNewFile(self):
         """Called on startup, if no file is specified and loads last recent file"""
-        # in case already a new frame created then nothing to do
-        if self.GetAllFrames():
+        if any(f.current_file or f.editor.GetModify() for f in self._frames):
             return
-
-        # Open last recent file
         recent_file = self.settings.get('recentfiles', '').split('|')[0]
         if recent_file and os.path.exists(recent_file):
-            frame = self.NewMainFrame()
-            frame.load_or_import(recent_file)
-            frame.Show(True)
+            self.OpenOrActivate(recent_file)
+        self._startup = False
 
     def OnInit(self):
         try:
@@ -9909,14 +9921,12 @@ class MyApp(wx.App):
             #self.Bind(wx.EVT_SYS_COLOUR_CHANGED, self.OnGlobalThemeChanged)
 
             # 1.3.8.4 [mist] Load most recent file
-            if not path:
+            if path:
+                self.OpenOrActivate(path)
+            else:
                 recent_file = self.settings.get('recentfiles', '').split('|')[0]
                 if recent_file and os.path.exists(recent_file):
-                    path = recent_file
-
-            #FAU: on Mac the sys.frozen is set by py2app and pyinstaller and is unset otherwise getattr( sys, 'frozen', False)
-            if path and wx.Platform != "__WXMAC__":
-                self.frame.load_or_import(path)
+                    self.OpenOrActivate(recent_file)
 
             if self.frame.settings.get('show_welcome_page', True):
                 wx.CallAfter(self.frame.ShowWelcomeFrame)
