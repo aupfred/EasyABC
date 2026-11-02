@@ -9354,9 +9354,17 @@ class MainFrame(wx.Frame):
                 self.SetDimensions(*dimensions)
         if load_perspective:
             perspective = settings.get('perspective')
-            # 1.3.6.3 [JWDJ] 2015-04-14 only load perspective if there is any.
+            # only try to load perspective if there is any.
+            # perspective might change from one version of wxpython to the other
+            # thus try or reset to default (see aupfred#29)
             if perspective:
-                self.manager.LoadPerspective(perspective)
+                try:
+                    self.manager.LoadPerspective(perspective)
+                except Exception:
+                    try:
+                        self.manager.LoadPerspective(self.default_perspective)
+                    except Exception:
+                        pass
         self.bpm_slider.SetValue(0)
         self.zoom_slider.SetValue(settings.get('score_zoom', 1000))
         self.author = settings.get('author', '')
