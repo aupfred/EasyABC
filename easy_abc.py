@@ -82,6 +82,46 @@ import traceback
 # import xml.etree.cElementTree as ET  # 1.3.7.4 [JWdJ] 2016-06-30
 import zipfile
 from datetime import datetime
+
+# Add logging to help on bug report
+def log_unexpected_error(tb_text):
+    """Traceback log: File created in app_dir if available, or home ;
+    Use the internal messages if wx is already loaded."""
+    try:
+        log_dir = None
+        try:
+            log_dir = wx.StandardPaths.Get().GetUserLocalDataDir()
+        except Exception:
+            pass
+        if not log_dir:
+            log_dir = os.path.join(os.path.expanduser('~'), 'EasyABC')
+        os.makedirs(log_dir, exist_ok=True)
+        with open(os.path.join(log_dir, 'easyabc-error.log'), 'a') as f:
+            f.write("\n===== %s =====\n%s" % (datetime.now(), tb_text))
+    except Exception:
+        pass
+
+    try:
+        global execmessages
+        execmessages = (execmessages or '') + \
+            "\n===== Unexpected error =====\n" + tb_text
+        win = wx.FindWindowByName('infoframe')
+        if win is None:
+            frame = MyInfoFrame()
+            frame.ShowText(execmessages)
+            frame.Show()
+        else:
+            win.ShowText(execmessages)
+            win.Iconize(False)
+            win.Raise()
+    except Exception:
+        pass
+
+def excepthook(type_, value, tb):
+    log_unexpected_error("".join(traceback.format_exception(type_, value, tb)))
+
+sys.excepthook = excepthook
+
 from collections import deque, namedtuple, defaultdict
 from io import StringIO
 from wx.lib.scrolledpanel import ScrolledPanel
@@ -9872,8 +9912,8 @@ class MyApp(wx.App):
 
             if self.frame.settings.get('show_welcome_page', True):
                 wx.CallAfter(self.frame.ShowWelcomeFrame)
-        except:
-            sys.stdout.write(traceback.format_exc())
+        except Exception:
+            log_unexpected_error(traceback.format_exc())
         return True
 
 app = MyApp(0)
