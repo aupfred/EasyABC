@@ -19,10 +19,12 @@ jobs:
         run: |
           sudo apt-get update
           # Build-Depends of debian/control + debuild toolchain.
+          # build-essential: dpkg-buildpackage treats it as an implicit
+          # native build-dep (GH runners don't preinstall it).
           # Runtime deps (python3-wxgtk4.0, abcm2ps, abcmidi, ...) are
           # declared in the .deb and resolved at install time.
           sudo apt-get install -y \
-            devscripts debhelper \
+            build-essential devscripts debhelper \
             pandoc imagemagick
 
       - name: Build package
