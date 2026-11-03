@@ -9763,14 +9763,14 @@ class MyApp(wx.App):
         self.theme_check_timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.CheckThemePeriodically, self.theme_check_timer)
         self.theme_check_timer.Start(500)
-        self.Bind(wx.EVT_IDLE, self.OnFirstIdle)
 
-    def EndStartup(self):
+    def FinishStartup(self):
+        if not self._startup:
+            return
         self._startup = False
-
-    def OnFirstIdle(self, event):
-        self.Unbind(wx.EVT_IDLE, handler=self.OnFirstIdle)
-        self.EndStartup()
+        if hasattr(self, '_startup_end_timer'):
+            self._startup_end_timer.Stop()
+        self.OpenWelcomeFrame()
 
     def CheckThemePeriodically(self, event):
         """
@@ -9854,16 +9854,27 @@ class MyApp(wx.App):
     def MacOpenFile(self, filename):
         """Called for files dropped on dock icon, or opened via finders context menu"""
         self.OpenOrActivate(filename)
-        self._startup = False
+        self.FinishStartup()
             
     def MacNewFile(self):
         """Called on startup, if no file is specified and loads last recent file"""
         if any(f.current_file or f.editor.GetModify() for f in self._frames):
+            self.FinishStartup()
             return
         recent_file = self.settings.get('recentfiles', '').split('|')[0]
         if recent_file and os.path.exists(recent_file):
             self.OpenOrActivate(recent_file)
-        self._startup = False
+        self.FinishStartup()
+
+    def OpenWelcomeFrame(self):
+        if self.frame.settings.get('show_welcome_page', True):
+            wx.CallAfter(self.frame.ShowWelcomeFrame)
+
+    def OnStartupEndTimer(self, event):
+        recent_file = self.settings.get('recentfiles', '').split('|')[0]
+        if recent_file and os.path.exists(recent_file):
+            self.OpenOrActivate(recent_file)
+        self.FinishStartup()
 
     def OnInit(self):
         try:
@@ -9920,16 +9931,17 @@ class MyApp(wx.App):
             self.SetTopWindow(self.frame)
             #self.Bind(wx.EVT_SYS_COLOUR_CHANGED, self.OnGlobalThemeChanged)
 
-            # 1.3.8.4 [mist] Load most recent file
+            self._startup_end_timer = wx.Timer(self)
+            self.Bind(wx.EVT_TIMER, self.OnStartupEndTimer, self._startup_end_timer)
             if path:
+                # if path is setup it means no rush with MacNewFile or MacOpenFile
                 self.OpenOrActivate(path)
+                self.FinishStartup()
             else:
-                recent_file = self.settings.get('recentfiles', '').split('|')[0]
-                if recent_file and os.path.exists(recent_file):
-                    self.OpenOrActivate(recent_file)
+                # in the context of mac app other event might come so starting a timer
+                # at the end recent file is open if no MacOpenFile event in between
+                self._startup_end_timer.StartOnce(300)
 
-            if self.frame.settings.get('show_welcome_page', True):
-                wx.CallAfter(self.frame.ShowWelcomeFrame)
         except Exception:
             log_unexpected_error(traceback.format_exc())
         return True
