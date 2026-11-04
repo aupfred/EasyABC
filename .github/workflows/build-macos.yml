@@ -60,13 +60,13 @@ jobs:
           $PY -m venv venv
           source venv/bin/activate
           python -m pip install --upgrade pip setuptools wheel py2app
-          # wxPython has no universal2 wheel: install the other deps,
-          # then stitch a universal2 wxPython from the two native wheels.
-          #grep -iv '^[[:space:]]*wx' requirements.txt | xargs -r python -m pip install
-          #chmod +x build_stitch_wxpython.sh
-          #./build_stitch_wxpython.sh
-          # wxpython for python 3.12 seems already a universal binary so installing from requirements.txt
+          # wxPython 4.2.2 (cp312) has a native universal2 wheel:
+          # no need to stitch for now.
           python -m pip install -r requirements.txt
+          # framemanager.py (wx.lib.agw.aui) needs typing_extensions;
+          # not needed with the python wheel but kept here in comments just in case
+          # (py2app setup to be modified to include typing_extensions).
+          # python -m pip install typing_extensions
 
       # ------------------------------------------------------------------
       # Helpers, default path: universal2 binaries committed in the repo
@@ -87,6 +87,15 @@ jobs:
             lipo -info "$SRC/$b" | tr ' ' '\n' | grep -qx arm64 \
               && lipo -info "$SRC/$b" | tr ' ' '\n' | grep -qx x86_64 \
               || { echo "ERROR: $SRC/$b is not universal2" >&2; exit 1; }
+            # each slice must support macOS 11+ (the DMG minimum).
+            # Guards against toolchain defaults (e.g. minos 26.0 after a
+            # local rebuild on a recent macOS) silently breaking old Macs.
+            for arch in arm64 x86_64; do
+              minos=$(otool -arch "$arch" -l "$SRC/$b" \
+                | awk '/LC_BUILD_VERSION/{f=1} f && /minos/{print $2; exit}')
+              [ "$minos" = "11.0" ] \
+                || { echo "ERROR: $b ($arch slice): minos=$minos, expected 11.0" >&2; exit 1; }
+            done
           done
           # Smoke test: run each helper (arm64 natively on this runner)
           # NOTE: abcm2ps takes -V, the abcMIDI tools take -ver.
@@ -140,19 +149,22 @@ jobs:
           # abcm2ps custom configure: CFLAGS via env; PKG_CONFIG=/bin/false
           # forces "no pango support" (historical EasyABC/abcplus builds);
           # DEFAULT_FDIR and A4_FORMAT match the abcplus builds.
+          # -mmacosx-version-min=11.0 on every slice: matches the committed
+          # helpers (DMG minimum = macOS 11). Without it the toolchain default
+          # takes over (recent Xcode => minos 26.0 => breaks older Macs).
           build_slice() { # $1=arch
             ARCH="$1"
 
             (cd "helpers_build/abcm2ps_${ARCH}" \
-              && PKG_CONFIG=/bin/false CFLAGS="-arch ${ARCH} -O2" \
+              && PKG_CONFIG=/bin/false CFLAGS="-arch ${ARCH} -mmacosx-version-min=11.0 -O2" \
                  DEFAULT_FDIR=/usr/share/abcm2ps ./configure \
               && echo "#define A4_FORMAT 1" >> config.h \
-              && make LDFLAGS="-arch ${ARCH}")
+              && make LDFLAGS="-arch ${ARCH} -mmacosx-version-min=11.0")
 
             mkdir -p "helpers_build/abcmidi_${ARCH}"
             (cd "helpers_build/abcmidi_${ARCH}" \
-              && "${GITHUB_WORKSPACE}/helpers_build/${ABCMIDI_DIR}/configure" CFLAGS="-arch ${ARCH} -O2" \
-              && make abc2midi abc2abc midi2abc)
+              && "${GITHUB_WORKSPACE}/helpers_build/${ABCMIDI_DIR}/configure" CFLAGS="-arch ${ARCH} -mmacosx-version-min=11.0 -O2" \
+              && make LDFLAGS="-arch ${ARCH} -mmacosx-version-min=11.0" abc2midi abc2abc midi2abc)
 
             mkdir -p "helpers_build/out_${ARCH}"
             cp "helpers_build/abcm2ps_${ARCH}/abcm2ps" \
@@ -176,12 +188,12 @@ jobs:
           # Smoke test: run each helper (arm64 natively on this runner)
           # NOTE: abcm2ps takes -V, the abcMIDI tools take -ver.
           for b in abcm2ps; do
-            arch -arm64 "$SRC/$b" -V >/dev/null 2>&1 \
+            arch -arm64 "bin/$b" -V >/dev/null 2>&1 \
               && echo "$b [run test]: OK" \
               || echo "WARNING: $b failed the arm64 run test" >&2
           done
           for b in abc2abc abc2midi midi2abc; do
-            arch -arm64 "$SRC/$b" -ver >/dev/null 2>&1 \
+            arch -arm64 "bin/$b" -ver >/dev/null 2>&1 \
               && echo "$b [run test]: OK" \
               || echo "WARNING: $b failed the arm64 run test" >&2
           done
