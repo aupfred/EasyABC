@@ -5970,6 +5970,17 @@ class MainFrame(wx.Frame):
 
         return False
 
+    def export_multiple_pdf(self, tune, filepath):
+        pdf_file = AbcToPDF(self.settings, tune.abc, tune.header, self.cache_dir, self.settings.get('abcm2ps_extra_params', ''),
+                                           self.settings.get('abcm2ps_path', ''),
+                                           self.settings.get('gs_path',''),
+                                           #self.settings.get('ps2pdf_path',''),
+                                           self.settings.get('abcm2ps_format_path', ''))
+        if pdf_file:
+            return self.copy_to_destination(pdf_file, filepath)
+
+        return False
+
     def export_pdf_tunes(self, only_selected=False, single_file=False):
         gs_path = self.settings.get('gs_path')
         if not gs_path:
@@ -5981,7 +5992,19 @@ class MainFrame(wx.Frame):
             dlg.ShowModal()
             return
 
-        self.export_tunes(_('PDF file'), '.pdf', self.export_pdf, only_selected=only_selected, single_file=single_file)
+        if only_selected:
+            tunes = self.GetSelectedTunes()
+        else:
+            tunes = [self.GetTune(i) for i in xrange(self.tune_list.GetItemCount())]
+
+        if len(tunes) == 0:
+            return
+
+        if len(tunes) == 1:
+            self.export_tunes(_('PDF file'), '.pdf', self.export_pdf, only_selected=only_selected, single_file=single_file)
+
+        if len(tunes) == 1:
+            self.export_tunes(_('PDF file'), '.pdf', self.export_multiple_pdf, only_selected=only_selected, single_file=single_file)
 
     def OnExportSVG(self, evt):
         self.export_tunes(_('SVG file'), '.svg', self.export_svg, only_selected=True)
@@ -6171,6 +6194,14 @@ class MainFrame(wx.Frame):
                     #launch_file(path)
             finally:
                 dlg.Destroy() # 1.3.6.3 [JWDJ] 2015-04-21 always clean up dialog window
+
+    def copy_to_destination(self, file_name, destination_path):
+        try:
+            return shutil.copy(file_name, destination_path)
+        except IOError as ex:
+            pass
+            # print(u'Failed to create %s: %s' % (destination_path.encode('utf-8'), os.strerror(ex.errno)))
+        return False
 
     def copy_to_destination_and_launch_file(self, file_name, destination_path):
         try:
