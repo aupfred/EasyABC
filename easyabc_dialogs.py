@@ -9,7 +9,7 @@ import wx
 import webbrowser
 from wx import GetTranslation as _
 from utils import get_application_path
-from easyabc_version import program_name 
+from easyabc_version import program_name, program_version
 
 import re
 from pathlib import Path
@@ -85,7 +85,8 @@ class AboutFrame(wx.Dialog):
 class WelcomeFrame(wx.Dialog):
 
     def __init__(self, parent):
-        super().__init__(parent, wx.ID_ANY, _('Welcome to EasyABC 1.4'), size=(700, 550))
+        title = _('Welcome to EasyABC')
+        super().__init__(parent, wx.ID_ANY, f"{title} {program_version}", size=(700, 550))
 
         application_path = get_application_path()
         docs_path = os.path.join(application_path,"docs")
@@ -194,7 +195,7 @@ class WelcomeFrame(wx.Dialog):
 class EasyAbcDocFrame(wx.Dialog):
 
     def __init__(self, parent):
-        super().__init__(parent, wx.ID_ANY, _('EasyABC 1.4 help page'), size=(700, 550))
+        super().__init__(parent, wx.ID_ANY, _('EasyABC help page'), size=(700, 550))
 
         application_path = get_application_path()
         docs_path = os.path.join(application_path,"docs")

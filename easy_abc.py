@@ -7410,9 +7410,12 @@ class MainFrame(wx.Frame):
 
     # 1.3.6.1 [SS] 2014-12-28 2015-01-22
     def OnColdRestart(self, evt):
-        result = wx.MessageBox(_("This will close EasyAbc and put it in a state so that it starts with default settings."
-        "i.e. the file settings1.4 will be deleted."),
-                               _("Proceed?"), wx.ICON_QUESTION | wx.OK | wx.CANCEL)
+        settings_filename = "settings1.4.dat"
+        result = wx.MessageBox(
+            _("This will close EasyABC and put it in a state so that it starts with default settings.\n"
+              "i.e. the file %(filename)s will be deleted.")
+            % {"filename": settings_filename},
+            _("Proceed?"), wx.ICON_QUESTION | wx.OK | wx.CANCEL)
         if result == wx.OK:
             #f = os.path.join(self.app_dir, 'settings1.4.dat')
             # FAU: write an empty settings to avoid to enforce migration from 1.3
