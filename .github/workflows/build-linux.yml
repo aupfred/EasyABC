@@ -2,8 +2,8 @@ name: Build Debian package
 
 on:
   workflow_dispatch:
-#  push:
-#    tags: ['v*']
+  push:
+    tags: ['v*']
 
 jobs:
   build:

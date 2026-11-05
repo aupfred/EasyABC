@@ -6,22 +6,22 @@ on:
       helpers_source:
         description: 'Source of the ABC helper binaries'
         type: choice
-        default: repo
+        default: repo   # keep in sync with HELPERS_SOURCE default below
         options: [repo, source, abcplus]
       abctools_ver:
         description: 'abctools version (abcplus cosmopolitan bundle: abcm2ps + abcmidi + abcpp + abc2prt)'
         type: string
-        default: '20261023-cosmo'
+        default: '20261023-cosmo'  # keep in sync with ABCTOOLS_VER default below
       abcm2ps_ver:
         description: 'abcm2ps fossil version (tag e.g. v8.14.18, or trunk)'
         type: string
-        default: 'v8.14.18'
+        default: 'v8.14.18'  # keep in sync with ABCM2PS_VER default below
       abcmidi_ver:
         description: 'abcMIDI version (archive date on ifdo.ca/~seymour/runabc)'
         type: string
-        default: '2026.10.23'
-#  push:
-#    tags: ['v*']
+        default: '2026.10.23'  # keep in sync with ABCMIDI_VER default below
+  push:
+    tags: ['v*']
 
 #Python 3.10 need to stitch wxPython and include type_extensions Switching to 3.12
 #env:
@@ -36,12 +36,19 @@ env:
 jobs:
   build:
     runs-on: macos-15   # arm64 runner
+    env:
+      # single point of truth: the default lives HERE (and in the
+      # workflow_dispatch input above, which feeds it on manual runs)
+      HELPERS_SOURCE: ${{ inputs.helpers_source || 'repo' }}
+      ABCTOOLS_VER: ${{ inputs.abctools_ver || '20261023-cosmo' }}
+      ABCM2PS_VER: ${{ inputs.abcm2ps_ver || 'v8.14.18' }}
+      ABCMIDI_VER: ${{ inputs.abcmidi_ver || '2026.10.23' }}
     steps:
       - uses: actions/checkout@v4
 
       # Rosetta is only needed for the (experimental) abcplus cosmopolitan path
       - name: Install Rosetta 2
-        if: inputs.helpers_source == 'abcplus'
+        if: env.HELPERS_SOURCE == 'abcplus'
         run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license || true
 
       - name: Install python.org universal2 framework build
@@ -74,7 +81,7 @@ jobs:
       # bin/ receives only what the app actually executes.
       # ------------------------------------------------------------------
       - name: Install universal helpers committed in the repo
-        if: inputs.helpers_source == 'repo'
+        if: env.HELPERS_SOURCE == 'repo'
         run: |
           set -euo pipefail
           SRC="bin/mac_universal2"
@@ -115,10 +122,7 @@ jobs:
       # Helpers, maintenance path: rebuild from official sources in CI.
       # ------------------------------------------------------------------
       - name: Build ABC helpers from source (universal2)
-        if: inputs.helpers_source == 'source'
-        env:
-          ABCM2PS_VER: ${{ inputs.abcm2ps_ver || 'v8.14.18' }}
-          ABCMIDI_VER: ${{ inputs.abcmidi_ver || '2026.10.23' }}
+        if: env.HELPERS_SOURCE == 'source'
         run: |
           set -euo pipefail
           # abcm2ps's custom configure needs GNU realpath/sed (macOS ships BSD ones)
@@ -204,9 +208,7 @@ jobs:
       # (ape-m1 loader passes the flag to the program; verified 2026-10).
       # ------------------------------------------------------------------
       - name: Fetch abcplus cosmopolitan helpers, assimilate and fuse
-        if: inputs.helpers_source == 'abcplus'
-        env:
-          ABCTOOLS_VER: ${{ inputs.abctools_ver || '20261023-cosmo' }}
+        if: env.HELPERS_SOURCE == 'abcplus'
         run: |
           set -euo pipefail
           mkdir -p helpers_src

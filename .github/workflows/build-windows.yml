@@ -6,13 +6,13 @@ on:
       abctools_ver:
         description: 'abctools version (abcplus cosmopolitan bundle: abcm2ps + abcmidi)'
         type: string
-        default: '20261023-cosmo'
+        default: '20261023-cosmo' # keep in sync with ABCTOOLS_VER default below
       fluidsynth_ver:
         description: 'FluidSynth release (GitHub FluidSynth/fluidsynth), e.g. v2.6.1'
         type: string
-        default: 'v2.6.1'
-#  push:
-#    tags: ['v*']
+        default: 'v2.6.1'  # keep in sync with FLUIDSYNTH_VER default below
+  push:
+    tags: ['v*']
 
 env:
   PY_MAJOR: '3.13'
@@ -24,6 +24,11 @@ env:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      # single point of truth: the default lives HERE (and in the
+      # workflow_dispatch input above, which feeds it on manual runs)
+      ABCTOOLS_VER: ${{ inputs.abctools_ver || '20261023-cosmo' }}
+      FLUIDSYNTH_VER: ${{ inputs.fluidsynth_ver || 'v2.6.1' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -44,8 +49,6 @@ jobs:
       # ------------------------------------------------------------------
       - name: Fetch abcplus cosmopolitan helpers
         shell: bash
-        env:
-          ABCTOOLS_VER: ${{ inputs.abctools_ver || '20261023-cosmo' }}
         run: |
           set -euo pipefail
           curl -sL --fail -o abctools.zip \
@@ -68,8 +71,6 @@ jobs:
       # ------------------------------------------------------------------
       - name: Fetch FluidSynth DLLs
         shell: bash
-        env:
-          FLUIDSYNTH_VER: ${{ inputs.fluidsynth_ver || 'v2.6.1' }}
         run: |
           set -euo pipefail
           curl -sL --fail -o fluidsynth.zip \
