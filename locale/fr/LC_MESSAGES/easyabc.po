@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: EasyABC 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-11-06 00:38+0100\n"
-"PO-Revision-Date: 2026-11-06 00:48+0100\n"
+"PO-Revision-Date: 2026-11-06 01:29+0100\n"
 "Last-Translator: Frédéric AUPEPIN <frederic.aupepin@gmail.com>\n"
 "Language-Team: EasyABC <info@nilsliberg.se>\n"
 "Language: fr_FR\n"
@@ -90,24 +90,20 @@ msgid "Double flat"
 msgstr "Double bémol"
 
 #: tune_actions.py:467
-#, fuzzy
 msgid "Half sharp"
 msgstr "Dièse barré"
 
 #: tune_actions.py:468
-#, fuzzy
 msgid "Half flat"
 msgstr "Bémol barré"
 
 #: tune_actions.py:469
-#, fuzzy
 msgid "Sharp and a half"
-msgstr "Un dièse et demi"
+msgstr "Sesqui-dièse"
 
 #: tune_actions.py:470
-#, fuzzy
 msgid "Flat and a half"
-msgstr "Un bémol et demi"
+msgstr "Sesqui-bémol"
 
 #: tune_actions.py:473
 msgid "Change accidental"
@@ -115,11 +111,11 @@ msgstr "Modifier l’altération"
 
 #: tune_actions.py:478
 msgid "Common time (4/4)"
-msgstr "Indication de mesure usuelle (4/4)"
+msgstr "C (4/4)"
 
 #: tune_actions.py:479
 msgid "Cut time (2/2)"
-msgstr "Alla breve (2/2)"
+msgstr "Alla breve, C barré (2/2)"
 
 #: tune_actions.py:480
 msgid "2/4"
@@ -319,7 +315,7 @@ msgstr "Diminuer les mesures"
 
 #: tune_actions.py:796
 msgid "Normal rest"
-msgstr ""
+msgstr "Silence"
 
 #: tune_actions.py:807 tune_actions.py:821
 msgid "Default length"
@@ -403,7 +399,7 @@ msgstr "Ligne de barre de mesure"
 
 #: tune_actions.py:860
 msgid "Double bar line"
-msgstr "Barre double"
+msgstr "Double barre"
 
 #: tune_actions.py:861
 msgid "Thin-thick double bar line"
@@ -415,7 +411,7 @@ msgstr "Barre pointillée"
 
 #: tune_actions.py:863
 msgid "Thick-thin double bar line"
-msgstr ""
+msgstr "Double barre (de début)"
 
 #: tune_actions.py:864
 msgid "Start of repeated section"
@@ -1096,7 +1092,6 @@ msgid "Insert pattern"
 msgstr "Ajouter la rythmique d’accompagnement"
 
 #: tune_actions.py:1472
-#, fuzzy
 msgid "Change time"
 msgstr "Modifier la mesure"
 
@@ -1230,15 +1225,15 @@ msgstr "Créer triolet"
 
 #: tune_actions.py:1908
 msgid "Show single voice"
-msgstr ""
+msgstr "Voir une voix seule"
 
 #: tune_actions.py:1942
 msgid "Show all voices"
-msgstr ""
+msgstr "Voir toutes les voix"
 
 #: tune_actions.py:1961
 msgid "Show additional voice"
-msgstr ""
+msgstr "Voir la voix additionnelle"
 
 #: tune_actions.py:1993
 msgid "Hide voice"
@@ -2113,7 +2108,7 @@ msgstr "Ne pas ajouter les paramètres de mise en page"
 #: easy_abc.py:3162
 #, python-brace-format
 msgid "Scales the separation between staff lines. Recommended value is {0}."
-msgstr ""
+msgstr "Adapte l’espace entre les lignes de portées. Valeur recommandée {0}"
 
 #: easy_abc.py:3335
 msgid "This will remove the selections in the combobox."
@@ -2258,7 +2253,7 @@ msgstr "Options de xml2abc"
 
 #: easy_abc.py:3693
 msgid "Unfold Repeats"
-msgstr ""
+msgstr "Déplie les répétitions"
 
 #: easy_abc.py:3694
 msgid "Midi Data"
@@ -2270,7 +2265,7 @@ msgstr ""
 
 #: easy_abc.py:3696
 msgid "characters/line"
-msgstr ""
+msgstr "Caractères / ligne"
 
 #: easy_abc.py:3697
 msgid "bars per line"
@@ -2445,7 +2440,7 @@ msgstr "Trier par titre"
 
 #: easy_abc.py:4045
 msgid "Look in"
-msgstr ""
+msgstr "Rechercher dans"
 
 #: easy_abc.py:4056
 msgid "Cancel"
@@ -2521,7 +2516,7 @@ msgstr "Barre de statut: vérifier la de temps en temps."
 #: easy_abc.py:4664
 #, python-brace-format
 msgid "You are running {0} on {1}"
-msgstr ""
+msgstr "Vous utilisez {0} sur {1}"
 
 #: easy_abc.py:4665
 msgid "You can get the latest version on"
@@ -2940,7 +2935,7 @@ msgstr "Désactivé"
 
 #: easy_abc.py:6959
 msgid "Using spacebar"
-msgstr ""
+msgstr "Avec la barre d’espace"
 
 #: easy_abc.py:6960
 msgid "Automatic"
@@ -3379,11 +3374,11 @@ msgstr ""
 
 #: easy_abc.py:7096
 msgid "Link to a PDF with the most common ABC commands"
-msgstr ""
+msgstr "Fichiers comprenant les commandes ABC principales"
 
 #: easy_abc.py:7098
 msgid "&Check for update..."
-msgstr ""
+msgstr "Vérifier les mises à jour…"
 
 #: easy_abc.py:7098
 msgid "Link to EasyABC download page"
@@ -3646,7 +3641,7 @@ msgstr "arpège"
 
 #: tune_elements.py:180 tune_elements.py:181
 msgid "marcato"
-msgstr ""
+msgstr "chevron"
 
 #: tune_elements.py:182
 msgid "fermata or hold"
