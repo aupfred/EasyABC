@@ -6003,7 +6003,7 @@ class MainFrame(wx.Frame):
         if len(tunes) == 1:
             self.export_tunes(_('PDF file'), '.pdf', self.export_pdf, only_selected=only_selected, single_file=single_file)
 
-        if len(tunes) == 1:
+        if len(tunes) > 1:
             self.export_tunes(_('PDF file'), '.pdf', self.export_multiple_pdf, only_selected=only_selected, single_file=single_file)
 
     def OnExportSVG(self, evt):
