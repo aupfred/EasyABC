@@ -4491,7 +4491,12 @@ class MainFrame(wx.Frame):
             except Exception as e:
                 error_msg = traceback.format_exc()
                 self.mc = None
-                
+
+        self.uses_vlc = False
+        if sys.platform == "darwin":
+            vlc_binary = "/Applications/VLC.app/Contents/MacOS/VLC"
+            if os.path.exists(vlc_binary):
+                self.uses_vlc = True
         #FAU:MIDIPLAY: on Mac add the ability to interface to System Midi Synth via mplay in case fluidsynth not available or not configured with soundfont
         if wx.Platform == "__WXMAC__" and self.mc is None:
             try:
@@ -5881,13 +5886,13 @@ class MainFrame(wx.Frame):
             self.ReportFluidSynthIsMissing()
 
     def OnExportToAAC(self, evt):
-        if self.uses_fluidsynth:
+        if self.uses_fluidsynth or self.uses_vlc:
             self.export_tunes(_('AAC file'), '.m4a', self.export_aac, only_selected=True)
         else:
             self.ReportFluidSynthIsMissing()
 
     def OnExportToWave(self, evt):
-        if self.uses_fluidsynth:
+        if self.uses_fluidsynth or self.uses_vlc:
             self.export_tunes(_('Wave file'), '.wav', self.export_wave, only_selected=True)
         else:
             self.ReportFluidSynthIsMissing()
@@ -5901,8 +5906,22 @@ class MainFrame(wx.Frame):
         midi_tune = AbcToMidi(tune.abc, tune.header, self.cache_dir, self.settings, self.statusbar, tempo_multiplier)
         if midi_tune:
             try:
-                self.mc.render_to_file(midi_tune.midi_file, filepath)
-                return True
+                if self.uses_fluidsynth:
+                    self.mc.render_to_file(midi_tune.midi_file, filepath)
+                    return True
+                elif self.uses_vlc:
+                    vlc_binary = "/Applications/VLC.app/Contents/MacOS/VLC"
+                    sout_str = f"#transcode{{acodec=s16l,channels=2,samplerate=44100}}:std{{access=file,mux=wav,dst='{os.path.abspath(filepath)}'}}"
+                    cmd = [
+                        vlc_binary, "-I", "dummy", "--no-sout-video", "--sout-audio",
+                        os.path.abspath(midi_tune.midi_file), f"--sout={sout_str}", "vlc://quit"
+                    ]
+                    stdout, stderr, code = get_output_from_process(cmd)
+                    if code == 0 and os.path.exists(filepath) and os.path.getsize(filepath) > 0:
+                        return True
+                    else:
+                        raise Exception('Wav file failed to be created at {0}'.format(filepath))
+
             except:
                 self.statusbar.SetStatusText(_('Failed to create {0}').format(filepath))
             finally:
@@ -5910,9 +5929,13 @@ class MainFrame(wx.Frame):
         return False
 
     def export_mp3(self, tune, filepath):
+        if self.uses_vlc:
+            self.export_afconvert(tune, filepath)
         self.export_ffmpeg(tune, filepath)
 
     def export_aac(self, tune, filepath):
+        if self.uses_vlc:
+            self.export_afconvert(tune, filepath)
         self.export_ffmpeg(tune, filepath)
 
     def export_ffmpeg(self, tune, filepath):
@@ -5945,6 +5968,30 @@ class MainFrame(wx.Frame):
         else:
             dlg = wx.MessageDialog(self, _('ffmpeg was not found here. Go to settings and indicate the path'), _('Warning'), wx.OK)
             dlg.ShowModal()
+
+    def export_afconvert(self, tune, filepath):
+        global execmessages
+        base_name, ext = os.path.splitext(filepath)
+        tmp_file = base_name + '.wav'
+        if not self.export_wave(tune, tmp_file):
+            return
+
+        if os.path.exists(tmp_file):
+            cmd = ['afconvert', '-f', 'm4af', '-d', 'aac', tmp_file]
+
+            if os.path.exists(filepath):
+                os.remove(filepath)
+            execmessages += '\nafconvert\n' + " ".join(cmd)
+            stdout_value, stderr_value, returncode = get_output_from_process(cmd)
+            if returncode != 0:
+                execmessages += stderr_value
+                execmessages += stdout_value
+                print(stderr_value)
+                print(stdout_value)
+                print(returncode)
+
+            if os.path.exists(tmp_file):
+                os.remove(tmp_file)
 
     #Add an export all tunes to individual PDF option
     def OnExportAllPDFFiles(self, evt):
