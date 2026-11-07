@@ -5931,12 +5931,14 @@ class MainFrame(wx.Frame):
     def export_mp3(self, tune, filepath):
         if self.uses_vlc:
             self.export_afconvert(tune, filepath)
-        self.export_ffmpeg(tune, filepath)
+        else:
+            self.export_ffmpeg(tune, filepath)
 
     def export_aac(self, tune, filepath):
         if self.uses_vlc:
             self.export_afconvert(tune, filepath)
-        self.export_ffmpeg(tune, filepath)
+        else:
+            self.export_ffmpeg(tune, filepath)
 
     def export_ffmpeg(self, tune, filepath):
         global execmessages
