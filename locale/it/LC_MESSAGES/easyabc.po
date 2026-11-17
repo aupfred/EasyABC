@@ -2420,7 +2420,7 @@ msgstr "Acciaccatura"
 
 #: tune_actions.py:900
 msgid "Appoggiatura/acciaccatura"
-msgstr "Langer/kurzer Vorschlag"
+msgstr "Appoggiatura/acciaccatura"
 
 #: tune_actions.py:942
 msgid "6 sharps"
