@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: EasyABC 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-11-06 00:38+0100\n"
-"PO-Revision-Date: 2026-11-06 00:40+0100\n"
+"PO-Revision-Date: 2026-11-17 01:04+0100\n"
 "Last-Translator: Bodo Meißner <bomm@users.sourceforge.net>\n"
 "Language-Team: EasyABC <info@nilsliberg.se>\n"
 "Language: de_DE\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 3.10\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: easy_abc.py\n"
 "X-Poedit-SearchPath-1: tune_actions.py\n"
@@ -42,7 +42,7 @@ msgstr "Öffne Dokumentation"
 
 #: easyabc_dialogs.py:130 easyabc_dialogs.py:233
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: easyabc_dialogs.py:198
 msgid "EasyABC help page"
@@ -78,7 +78,7 @@ msgstr "Kreuz"
 
 #: tune_actions.py:464
 msgid "Flat"
-msgstr "B"
+msgstr "b"
 
 #: tune_actions.py:465
 msgid "Double sharp"
@@ -86,23 +86,23 @@ msgstr "Doppel-Kreuz"
 
 #: tune_actions.py:466
 msgid "Double flat"
-msgstr "Doppel-B"
+msgstr "Doppel-b"
 
 #: tune_actions.py:467
 msgid "Half sharp"
-msgstr "Halbes Kreuz"
+msgstr "Vierteltonkreuz"
 
 #: tune_actions.py:468
 msgid "Half flat"
-msgstr "Halbes B"
+msgstr "Viertelton-b"
 
 #: tune_actions.py:469
 msgid "Sharp and a half"
-msgstr "Kreuz und ein Halb"
+msgstr "Dreivierteltonkreuz"
 
 #: tune_actions.py:470
 msgid "Flat and a half"
-msgstr "B und ein Halb"
+msgstr "Dreiviertelton-b"
 
 #: tune_actions.py:473
 msgid "Change accidental"
@@ -286,7 +286,7 @@ msgstr "Ändere die Tonhöhe"
 
 #: tune_actions.py:664
 msgid "Change duration"
-msgstr "Ändere die Dauer"
+msgstr "Ändere Notenwert"
 
 #: tune_actions.py:791
 msgid "One measure"
@@ -294,11 +294,11 @@ msgstr "Ein Takt"
 
 #: tune_actions.py:792
 msgid "Double measures"
-msgstr "Doppelte Takte"
+msgstr "Verdopple Taktanzahl"
 
 #: tune_actions.py:793
 msgid "Half measures"
-msgstr "Halbe Takte"
+msgstr "Halbiere Taktanzahl"
 
 #: tune_actions.py:794
 msgid "Increase measures"
@@ -362,7 +362,7 @@ msgstr "Ritenuto"
 
 #: tune_actions.py:841
 msgid "Change annotation"
-msgstr "Bemerkung ändern"
+msgstr "Zusatzbezeichnung ändern"
 
 #: tune_actions.py:847
 msgid "Above"
@@ -454,15 +454,15 @@ msgstr "Sichtbarkeit"
 
 #: tune_actions.py:896
 msgid "Appoggiatura"
-msgstr "Appoggiatura (Vorschlag)"
+msgstr "Langer Vorschlag (appoggiatura)"
 
 #: tune_actions.py:897
 msgid "Acciaccatura"
-msgstr "Acciaccatura"
+msgstr "Kurzer Vorschlag (acciaccatura)"
 
 #: tune_actions.py:900
 msgid "Appoggiatura/acciaccatura"
-msgstr "Appoggiatura/Acciaccatura"
+msgstr "Vorschlag (appoggiatura/acciaccatura)"
 
 #: tune_actions.py:942
 msgid "6 sharps"
@@ -620,11 +620,11 @@ msgstr "Oktavverschiebung"
 
 #: tune_actions.py:1155
 msgid "Change dynamics mark"
-msgstr "Ändere die Dynamikzeichen"
+msgstr "Ändere Dynamikzeichen"
 
 #: tune_actions.py:1160
 msgid "Change fingering"
-msgstr "Ändere den Fingersatz"
+msgstr "Ändere Fingersatz"
 
 #: tune_actions.py:1165
 msgid "Change ornament"
@@ -632,7 +632,7 @@ msgstr "Ändere Verzierung"
 
 #: tune_actions.py:1170
 msgid "Change direction marker"
-msgstr "Ändere Anweisungszeichen"
+msgstr "Ändere Richtungsangabe"
 
 #: tune_actions.py:1175
 msgid "Change articulation marker"
@@ -1021,7 +1021,7 @@ msgstr "Ändere das Schlaginstrument"
 
 #: tune_actions.py:1391
 msgid "Muted"
-msgstr ""
+msgstr "Stumm"
 
 #: tune_actions.py:1404
 msgid "Change volume"
@@ -1175,15 +1175,15 @@ msgstr "Verzierung"
 
 #: tune_actions.py:1801 tune_elements.py:916
 msgid "Articulation"
-msgstr "Ausdruck"
+msgstr "Artikulation"
 
 #: tune_actions.py:1802 tune_elements.py:892
 msgid "Direction"
-msgstr "Anweisung"
+msgstr "Ablaufanweisung"
 
 #: tune_actions.py:1803
 msgid "Shortcut symbol"
-msgstr "Abkürzung"
+msgstr "Code-Kürzel"
 
 #: tune_actions.py:1804 tune_elements.py:856
 msgid "Fingering"
@@ -1191,11 +1191,11 @@ msgstr "Fingersatz"
 
 #: tune_actions.py:1805
 msgid "Accidental"
-msgstr "Vorzeichen"
+msgstr "Redaktionelles Zeichen"
 
 #: tune_actions.py:1808
 msgid "Insert decoration"
-msgstr "Füge Verzierung ein"
+msgstr "Füge Symbol ein"
 
 #: tune_actions.py:1819
 msgid "Add slur"
@@ -2113,7 +2113,7 @@ msgstr "Dies entfernt alle Auswahlmöglichkeiten aus der Liste."
 
 #: easy_abc.py:3352
 msgid "Find PostScript format file"
-msgstr "Suche die PostScript-Formatdatei"
+msgstr "Wähle die PostScript-Formatdatei"
 
 #: easy_abc.py:3386
 msgid "Configure colors for:"
@@ -2869,11 +2869,11 @@ msgstr "Fehlermeldung von abc2abc"
 
 #: easy_abc.py:6911
 msgid "Move up"
-msgstr "Nach oben bewegen"
+msgstr "Nach oben verschieben"
 
 #: easy_abc.py:6912
 msgid "Move down"
-msgstr "Nach unten bewegen"
+msgstr "Nach unten verschieben"
 
 #: easy_abc.py:6914
 msgid "Copy"
@@ -2971,7 +2971,7 @@ msgstr "&Noten neu darstellen"
 
 #: easy_abc.py:6988
 msgid "&Automatically refresh music as I type"
-msgstr "&Noten automatisch beim Eingeben aktualisieren"
+msgstr "Noten &automatisch beim Eingeben aktualisieren"
 
 #: easy_abc.py:6990
 msgid "&Use reduced margins when displaying tunes on screen"
@@ -2983,11 +2983,11 @@ msgstr "&Schriftart für Editor ändern..."
 
 #: easy_abc.py:6992
 msgid "&Use default editor font"
-msgstr "&Standardschriftart für Editor verwenden"
+msgstr "Standar&dschriftart für Editor verwenden"
 
 #: easy_abc.py:6994
 msgid "&Reset window layout to default"
-msgstr "&Standard-Fensteranordnung wiederherstellen"
+msgstr "Standard-&Fensteranordnung wiederherstellen"
 
 #: easy_abc.py:6996
 msgid "&Full screen"
@@ -3312,7 +3312,7 @@ msgstr "Liste der Stücke"
 
 #: easy_abc.py:7085
 msgid "Output midi file"
-msgstr "Ausgabe Midi-Datei"
+msgstr "Generierte MIDI-Datei"
 
 #: easy_abc.py:7086
 msgid "Show settings status"
