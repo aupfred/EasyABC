@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: EasyABC 1.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-11-17 01:32+0100\n"
-"PO-Revision-Date: 2026-11-17 01:34+0100\n"
+"PO-Revision-Date: 2026-11-17 01:40+0100\n"
 "Last-Translator: Bodo Meißner <bomm@users.sourceforge.net>\n"
 "Language-Team: EasyABC <info@nilsliberg.se>\n"
 "Language: de_DE\n"
@@ -87,11 +87,12 @@ msgstr "{0} meldete Warnungen"
 
 #: easy_abc.py:1577
 msgid "No file created so cannot continue"
-msgstr ""
+msgstr "Keine Datei erzeugt, kann nicht fortsetzen"
 
 #: easy_abc.py:1579
 msgid "Abc2midi reported an error. As Midi file exist, continue..."
 msgstr ""
+"abc2midi hat einen Fehler gemeldet. MIDI-Datei existiert, setze fort..."
 
 #: easy_abc.py:1663
 #, python-format
