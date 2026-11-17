@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: EasyABC 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 00:38+0100\n"
-"PO-Revision-Date: 2026-11-17 01:04+0100\n"
+"POT-Creation-Date: 2026-11-17 01:32+0100\n"
+"PO-Revision-Date: 2026-11-17 01:34+0100\n"
 "Last-Translator: Bodo Meißner <bomm@users.sourceforge.net>\n"
 "Language-Team: EasyABC <info@nilsliberg.se>\n"
 "Language: de_DE\n"
@@ -51,1535 +51,6 @@ msgstr "EasyABC Hilfeseite"
 #: easyabc_dialogs.py:227
 msgid "Open Documentation on Sourceforge"
 msgstr "Öffne Dokumentation auf Sourceforge"
-
-#: tune_actions.py:286
-msgid "Less options"
-msgstr "Weniger Optionen"
-
-#: tune_actions.py:288
-msgid "More options"
-msgstr "Mehr Optionen"
-
-#: tune_actions.py:427
-msgid "Convert to annotation"
-msgstr "In Anmerkung umwandeln"
-
-#: tune_actions.py:461
-msgid "No accidental"
-msgstr "Kein Vorzeichen"
-
-#: tune_actions.py:462
-msgid "Natural"
-msgstr "Aufgelöst"
-
-#: tune_actions.py:463
-msgid "Sharp"
-msgstr "Kreuz"
-
-#: tune_actions.py:464
-msgid "Flat"
-msgstr "b"
-
-#: tune_actions.py:465
-msgid "Double sharp"
-msgstr "Doppel-Kreuz"
-
-#: tune_actions.py:466
-msgid "Double flat"
-msgstr "Doppel-b"
-
-#: tune_actions.py:467
-msgid "Half sharp"
-msgstr "Vierteltonkreuz"
-
-#: tune_actions.py:468
-msgid "Half flat"
-msgstr "Viertelton-b"
-
-#: tune_actions.py:469
-msgid "Sharp and a half"
-msgstr "Dreivierteltonkreuz"
-
-#: tune_actions.py:470
-msgid "Flat and a half"
-msgstr "Dreiviertelton-b"
-
-#: tune_actions.py:473
-msgid "Change accidental"
-msgstr "Vorzeichen ändern"
-
-#: tune_actions.py:478
-msgid "Common time (4/4)"
-msgstr "Semicircolo (C=4/4)"
-
-#: tune_actions.py:479
-msgid "Cut time (2/2)"
-msgstr "Alla breve (2/2)"
-
-#: tune_actions.py:480
-msgid "2/4"
-msgstr "2/4"
-
-#: tune_actions.py:481
-msgid "3/4"
-msgstr "3/4"
-
-#: tune_actions.py:482
-msgid "4/4"
-msgstr "4/4"
-
-#: tune_actions.py:483
-msgid "6/4"
-msgstr "6/4"
-
-#: tune_actions.py:484
-msgid "6/8"
-msgstr "6/8"
-
-#: tune_actions.py:485
-msgid "9/8"
-msgstr "9/8"
-
-#: tune_actions.py:486
-msgid "12/8"
-msgstr "12/8"
-
-#: tune_actions.py:489
-msgid "Change meter"
-msgstr "Takt ändern"
-
-#: tune_actions.py:494 tune_actions.py:506
-msgid "half note"
-msgstr "halbe Note"
-
-#: tune_actions.py:495 tune_actions.py:508
-msgid "quarter note"
-msgstr "viertel Note"
-
-#: tune_actions.py:496 tune_actions.py:509
-msgid "eighth note"
-msgstr "achtel Note"
-
-#: tune_actions.py:497 tune_actions.py:510
-msgid "sixteenth note"
-msgstr "sechzehntel Note"
-
-#: tune_actions.py:500 tune_actions.py:513
-msgid "Change note length"
-msgstr "Ändere den Notenwert"
-
-#: tune_actions.py:505
-msgid "three quarter note"
-msgstr "drei viertel Note"
-
-#: tune_actions.py:507
-msgid "three eighth note"
-msgstr "drei achtel Note"
-
-#: tune_actions.py:518
-msgid "Change second note length"
-msgstr "Ändere den zweiten Notenwert"
-
-#: tune_actions.py:523
-msgid "Only name"
-msgstr "Nur Name"
-
-#: tune_actions.py:524
-msgid "Only speed"
-msgstr "Nur Geschwindigkeit"
-
-#: tune_actions.py:525
-msgid "Name & speed"
-msgstr "Name und Geschwindigkeit"
-
-#: tune_actions.py:528
-msgid "Change tempo notation"
-msgstr "Ändere die Tempoangabe"
-
-#: tune_actions.py:566
-msgid "Larghissimo"
-msgstr "Larghissimo"
-
-#: tune_actions.py:567
-msgid "Grave"
-msgstr "Grave"
-
-#: tune_actions.py:568
-msgid "Lento"
-msgstr "Lento"
-
-#: tune_actions.py:569
-msgid "Largo"
-msgstr "Largo"
-
-#: tune_actions.py:570
-msgid "Adagio"
-msgstr "Adagio"
-
-#: tune_actions.py:571
-msgid "Adagietto"
-msgstr "Adagietto"
-
-#: tune_actions.py:572
-msgid "Andante"
-msgstr "Andante"
-
-#: tune_actions.py:573
-msgid "Andantino"
-msgstr "Andantino"
-
-#: tune_actions.py:574
-msgid "Moderato"
-msgstr "Moderato"
-
-#: tune_actions.py:575
-msgid "Allegretto"
-msgstr "Allegretto"
-
-#: tune_actions.py:576
-msgid "Allegro"
-msgstr "Allegro"
-
-#: tune_actions.py:577
-msgid "Vivace"
-msgstr "Vivace"
-
-#: tune_actions.py:578
-msgid "Presto"
-msgstr "Presto"
-
-#: tune_actions.py:579
-msgid "Prestissimo"
-msgstr "Prestissimo"
-
-#: tune_actions.py:582
-msgid "Change tempo name"
-msgstr "Ändere den Temponamen"
-
-#: tune_actions.py:587
-msgid "Note up"
-msgstr "Note nach oben"
-
-#: tune_actions.py:588
-msgid "Note down"
-msgstr "Note nach unten"
-
-#: tune_actions.py:589
-msgid "Third up"
-msgstr "Terz nach oben"
-
-#: tune_actions.py:590
-msgid "Third down"
-msgstr "Terz nach unten"
-
-#: tune_actions.py:591 tune_actions.py:1105 tune_actions.py:1115
-msgid "Octave up"
-msgstr "Oktave nach oben"
-
-#: tune_actions.py:592 tune_actions.py:1106 tune_actions.py:1116
-msgid "Octave down"
-msgstr "Oktave nach unten"
-
-#: tune_actions.py:596
-msgid "Change pitch"
-msgstr "Ändere die Tonhöhe"
-
-#: tune_actions.py:664
-msgid "Change duration"
-msgstr "Ändere Notenwert"
-
-#: tune_actions.py:791
-msgid "One measure"
-msgstr "Ein Takt"
-
-#: tune_actions.py:792
-msgid "Double measures"
-msgstr "Verdopple Taktanzahl"
-
-#: tune_actions.py:793
-msgid "Half measures"
-msgstr "Halbiere Taktanzahl"
-
-#: tune_actions.py:794
-msgid "Increase measures"
-msgstr "Mehr Takte"
-
-#: tune_actions.py:795
-msgid "Decrease measures"
-msgstr "Weniger Takte"
-
-#: tune_actions.py:796
-msgid "Normal rest"
-msgstr "Normale Pause"
-
-#: tune_actions.py:807 tune_actions.py:821
-msgid "Default length"
-msgstr "Standardwert"
-
-#: tune_actions.py:808 tune_actions.py:822
-msgid "Halve note length"
-msgstr "Notenwert halbieren"
-
-#: tune_actions.py:809 tune_actions.py:823
-msgid "Double note length"
-msgstr "Notenwert verdoppeln"
-
-#: tune_actions.py:810 tune_actions.py:824
-msgid "Dotted note"
-msgstr "Punktierte Note"
-
-#: tune_actions.py:811 tune_actions.py:825
-msgid "This note dotted, next note halved"
-msgstr "Diese Note punktiert, die nächste halbiert"
-
-#: tune_actions.py:812 tune_actions.py:826
-msgid "This note halved, next note dotted"
-msgstr "Diese Note halbiert, die nächste punktiert"
-
-#: tune_actions.py:813
-msgid "Tie / untie"
-msgstr "Überbinden / Bindung lösen"
-
-#: tune_actions.py:827
-msgid "Whole measure"
-msgstr "Ganzer Takt"
-
-#: tune_actions.py:835 tune_actions.py:1783
-msgid "Optional sharp"
-msgstr "Optionales Kreuz"
-
-#: tune_actions.py:836 tune_actions.py:1784
-msgid "Optional natural"
-msgstr "Optionales Auflösungszeichen"
-
-#: tune_actions.py:837 tune_actions.py:1785
-msgid "Optional flat"
-msgstr "Optionales B"
-
-#: tune_actions.py:838
-msgid "Ritenuto"
-msgstr "Ritenuto"
-
-#: tune_actions.py:841
-msgid "Change annotation"
-msgstr "Zusatzbezeichnung ändern"
-
-#: tune_actions.py:847
-msgid "Above"
-msgstr "Oberhalb"
-
-#: tune_actions.py:848
-msgid "Below"
-msgstr "Unterhalb"
-
-#: tune_actions.py:849
-msgid "Left"
-msgstr "Links"
-
-#: tune_actions.py:850
-msgid "Right"
-msgstr "Rechts"
-
-#: tune_actions.py:851
-msgid "Auto"
-msgstr "Automatisch"
-
-#: tune_actions.py:854
-msgid "Position"
-msgstr "Position"
-
-#: tune_actions.py:859
-msgid "Bar line"
-msgstr "Taktstrich"
-
-#: tune_actions.py:860
-msgid "Double bar line"
-msgstr "Doppelter Taktstrich"
-
-#: tune_actions.py:861
-msgid "Thin-thick double bar line"
-msgstr "Dünner/dicker doppelter Taktstrich"
-
-#: tune_actions.py:862
-msgid "Dotted bar"
-msgstr "Gepunkteter Taktstrich"
-
-#: tune_actions.py:863
-msgid "Thick-thin double bar line"
-msgstr "Dicker/dünner doppelter Taktstrich"
-
-#: tune_actions.py:864
-msgid "Start of repeated section"
-msgstr "Beginn der Wiederholung"
-
-#: tune_actions.py:865
-msgid "End of repeated section"
-msgstr "Ende der Wiederholung"
-
-#: tune_actions.py:866
-msgid "First ending"
-msgstr "Erste Klammer"
-
-#: tune_actions.py:867
-msgid "Second ending"
-msgstr "Zweite Klammer"
-
-#: tune_actions.py:868
-msgid "Both end and start of repetition"
-msgstr "Ende und Start einer Wiederholung"
-
-#: tune_actions.py:869 tune_elements.py:954
-msgid "Voice overlay"
-msgstr "Stimm-Überlagerung"
-
-#: tune_actions.py:870
-msgid "Invisible bar"
-msgstr "Unsichtbarer Taktstrich"
-
-#: tune_actions.py:873
-msgid "Change bar"
-msgstr "Taktstrich ändern"
-
-#: tune_actions.py:878 tune_actions.py:887
-msgid "Visible"
-msgstr "Sichtbar"
-
-#: tune_actions.py:879 tune_actions.py:888
-msgid "Hidden"
-msgstr "Unsichtbar"
-
-#: tune_actions.py:882 tune_actions.py:891
-msgid "Visibility"
-msgstr "Sichtbarkeit"
-
-#: tune_actions.py:896
-msgid "Appoggiatura"
-msgstr "Langer Vorschlag (appoggiatura)"
-
-#: tune_actions.py:897
-msgid "Acciaccatura"
-msgstr "Kurzer Vorschlag (acciaccatura)"
-
-#: tune_actions.py:900
-msgid "Appoggiatura/acciaccatura"
-msgstr "Vorschlag (appoggiatura/acciaccatura)"
-
-#: tune_actions.py:942
-msgid "6 sharps"
-msgstr "6 Kreuze"
-
-#: tune_actions.py:943
-msgid "5 sharps"
-msgstr "5 Kreuze"
-
-#: tune_actions.py:944
-msgid "4 sharps"
-msgstr "4 Kreuze"
-
-#: tune_actions.py:945
-msgid "3 sharps"
-msgstr "3 Kreuze"
-
-#: tune_actions.py:946
-msgid "2 sharps"
-msgstr "2 Kreuze"
-
-#: tune_actions.py:947
-msgid "1 sharp"
-msgstr "1 Kreuz"
-
-#: tune_actions.py:948
-msgid "0 sharps/flats"
-msgstr "Ohne Vorzeichen"
-
-#: tune_actions.py:949
-msgid "1 flat"
-msgstr "1 b"
-
-#: tune_actions.py:950
-msgid "2 flats"
-msgstr "2 b"
-
-#: tune_actions.py:951
-msgid "3 flats"
-msgstr "2 b"
-
-#: tune_actions.py:952
-msgid "4 flats"
-msgstr "4 b"
-
-#: tune_actions.py:953
-msgid "5 flats"
-msgstr "5 b"
-
-#: tune_actions.py:954
-msgid "6 flats"
-msgstr "6 b"
-
-#: tune_actions.py:955 tune_actions.py:1062 tune_actions.py:2162
-#: easy_abc.py:2971 easy_abc.py:2973
-msgid "None"
-msgstr "Kein(e)"
-
-#: tune_actions.py:958 easy_abc.py:3836
-msgid "Key signature"
-msgstr "Tonart"
-
-#: tune_actions.py:1006
-msgid "Major (Ionian)"
-msgstr "Dur (Ionisch)"
-
-#: tune_actions.py:1007
-msgid "Minor (Aeolian)"
-msgstr "Moll (Aeolisch)"
-
-#: tune_actions.py:1008
-msgid "Dorian"
-msgstr "Dorisch"
-
-#: tune_actions.py:1009
-msgid "Mixolydian"
-msgstr "Mixolydisch"
-
-#: tune_actions.py:1010
-msgid "Phrygian"
-msgstr "Phrygisch"
-
-#: tune_actions.py:1011
-msgid "Lydian"
-msgstr "Lydisch"
-
-#: tune_actions.py:1012
-msgid "Locrian"
-msgstr "Lokrisch"
-
-#: tune_actions.py:1015
-msgid "Mode"
-msgstr "Modus"
-
-#: tune_actions.py:1053 tune_actions.py:1094 tune_actions.py:1104
-#: tune_actions.py:1114
-msgid "Default"
-msgstr "Vorgabe"
-
-#: tune_actions.py:1054
-msgid "Treble clef"
-msgstr "Violinschlüssel"
-
-#: tune_actions.py:1055
-msgid "Bass clef"
-msgstr "Bassschlüssel"
-
-#: tune_actions.py:1056
-msgid "Tenor clef"
-msgstr "Tenorschlüssel"
-
-#: tune_actions.py:1057
-msgid "Alto clef"
-msgstr "Altschlüssel"
-
-#: tune_actions.py:1058
-msgid "Soprano clef"
-msgstr "Sopranschlüssel"
-
-#: tune_actions.py:1059
-msgid "Mezzo-soprano clef"
-msgstr "Mezzosoparanschlüssel"
-
-#: tune_actions.py:1060
-msgid "Baritone clef"
-msgstr "Baritonschlüssel"
-
-#: tune_actions.py:1061
-msgid "Percussion clef"
-msgstr "Perkussionsschlüssel"
-
-#: tune_actions.py:1065
-msgid "Clef"
-msgstr "Notenschlüssel"
-
-#: tune_actions.py:1095
-msgid "Octave higher (8va)"
-msgstr "Oktave höher (8va)"
-
-#: tune_actions.py:1096
-msgid "Octave lower (8va bassa)"
-msgstr "Oktave tiefer (8va bassa)"
-
-#: tune_actions.py:1099
-msgid "Staff transpose"
-msgstr "Notentransponierung"
-
-#: tune_actions.py:1109
-msgid "Playback transpose"
-msgstr "Wiedegabetransponierung"
-
-#: tune_actions.py:1119
-msgid "Octave shift"
-msgstr "Oktavverschiebung"
-
-#: tune_actions.py:1155
-msgid "Change dynamics mark"
-msgstr "Ändere Dynamikzeichen"
-
-#: tune_actions.py:1160
-msgid "Change fingering"
-msgstr "Ändere Fingersatz"
-
-#: tune_actions.py:1165
-msgid "Change ornament"
-msgstr "Ändere Verzierung"
-
-#: tune_actions.py:1170
-msgid "Change direction marker"
-msgstr "Ändere Richtungsangabe"
-
-#: tune_actions.py:1175
-msgid "Change articulation marker"
-msgstr "Ändere Ausdruckszeichen"
-
-#: tune_actions.py:1180
-msgid "Change chord"
-msgstr "Ändere Akkord"
-
-#: tune_actions.py:1213
-msgid "Major"
-msgstr "Dur"
-
-#: tune_actions.py:1214
-msgid "Minor"
-msgstr "Moll"
-
-#: tune_actions.py:1215
-msgid "Diminished"
-msgstr "Vermindert"
-
-#: tune_actions.py:1216
-msgid "Augmented"
-msgstr "Übermäßig"
-
-#: tune_actions.py:1217
-msgid "Suspended"
-msgstr "Vorhalt"
-
-#: tune_actions.py:1218
-msgid "Suspended (2nd)"
-msgstr "Vorhalt (Sekunde statt Terz)"
-
-#: tune_actions.py:1219
-msgid "Seventh"
-msgstr "Sept"
-
-#: tune_actions.py:1220
-msgid "Major seventh"
-msgstr "Dur Septime"
-
-#: tune_actions.py:1222
-msgid "Minor seventh"
-msgstr "Moll Septime"
-
-#: tune_actions.py:1224
-msgid "Augmented seventh"
-msgstr "Übermäßige Septime"
-
-#: tune_actions.py:1225
-msgid "Diminished seventh"
-msgstr "Verminderte Septime"
-
-#: tune_actions.py:1226
-msgid "Major sixth"
-msgstr "Dur Sext"
-
-#: tune_actions.py:1227
-msgid "Minor sixth"
-msgstr "Moll Sext"
-
-#: tune_actions.py:1228
-msgid "Half-diminished seventh"
-msgstr "Halbverminderte Septime"
-
-#: tune_actions.py:1230
-msgid "Power-chord (no third)"
-msgstr "Ohne Terz (Power-Chord)"
-
-#: tune_actions.py:1231
-msgid "Seventh suspended"
-msgstr "Septime vorgehalten"
-
-#: tune_actions.py:1232
-msgid "Seventh suspended (2nd)"
-msgstr "Septime vorgehalten (Sek. statt Terz)"
-
-#: tune_actions.py:1233
-msgid "Dominant 9th"
-msgstr "Dominant None"
-
-#: tune_actions.py:1235
-msgid "Major 9th"
-msgstr "Dur None"
-
-#: tune_actions.py:1236
-msgid "Minor Dominant 9th"
-msgstr "Moll Dominant None"
-
-#: tune_actions.py:1243
-msgid "Dominant 11th"
-msgstr "Dominant Undezime"
-
-#: tune_actions.py:1246
-msgid "Change chord name"
-msgstr "Ändere Akkordnamen"
-
-#: tune_actions.py:1254
-msgid "Root position"
-msgstr "Grundakkord (Tonika)"
-
-#: tune_actions.py:1255
-msgid "First inversion"
-msgstr "Erste Umkehrung"
-
-#: tune_actions.py:1256
-msgid "Second inversion"
-msgstr "Zweite Umkehrung"
-
-#: tune_actions.py:1259
-msgid "Change bass note"
-msgstr "Ändere die Bassnote"
-
-#: tune_actions.py:1267 tune_actions.py:2174
-msgid "Normal"
-msgstr "Normal"
-
-#: tune_actions.py:1268
-msgid "Dashed"
-msgstr "Gestrichtelt"
-
-#: tune_actions.py:1271
-msgid "Change slur"
-msgstr "Ändere den Bindebogen"
-
-#: tune_actions.py:1276
-msgid "Change redefinable symbol"
-msgstr "Ändere das umdefinierbare Symbol"
-
-#: tune_actions.py:1302
-msgid "Change instrument"
-msgstr "Ändere das Instrument"
-
-#: tune_actions.py:1313
-msgid "Change channel"
-msgstr "Ändere den Kanal"
-
-# MIDI percussion instrument names are currently not translated
-#: tune_actions.py:1322
-msgid "High Q"
-msgstr ""
-
-#: tune_actions.py:1323
-msgid "Slap"
-msgstr ""
-
-#: tune_actions.py:1324
-msgid "Scratch Push"
-msgstr ""
-
-#: tune_actions.py:1325
-msgid "Scratch Pull"
-msgstr ""
-
-#: tune_actions.py:1326
-msgid "Sticks"
-msgstr ""
-
-#: tune_actions.py:1327
-msgid "Square Click"
-msgstr ""
-
-#: tune_actions.py:1328
-msgid "Metronome Click"
-msgstr ""
-
-#: tune_actions.py:1329
-msgid "Metronome Bell"
-msgstr ""
-
-#: tune_actions.py:1330
-msgid "Acoustic Bass Drum"
-msgstr ""
-
-#: tune_actions.py:1331
-msgid "Bass Drum 1"
-msgstr ""
-
-#: tune_actions.py:1332
-msgid "Side Stick"
-msgstr ""
-
-#: tune_actions.py:1333
-msgid "Acoustic Snare"
-msgstr ""
-
-#: tune_actions.py:1334
-msgid "Hand Clap"
-msgstr ""
-
-#: tune_actions.py:1335
-msgid "Electric Snare"
-msgstr ""
-
-#: tune_actions.py:1336
-msgid "Low Floor Tom"
-msgstr ""
-
-#: tune_actions.py:1337
-msgid "Closed Hi Hat"
-msgstr ""
-
-#: tune_actions.py:1338
-msgid "High Floor Tom"
-msgstr ""
-
-#: tune_actions.py:1339
-msgid "Pedal Hi-Hat"
-msgstr ""
-
-#: tune_actions.py:1340
-msgid "Low Tom"
-msgstr ""
-
-#: tune_actions.py:1341
-msgid "Open Hi-Hat"
-msgstr ""
-
-#: tune_actions.py:1342
-msgid "Low-Mid Tom"
-msgstr ""
-
-#: tune_actions.py:1343
-msgid "Hi Mid Tom"
-msgstr ""
-
-#: tune_actions.py:1344
-msgid "Crash Cymbal 1"
-msgstr ""
-
-#: tune_actions.py:1345
-msgid "High Tom"
-msgstr ""
-
-#: tune_actions.py:1346
-msgid "Ride Cymbal 1"
-msgstr ""
-
-#: tune_actions.py:1347
-msgid "Chinese Cymbal"
-msgstr ""
-
-#: tune_actions.py:1348
-msgid "Ride Bell"
-msgstr ""
-
-#: tune_actions.py:1349
-msgid "Tambourine"
-msgstr ""
-
-#: tune_actions.py:1350
-msgid "Splash Cymbal"
-msgstr ""
-
-#: tune_actions.py:1351
-msgid "Cowbell"
-msgstr ""
-
-#: tune_actions.py:1352
-msgid "Crash Cymbal 2"
-msgstr ""
-
-#: tune_actions.py:1353
-msgid "Vibraslap"
-msgstr ""
-
-#: tune_actions.py:1354
-msgid "Ride Cymbal 2"
-msgstr ""
-
-#: tune_actions.py:1355
-msgid "Hi Bongo"
-msgstr ""
-
-#: tune_actions.py:1356
-msgid "Low Bongo"
-msgstr ""
-
-#: tune_actions.py:1357
-msgid "Mute Hi Conga"
-msgstr ""
-
-#: tune_actions.py:1358
-msgid "Open Hi Conga"
-msgstr ""
-
-#: tune_actions.py:1359
-msgid "Low Conga"
-msgstr ""
-
-#: tune_actions.py:1360
-msgid "High Timbale"
-msgstr ""
-
-#: tune_actions.py:1361
-msgid "Low Timbale"
-msgstr ""
-
-#: tune_actions.py:1362
-msgid "High Agogo"
-msgstr ""
-
-#: tune_actions.py:1363
-msgid "Low Agogo"
-msgstr ""
-
-#: tune_actions.py:1364
-msgid "Cabasa"
-msgstr ""
-
-#: tune_actions.py:1365
-msgid "Maracas"
-msgstr ""
-
-#: tune_actions.py:1366
-msgid "Short Whistle"
-msgstr ""
-
-#: tune_actions.py:1367
-msgid "Long Whistle"
-msgstr ""
-
-#: tune_actions.py:1368
-msgid "Short Guiro"
-msgstr ""
-
-#: tune_actions.py:1369
-msgid "Long Guiro"
-msgstr ""
-
-#: tune_actions.py:1370
-msgid "Claves"
-msgstr ""
-
-#: tune_actions.py:1371
-msgid "Hi Wood Block"
-msgstr ""
-
-#: tune_actions.py:1372
-msgid "Low Wood Block"
-msgstr ""
-
-#: tune_actions.py:1373
-msgid "Mute Cuica"
-msgstr ""
-
-#: tune_actions.py:1374
-msgid "Open Cuica"
-msgstr ""
-
-#: tune_actions.py:1375
-msgid "Mute Triangle"
-msgstr ""
-
-#: tune_actions.py:1376
-msgid "Open Triangle"
-msgstr ""
-
-#: tune_actions.py:1377
-msgid "Shaker"
-msgstr ""
-
-#: tune_actions.py:1378
-msgid "Jingle Bell"
-msgstr ""
-
-#: tune_actions.py:1379
-msgid "Belltree"
-msgstr ""
-
-#: tune_actions.py:1380
-msgid "Castanets"
-msgstr ""
-
-#: tune_actions.py:1381
-msgid "Closed Surdo"
-msgstr ""
-
-#: tune_actions.py:1382
-msgid "Open Surdo"
-msgstr ""
-
-#: tune_actions.py:1385
-msgid "Change percussion instrument"
-msgstr "Ändere das Schlaginstrument"
-
-#: tune_actions.py:1391
-msgid "Muted"
-msgstr "Stumm"
-
-#: tune_actions.py:1404
-msgid "Change volume"
-msgstr "Ändere die Lautstärke"
-
-#: tune_actions.py:1421 tune_actions.py:1422 tune_actions.py:1423
-#: tune_actions.py:1424 tune_actions.py:1425 tune_actions.py:1429
-#: tune_actions.py:1430 tune_actions.py:1431 tune_actions.py:1432
-#: tune_actions.py:1433
-msgid "Preset"
-msgstr "Voreinstellung"
-
-#: tune_actions.py:1426 tune_actions.py:1434
-msgid "Custom"
-msgstr "Benutzerdefiniert"
-
-#: tune_actions.py:1437
-msgid "Change guitar pattern"
-msgstr "Ändere das Gitarrenmuster"
-
-#: tune_actions.py:1452
-msgid "Fundamental"
-msgstr "Grundbass"
-
-#: tune_actions.py:1453 tune_elements.py:1024
-msgid "Chord"
-msgstr "Akkord"
-
-#: tune_actions.py:1454 tune_elements.py:1043
-msgid "Rest"
-msgstr "Pause"
-
-#: tune_actions.py:1455
-msgid "Double duration"
-msgstr "Doppelte Länge"
-
-#: tune_actions.py:1456
-msgid "Fundamental plus chord"
-msgstr "Grundbass + Akkord"
-
-#: tune_actions.py:1457 tune_actions.py:1461
-msgid "Lowest note"
-msgstr "Tiefste Note"
-
-#: tune_actions.py:1458 tune_actions.py:1462
-msgid "Second note"
-msgstr "Zweite Note"
-
-#: tune_actions.py:1459 tune_actions.py:1463
-msgid "Third note"
-msgstr "Dritte Note"
-
-#: tune_actions.py:1460 tune_actions.py:1464
-msgid "Fourth note"
-msgstr "Vierte Note"
-
-#: tune_actions.py:1461 tune_actions.py:1462 tune_actions.py:1463
-#: tune_actions.py:1464
-msgid "an octave higher"
-msgstr "Oktave höher"
-
-#: tune_actions.py:1467
-msgid "Insert pattern"
-msgstr "Muster eingeben"
-
-#: tune_actions.py:1472
-msgid "Change time"
-msgstr "Zeit ändern"
-
-#: tune_actions.py:1477
-msgid "Double time"
-msgstr "Doppelte Zeit"
-
-#: tune_actions.py:1480
-msgid "Half time"
-msgstr "Halbe Zeit"
-
-#: tune_actions.py:1527
-#, python-brace-format
-msgid "Learn {0}..."
-msgstr "Lerne {0}..."
-
-#: tune_actions.py:1530
-msgid "more"
-msgstr "mehr"
-
-#: tune_actions.py:1593
-msgid "Full ABC specification"
-msgstr "Vollständige ABC-Spezifikation (englisch)"
-
-#: tune_actions.py:1605
-msgid "New tune"
-msgstr "Neues Stück"
-
-#: tune_actions.py:1614 tune_actions.py:2299 easy_abc.py:4396 easy_abc.py:4798
-#: easy_abc.py:6258
-msgid "Untitled"
-msgstr "Unbenannt"
-
-#: tune_actions.py:1615
-msgid "Unknown composer"
-msgstr "Unbekannter Komponist"
-
-#: tune_actions.py:1633
-msgid "New tune with multiple voices"
-msgstr "Neues mehrstimmiges Stück"
-
-#: tune_actions.py:1659
-msgid "New drum score"
-msgstr "Neue Schlagzeug-Notation"
-
-#: tune_actions.py:1683
-msgid "Add voice"
-msgstr "Stimme hinzufügen"
-
-#: tune_actions.py:1699
-msgid "Replace invalid characters"
-msgstr "Fehlerhafte Zeichen ersetzen"
-
-#: tune_actions.py:1721
-msgid "New line"
-msgstr "Neue Zeile"
-
-#: tune_actions.py:1736
-msgid "Space"
-msgstr "Leerraum"
-
-#: tune_actions.py:1752
-msgid "New note/rest"
-msgstr "Neue Note/Pause"
-
-#: tune_actions.py:1781 tune_elements.py:968 tune_elements.py:1034
-msgid "Chord symbol"
-msgstr "Akkordsymbol"
-
-#: tune_actions.py:1782
-msgid "Between parenthesis"
-msgstr "In Klammern"
-
-#: tune_actions.py:1788
-msgid "Insert annotation or chord"
-msgstr "Füge Anmerkung oder Akkord ein"
-
-#: tune_actions.py:1799 easy_abc.py:7053 tune_elements.py:850
-msgid "Dynamics"
-msgstr "Dynamik"
-
-#: tune_actions.py:1800 tune_elements.py:874
-msgid "Ornament"
-msgstr "Verzierung"
-
-#: tune_actions.py:1801 tune_elements.py:916
-msgid "Articulation"
-msgstr "Artikulation"
-
-#: tune_actions.py:1802 tune_elements.py:892
-msgid "Direction"
-msgstr "Ablaufanweisung"
-
-#: tune_actions.py:1803
-msgid "Shortcut symbol"
-msgstr "Code-Kürzel"
-
-#: tune_actions.py:1804 tune_elements.py:856
-msgid "Fingering"
-msgstr "Fingersatz"
-
-#: tune_actions.py:1805
-msgid "Accidental"
-msgstr "Redaktionelles Zeichen"
-
-#: tune_actions.py:1808
-msgid "Insert decoration"
-msgstr "Füge Symbol ein"
-
-#: tune_actions.py:1819
-msgid "Add slur"
-msgstr "Füge Bindebogen ein"
-
-#: tune_actions.py:1830
-msgid "Add bar"
-msgstr "Füge Taktstrich ein"
-
-#: tune_actions.py:1872
-msgid "Combine using beam"
-msgstr "Verbinde mit Balken"
-
-#: tune_actions.py:1884
-msgid "Combine to chord"
-msgstr "Kombiniere zu Akkord"
-
-#: tune_actions.py:1896
-msgid "Make triplets"
-msgstr "Erzeuge Triolen"
-
-#: tune_actions.py:1908
-msgid "Show single voice"
-msgstr "Zeige einzelne Stimme"
-
-#: tune_actions.py:1942
-msgid "Show all voices"
-msgstr "Zeige alle Stimmen"
-
-#: tune_actions.py:1961
-msgid "Show additional voice"
-msgstr "Zeige weitere Stimme"
-
-#: tune_actions.py:1993
-msgid "Hide voice"
-msgstr "Stimme verbergen"
-
-#: tune_actions.py:2031
-msgid "Group together on same stave"
-msgstr "In der gleichen Notenzeile gruppieren"
-
-#: tune_actions.py:2044
-msgid "Brace together"
-msgstr "Mit geschweifter Klammer"
-
-#: tune_actions.py:2057
-msgid "Bracket together"
-msgstr "Mit eckiger Klammer"
-
-#: tune_actions.py:2062
-msgid "Toggle continued bar lines"
-msgstr "Durchgehende Taktstriche ein/aus"
-
-#: tune_actions.py:2079
-msgid "Simplify note"
-msgstr "Note vereinfachen"
-
-#: tune_actions.py:2101 tune_elements.py:80
-msgid "Book"
-msgstr "Buch"
-
-#: tune_actions.py:2102 easy_abc.py:4032 tune_elements.py:81
-msgid "Composer"
-msgstr "Komponist"
-
-#: tune_actions.py:2103 tune_elements.py:82
-msgid "Discography"
-msgstr "Diskografie"
-
-#: tune_actions.py:2104 tune_elements.py:83
-msgid "File url"
-msgstr "Datei URI"
-
-#: tune_actions.py:2105 tune_elements.py:84
-msgid "Group"
-msgstr "Gruppe"
-
-#: tune_actions.py:2106 tune_elements.py:85
-msgid "History"
-msgstr "Geschichte"
-
-#: tune_actions.py:2107 tune_elements.py:91
-msgid "Notes"
-msgstr "Notizen"
-
-#: tune_actions.py:2108 tune_elements.py:92
-msgid "Origin"
-msgstr "Herkunft"
-
-#: tune_actions.py:2109 tune_elements.py:93
-msgid "Parts"
-msgstr "Abschnitte"
-
-#: tune_actions.py:2110 easy_abc.py:5529 tune_elements.py:94
-msgid "Tempo"
-msgstr "Tempo"
-
-#: tune_actions.py:2111 tune_elements.py:95
-msgid "Rhythm"
-msgstr "Rhythmus"
-
-#: tune_actions.py:2112 tune_elements.py:97
-msgid "Source"
-msgstr "Quelle"
-
-#: tune_actions.py:2113 tune_elements.py:99
-msgid "Tune title"
-msgstr "Titel des Stückes"
-
-#: tune_actions.py:2114 tune_elements.py:102
-msgid "Words (note aligned)"
-msgstr "Liedtext (ausgerichtet an Noten)"
-
-#: tune_actions.py:2115 tune_elements.py:103
-msgid "Words (at the end)"
-msgstr "Liedtext (am Ende)"
-
-#: tune_actions.py:2116 tune_elements.py:104
-msgid "Reference number"
-msgstr "Referenznummer"
-
-#: tune_actions.py:2117 tune_elements.py:105
-msgid "Transcription"
-msgstr "Transkription"
-
-#: tune_actions.py:2120
-msgid "Fields"
-msgstr "Felder"
-
-#: tune_actions.py:2147 tune_actions.py:2151 tune_actions.py:2152
-msgid "Page width"
-msgstr "Seitenbreite"
-
-#: tune_actions.py:2148
-msgid "Page height"
-msgstr "Seitenhöhe"
-
-#: tune_actions.py:2149
-msgid "Top margin"
-msgstr "Oberer Rand"
-
-#: tune_actions.py:2150
-msgid "Bottom margin"
-msgstr "Unterer Rand"
-
-#: tune_actions.py:2153
-msgid "Staff width"
-msgstr "Bereite des Notensystems"
-
-#: tune_actions.py:2154
-msgid "Page orientation"
-msgstr "Seitenausrichtung"
-
-#: tune_actions.py:2157
-msgid "Change page format"
-msgstr "Ändere Seitenformat"
-
-#: tune_actions.py:2163
-msgid "Start of every line"
-msgstr "Zeilenanfang"
-
-#: tune_actions.py:2164
-msgid "Every measure"
-msgstr "Jeden Takt"
-
-#: tune_actions.py:2165
-msgid "Every 4 measures"
-msgstr "Alle vier Takte"
-
-#: tune_actions.py:2166
-msgid "Every 5 measures"
-msgstr "Alle fünf Takte"
-
-#: tune_actions.py:2169
-msgid "Show measure numbers"
-msgstr "Zeige Taktnummern"
-
-#: tune_actions.py:2175
-msgid "Boxed"
-msgstr "Umrahmt"
-
-#: tune_actions.py:2178
-msgid "Show measure box"
-msgstr "Umrahmte Taktnummer"
-
-#: tune_actions.py:2183
-msgid "Zero"
-msgstr "Null"
-
-#: tune_actions.py:2184
-msgid "One"
-msgstr "Eins"
-
-#: tune_actions.py:2187
-msgid "First measure number"
-msgstr "Erste Taktnummer"
-
-#: tune_actions.py:2192
-msgid "Title font"
-msgstr "Schriftart für Titel"
-
-#: tune_actions.py:2193
-msgid "Subtitle font"
-msgstr "Schriftart für Untertitel"
-
-#: tune_actions.py:2194
-msgid "Composer font"
-msgstr "Schriftart für Komponist"
-
-#: tune_actions.py:2195
-msgid "Parts font"
-msgstr "Schriftart für Abschnitte"
-
-#: tune_actions.py:2196
-msgid "Tempo font"
-msgstr "Schriftart für Tempo"
-
-#: tune_actions.py:2197
-msgid "Guitar chord font"
-msgstr "Schriftart für Gitarrenakkorde"
-
-#: tune_actions.py:2198
-msgid "Annotation font"
-msgstr "Schriftart für Anmerkungen"
-
-#: tune_actions.py:2199
-msgid "Info font"
-msgstr "Schriftart für Informationen"
-
-#: tune_actions.py:2200
-msgid "Text font"
-msgstr "Schriftart für Text"
-
-#: tune_actions.py:2201
-msgid "Vocal font"
-msgstr "Schriftart für Singstimme"
-
-#: tune_actions.py:2202
-msgid "Words font"
-msgstr "Schriftart für Liedtexte"
-
-#: tune_actions.py:2203
-msgid "Custom font 1"
-msgstr "Benutzerdefinierte Schriftart 1"
-
-#: tune_actions.py:2204
-msgid "Custom font 2"
-msgstr "Benutzerdefinierte Schriftart 2"
-
-#: tune_actions.py:2205
-msgid "Custom font 3"
-msgstr "Benutzerdefinierte Schriftart 3"
-
-#: tune_actions.py:2206
-msgid "Custom font 4"
-msgstr "Benutzerdefinierte Schriftart 4"
-
-#: tune_actions.py:2209
-msgid "Change font directive"
-msgstr "Ändere Schriftart"
-
-#: tune_actions.py:2214 tune_actions.py:2224
-msgid "Page scale factor"
-msgstr "Skalierungsfaktor der Seite"
-
-#: tune_actions.py:2215
-msgid "Staff scale factor"
-msgstr "Skalierungsfaktor des Notensystems"
-
-#: tune_actions.py:2218
-msgid "Change scale directive"
-msgstr "Ändere die Skalierung"
-
-#: tune_actions.py:2223 tune_elements.py:638
-msgid "Score layout"
-msgstr "Partitur-Layout"
-
-#: tune_actions.py:2225 tune_elements.py:646
-msgid "Measure numbering"
-msgstr "Taktnumerierung"
-
-#: tune_actions.py:2226 tune_elements.py:654
-msgid "Hide fields"
-msgstr "Felder verbergen"
-
-#: tune_actions.py:2227
-msgid "Playback"
-msgstr "Wiedegabe"
-
-#: tune_actions.py:2230
-msgid "Insert directive"
-msgstr "Anweisung einfügen"
-
-#: tune_actions.py:2238 tune_elements.py:591
-msgid "Chord instrument"
-msgstr "Akkord-Instrument"
-
-#: tune_actions.py:2239
-msgid "Chord volume"
-msgstr "Akkordlautstärke"
-
-#: tune_actions.py:2240 tune_elements.py:598
-msgid "Bass instrument"
-msgstr "Bass-Instrument"
-
-#: tune_actions.py:2241
-msgid "Bass volume"
-msgstr "Bass-Lautstärke"
-
-#: tune_actions.py:2243
-msgid "Accompaniment pattern (optional). Place after line with M:"
-msgstr "Begleitmuster (optional). Einfügen nach Zeile mit M:"
-
-#: tune_actions.py:2246 tune_elements.py:584
-msgid "Instrument"
-msgstr "Instrument"
-
-#: tune_actions.py:2246
-msgid "Set instrument"
-msgstr "Instrument einstellen"
-
-#: tune_actions.py:2247 tune_elements.py:622
-msgid "Volume"
-msgstr "Lautstärke"
-
-#: tune_actions.py:2247
-msgid "Set volume"
-msgstr "Lautstärke einstellen"
-
-#: tune_actions.py:2249 easy_abc.py:2560
-msgid "Play chords"
-msgstr "Akkorde wiedergeben"
-
-#: tune_actions.py:2252
-msgid "Insert playback directive"
-msgstr "Spielanweisung einfügen"
-
-#: tune_actions.py:2257
-msgid "break between syllables within a word"
-msgstr "Umbruch zwischen Silben eines Wortes"
-
-#: tune_actions.py:2258
-msgid "previous syllable is to be held for an extra note"
-msgstr "vorherige Silbe halten für eine weitere Note"
-
-#: tune_actions.py:2259
-msgid "one note is skipped (* is equivalent to a blank syllable)"
-msgstr "eine Note auslassen ('*' entspricht leerer Silbe)"
-
-#: tune_actions.py:2260
-msgid "appears as a space; aligns multiple words under one note"
-msgstr "erscheint als Leerzeichen; mehrere Worte unter einer Note"
-
-#: tune_actions.py:2261
-msgid "appears as hyphen; aligns multiple syllables under one note"
-msgstr "erscheint als Bindestrich; mehrere Silben unter einer Note"
-
-#: tune_actions.py:2262 tune_actions.py:2271
-msgid "advances to the next bar"
-msgstr "geht zum nächsten Takt"
-
-#: tune_actions.py:2265 tune_actions.py:2274
-msgid "Insert align symbol"
-msgstr "Ausrichtungssymbol einfügen"
-
-#: tune_actions.py:2270
-msgid "one note is skipped"
-msgstr "eine Note wird augelassen"
-
-#: tune_actions.py:2279 tune_actions.py:2312 tune_actions.py:2331
-msgid "Key / clef"
-msgstr "Tonart / Schlüssel"
-
-#: tune_actions.py:2284 tune_actions.py:2338
-msgid "Change..."
-msgstr "Ändern ..."
-
-#: tune_actions.py:2315 tune_actions.py:2352
-msgid "Add..."
-msgstr "Einfügen..."
-
-#: tune_actions.py:2373
-msgid "Remove"
-msgstr "Entfernen"
 
 #: easy_abc.py:1035 easy_abc.py:1061 easy_abc.py:1573 easy_abc.py:1659
 #: easy_abc.py:9300
@@ -1831,6 +302,10 @@ msgstr ""
 msgid "Proceed?"
 msgstr "Fortsetzen?"
 
+#: easy_abc.py:2560 tune_actions.py:2249
+msgid "Play chords"
+msgstr "Akkorde wiedergeben"
+
 #: easy_abc.py:2561
 msgid "Ignore Dynamics"
 msgstr "Dynamik ignorieren"
@@ -2006,6 +481,11 @@ msgstr "Midi-Eingabegerät"
 #: easy_abc.py:2969
 msgid "Output device"
 msgstr "Midi-Ausgabegerät"
+
+#: easy_abc.py:2971 easy_abc.py:2973 tune_actions.py:955 tune_actions.py:1062
+#: tune_actions.py:2162
+msgid "None"
+msgstr "Kein(e)"
 
 #: easy_abc.py:3054
 msgid ""
@@ -2381,6 +861,10 @@ msgstr ""
 msgid "ABC Options"
 msgstr "ABC-Einstellungen"
 
+#: easy_abc.py:3836 tune_actions.py:958
+msgid "Key signature"
+msgstr "Tonart"
+
 #: easy_abc.py:3837 easy_abc.py:5472
 msgid "Metre"
 msgstr "Taktart"
@@ -2435,6 +919,10 @@ msgstr "Konvertiere..."
 msgid "Find what"
 msgstr "Wonach suchen"
 
+#: easy_abc.py:4032 tune_actions.py:2102 tune_elements.py:81
+msgid "Composer"
+msgstr "Komponist"
+
 #: easy_abc.py:4032
 msgid "Lyrics"
 msgstr "Liedtext"
@@ -2488,6 +976,11 @@ msgstr "{0} Ergebnisse gefunden"
 #, python-brace-format
 msgid "Next {0} results"
 msgstr "Nächste {0} Ergebnisse"
+
+#: easy_abc.py:4396 easy_abc.py:4798 easy_abc.py:6258 tune_actions.py:1614
+#: tune_actions.py:2299
+msgid "Untitled"
+msgstr "Unbenannt"
 
 #: easy_abc.py:4529
 msgid "No."
@@ -2559,6 +1052,10 @@ msgstr "Zoom"
 #: easy_abc.py:5524
 msgid "Page"
 msgstr "Seite"
+
+#: easy_abc.py:5529 tune_actions.py:2110 tune_elements.py:94
+msgid "Tempo"
+msgstr "Tempo"
 
 #: easy_abc.py:5532
 msgid "Play position"
@@ -3205,6 +1702,10 @@ msgstr "Notenornamente"
 msgid "Directions"
 msgstr "Anweisungen"
 
+#: easy_abc.py:7053 tune_actions.py:1799 tune_elements.py:850
+msgid "Dynamics"
+msgstr "Dynamik"
+
 #: easy_abc.py:7055
 msgid "&Transpose"
 msgstr "&Transponieren"
@@ -3511,6 +2012,1505 @@ msgstr "Liste der Stücke"
 #: easy_abc.py:9719
 msgid "Processed Abc Tune"
 msgstr "Verarbeitetes ABC-Stück"
+
+#: tune_actions.py:286
+msgid "Less options"
+msgstr "Weniger Optionen"
+
+#: tune_actions.py:288
+msgid "More options"
+msgstr "Mehr Optionen"
+
+#: tune_actions.py:427
+msgid "Convert to annotation"
+msgstr "In Anmerkung umwandeln"
+
+#: tune_actions.py:461
+msgid "No accidental"
+msgstr "Kein Vorzeichen"
+
+#: tune_actions.py:462
+msgid "Natural"
+msgstr "Aufgelöst"
+
+#: tune_actions.py:463
+msgid "Sharp"
+msgstr "Kreuz"
+
+#: tune_actions.py:464
+msgid "Flat"
+msgstr "b"
+
+#: tune_actions.py:465
+msgid "Double sharp"
+msgstr "Doppel-Kreuz"
+
+#: tune_actions.py:466
+msgid "Double flat"
+msgstr "Doppel-b"
+
+#: tune_actions.py:467
+msgid "Half sharp"
+msgstr "Vierteltonkreuz"
+
+#: tune_actions.py:468
+msgid "Half flat"
+msgstr "Viertelton-b"
+
+#: tune_actions.py:469
+msgid "Sharp and a half"
+msgstr "Dreivierteltonkreuz"
+
+#: tune_actions.py:470
+msgid "Flat and a half"
+msgstr "Dreiviertelton-b"
+
+#: tune_actions.py:473
+msgid "Change accidental"
+msgstr "Vorzeichen ändern"
+
+#: tune_actions.py:478
+msgid "Common time (4/4)"
+msgstr "Semicircolo (C=4/4)"
+
+#: tune_actions.py:479
+msgid "Cut time (2/2)"
+msgstr "Alla breve (2/2)"
+
+#: tune_actions.py:480
+msgid "2/4"
+msgstr "2/4"
+
+#: tune_actions.py:481
+msgid "3/4"
+msgstr "3/4"
+
+#: tune_actions.py:482
+msgid "4/4"
+msgstr "4/4"
+
+#: tune_actions.py:483
+msgid "6/4"
+msgstr "6/4"
+
+#: tune_actions.py:484
+msgid "6/8"
+msgstr "6/8"
+
+#: tune_actions.py:485
+msgid "9/8"
+msgstr "9/8"
+
+#: tune_actions.py:486
+msgid "12/8"
+msgstr "12/8"
+
+#: tune_actions.py:489
+msgid "Change meter"
+msgstr "Takt ändern"
+
+#: tune_actions.py:494 tune_actions.py:506
+msgid "half note"
+msgstr "halbe Note"
+
+#: tune_actions.py:495 tune_actions.py:508
+msgid "quarter note"
+msgstr "viertel Note"
+
+#: tune_actions.py:496 tune_actions.py:509
+msgid "eighth note"
+msgstr "achtel Note"
+
+#: tune_actions.py:497 tune_actions.py:510
+msgid "sixteenth note"
+msgstr "sechzehntel Note"
+
+#: tune_actions.py:500 tune_actions.py:513
+msgid "Change note length"
+msgstr "Ändere den Notenwert"
+
+#: tune_actions.py:505
+msgid "three quarter note"
+msgstr "drei viertel Note"
+
+#: tune_actions.py:507
+msgid "three eighth note"
+msgstr "drei achtel Note"
+
+#: tune_actions.py:518
+msgid "Change second note length"
+msgstr "Ändere den zweiten Notenwert"
+
+#: tune_actions.py:523
+msgid "Only name"
+msgstr "Nur Name"
+
+#: tune_actions.py:524
+msgid "Only speed"
+msgstr "Nur Geschwindigkeit"
+
+#: tune_actions.py:525
+msgid "Name & speed"
+msgstr "Name und Geschwindigkeit"
+
+#: tune_actions.py:528
+msgid "Change tempo notation"
+msgstr "Ändere die Tempoangabe"
+
+#: tune_actions.py:566
+msgid "Larghissimo"
+msgstr "Larghissimo"
+
+#: tune_actions.py:567
+msgid "Grave"
+msgstr "Grave"
+
+#: tune_actions.py:568
+msgid "Lento"
+msgstr "Lento"
+
+#: tune_actions.py:569
+msgid "Largo"
+msgstr "Largo"
+
+#: tune_actions.py:570
+msgid "Adagio"
+msgstr "Adagio"
+
+#: tune_actions.py:571
+msgid "Adagietto"
+msgstr "Adagietto"
+
+#: tune_actions.py:572
+msgid "Andante"
+msgstr "Andante"
+
+#: tune_actions.py:573
+msgid "Andantino"
+msgstr "Andantino"
+
+#: tune_actions.py:574
+msgid "Moderato"
+msgstr "Moderato"
+
+#: tune_actions.py:575
+msgid "Allegretto"
+msgstr "Allegretto"
+
+#: tune_actions.py:576
+msgid "Allegro"
+msgstr "Allegro"
+
+#: tune_actions.py:577
+msgid "Vivace"
+msgstr "Vivace"
+
+#: tune_actions.py:578
+msgid "Presto"
+msgstr "Presto"
+
+#: tune_actions.py:579
+msgid "Prestissimo"
+msgstr "Prestissimo"
+
+#: tune_actions.py:582
+msgid "Change tempo name"
+msgstr "Ändere den Temponamen"
+
+#: tune_actions.py:587
+msgid "Note up"
+msgstr "Note nach oben"
+
+#: tune_actions.py:588
+msgid "Note down"
+msgstr "Note nach unten"
+
+#: tune_actions.py:589
+msgid "Third up"
+msgstr "Terz nach oben"
+
+#: tune_actions.py:590
+msgid "Third down"
+msgstr "Terz nach unten"
+
+#: tune_actions.py:591 tune_actions.py:1105 tune_actions.py:1115
+msgid "Octave up"
+msgstr "Oktave nach oben"
+
+#: tune_actions.py:592 tune_actions.py:1106 tune_actions.py:1116
+msgid "Octave down"
+msgstr "Oktave nach unten"
+
+#: tune_actions.py:596
+msgid "Change pitch"
+msgstr "Ändere die Tonhöhe"
+
+#: tune_actions.py:664
+msgid "Change duration"
+msgstr "Ändere Notenwert"
+
+#: tune_actions.py:791
+msgid "One measure"
+msgstr "Ein Takt"
+
+#: tune_actions.py:792
+msgid "Double measures"
+msgstr "Verdopple Taktanzahl"
+
+#: tune_actions.py:793
+msgid "Half measures"
+msgstr "Halbiere Taktanzahl"
+
+#: tune_actions.py:794
+msgid "Increase measures"
+msgstr "Mehr Takte"
+
+#: tune_actions.py:795
+msgid "Decrease measures"
+msgstr "Weniger Takte"
+
+#: tune_actions.py:796
+msgid "Normal rest"
+msgstr "Normale Pause"
+
+#: tune_actions.py:807 tune_actions.py:821
+msgid "Default length"
+msgstr "Standardwert"
+
+#: tune_actions.py:808 tune_actions.py:822
+msgid "Halve note length"
+msgstr "Notenwert halbieren"
+
+#: tune_actions.py:809 tune_actions.py:823
+msgid "Double note length"
+msgstr "Notenwert verdoppeln"
+
+#: tune_actions.py:810 tune_actions.py:824
+msgid "Dotted note"
+msgstr "Punktierte Note"
+
+#: tune_actions.py:811 tune_actions.py:825
+msgid "This note dotted, next note halved"
+msgstr "Diese Note punktiert, die nächste halbiert"
+
+#: tune_actions.py:812 tune_actions.py:826
+msgid "This note halved, next note dotted"
+msgstr "Diese Note halbiert, die nächste punktiert"
+
+#: tune_actions.py:813
+msgid "Tie / untie"
+msgstr "Überbinden / Bindung lösen"
+
+#: tune_actions.py:827
+msgid "Whole measure"
+msgstr "Ganzer Takt"
+
+#: tune_actions.py:835 tune_actions.py:1783
+msgid "Optional sharp"
+msgstr "Optionales Kreuz"
+
+#: tune_actions.py:836 tune_actions.py:1784
+msgid "Optional natural"
+msgstr "Optionales Auflösungszeichen"
+
+#: tune_actions.py:837 tune_actions.py:1785
+msgid "Optional flat"
+msgstr "Optionales B"
+
+#: tune_actions.py:838
+msgid "Ritenuto"
+msgstr "Ritenuto"
+
+#: tune_actions.py:841
+msgid "Change annotation"
+msgstr "Zusatzbezeichnung ändern"
+
+#: tune_actions.py:847
+msgid "Above"
+msgstr "Oberhalb"
+
+#: tune_actions.py:848
+msgid "Below"
+msgstr "Unterhalb"
+
+#: tune_actions.py:849
+msgid "Left"
+msgstr "Links"
+
+#: tune_actions.py:850
+msgid "Right"
+msgstr "Rechts"
+
+#: tune_actions.py:851
+msgid "Auto"
+msgstr "Automatisch"
+
+#: tune_actions.py:854
+msgid "Position"
+msgstr "Position"
+
+#: tune_actions.py:859
+msgid "Bar line"
+msgstr "Taktstrich"
+
+#: tune_actions.py:860
+msgid "Double bar line"
+msgstr "Doppelter Taktstrich"
+
+#: tune_actions.py:861
+msgid "Thin-thick double bar line"
+msgstr "Dünner/dicker doppelter Taktstrich"
+
+#: tune_actions.py:862
+msgid "Dotted bar"
+msgstr "Gepunkteter Taktstrich"
+
+#: tune_actions.py:863
+msgid "Thick-thin double bar line"
+msgstr "Dicker/dünner doppelter Taktstrich"
+
+#: tune_actions.py:864
+msgid "Start of repeated section"
+msgstr "Beginn der Wiederholung"
+
+#: tune_actions.py:865
+msgid "End of repeated section"
+msgstr "Ende der Wiederholung"
+
+#: tune_actions.py:866
+msgid "First ending"
+msgstr "Erste Klammer"
+
+#: tune_actions.py:867
+msgid "Second ending"
+msgstr "Zweite Klammer"
+
+#: tune_actions.py:868
+msgid "Both end and start of repetition"
+msgstr "Ende und Start einer Wiederholung"
+
+#: tune_actions.py:869 tune_elements.py:954
+msgid "Voice overlay"
+msgstr "Stimm-Überlagerung"
+
+#: tune_actions.py:870
+msgid "Invisible bar"
+msgstr "Unsichtbarer Taktstrich"
+
+#: tune_actions.py:873
+msgid "Change bar"
+msgstr "Taktstrich ändern"
+
+#: tune_actions.py:878 tune_actions.py:887
+msgid "Visible"
+msgstr "Sichtbar"
+
+#: tune_actions.py:879 tune_actions.py:888
+msgid "Hidden"
+msgstr "Unsichtbar"
+
+#: tune_actions.py:882 tune_actions.py:891
+msgid "Visibility"
+msgstr "Sichtbarkeit"
+
+#: tune_actions.py:896
+msgid "Appoggiatura"
+msgstr "Langer Vorschlag (appoggiatura)"
+
+#: tune_actions.py:897
+msgid "Acciaccatura"
+msgstr "Kurzer Vorschlag (acciaccatura)"
+
+#: tune_actions.py:900
+msgid "Appoggiatura/acciaccatura"
+msgstr "Vorschlag (appoggiatura/acciaccatura)"
+
+#: tune_actions.py:942
+msgid "6 sharps"
+msgstr "6 Kreuze"
+
+#: tune_actions.py:943
+msgid "5 sharps"
+msgstr "5 Kreuze"
+
+#: tune_actions.py:944
+msgid "4 sharps"
+msgstr "4 Kreuze"
+
+#: tune_actions.py:945
+msgid "3 sharps"
+msgstr "3 Kreuze"
+
+#: tune_actions.py:946
+msgid "2 sharps"
+msgstr "2 Kreuze"
+
+#: tune_actions.py:947
+msgid "1 sharp"
+msgstr "1 Kreuz"
+
+#: tune_actions.py:948
+msgid "0 sharps/flats"
+msgstr "Ohne Vorzeichen"
+
+#: tune_actions.py:949
+msgid "1 flat"
+msgstr "1 b"
+
+#: tune_actions.py:950
+msgid "2 flats"
+msgstr "2 b"
+
+#: tune_actions.py:951
+msgid "3 flats"
+msgstr "2 b"
+
+#: tune_actions.py:952
+msgid "4 flats"
+msgstr "4 b"
+
+#: tune_actions.py:953
+msgid "5 flats"
+msgstr "5 b"
+
+#: tune_actions.py:954
+msgid "6 flats"
+msgstr "6 b"
+
+#: tune_actions.py:1006
+msgid "Major (Ionian)"
+msgstr "Dur (Ionisch)"
+
+#: tune_actions.py:1007
+msgid "Minor (Aeolian)"
+msgstr "Moll (Aeolisch)"
+
+#: tune_actions.py:1008
+msgid "Dorian"
+msgstr "Dorisch"
+
+#: tune_actions.py:1009
+msgid "Mixolydian"
+msgstr "Mixolydisch"
+
+#: tune_actions.py:1010
+msgid "Phrygian"
+msgstr "Phrygisch"
+
+#: tune_actions.py:1011
+msgid "Lydian"
+msgstr "Lydisch"
+
+#: tune_actions.py:1012
+msgid "Locrian"
+msgstr "Lokrisch"
+
+#: tune_actions.py:1015
+msgid "Mode"
+msgstr "Modus"
+
+#: tune_actions.py:1053 tune_actions.py:1094 tune_actions.py:1104
+#: tune_actions.py:1114
+msgid "Default"
+msgstr "Vorgabe"
+
+#: tune_actions.py:1054
+msgid "Treble clef"
+msgstr "Violinschlüssel"
+
+#: tune_actions.py:1055
+msgid "Bass clef"
+msgstr "Bassschlüssel"
+
+#: tune_actions.py:1056
+msgid "Tenor clef"
+msgstr "Tenorschlüssel"
+
+#: tune_actions.py:1057
+msgid "Alto clef"
+msgstr "Altschlüssel"
+
+#: tune_actions.py:1058
+msgid "Soprano clef"
+msgstr "Sopranschlüssel"
+
+#: tune_actions.py:1059
+msgid "Mezzo-soprano clef"
+msgstr "Mezzosoparanschlüssel"
+
+#: tune_actions.py:1060
+msgid "Baritone clef"
+msgstr "Baritonschlüssel"
+
+#: tune_actions.py:1061
+msgid "Percussion clef"
+msgstr "Perkussionsschlüssel"
+
+#: tune_actions.py:1065
+msgid "Clef"
+msgstr "Notenschlüssel"
+
+#: tune_actions.py:1095
+msgid "Octave higher (8va)"
+msgstr "Oktave höher (8va)"
+
+#: tune_actions.py:1096
+msgid "Octave lower (8va bassa)"
+msgstr "Oktave tiefer (8va bassa)"
+
+#: tune_actions.py:1099
+msgid "Staff transpose"
+msgstr "Notentransponierung"
+
+#: tune_actions.py:1109
+msgid "Playback transpose"
+msgstr "Wiedegabetransponierung"
+
+#: tune_actions.py:1119
+msgid "Octave shift"
+msgstr "Oktavverschiebung"
+
+#: tune_actions.py:1155
+msgid "Change dynamics mark"
+msgstr "Ändere Dynamikzeichen"
+
+#: tune_actions.py:1160
+msgid "Change fingering"
+msgstr "Ändere Fingersatz"
+
+#: tune_actions.py:1165
+msgid "Change ornament"
+msgstr "Ändere Verzierung"
+
+#: tune_actions.py:1170
+msgid "Change direction marker"
+msgstr "Ändere Richtungsangabe"
+
+#: tune_actions.py:1175
+msgid "Change articulation marker"
+msgstr "Ändere Ausdruckszeichen"
+
+#: tune_actions.py:1180
+msgid "Change chord"
+msgstr "Ändere Akkord"
+
+#: tune_actions.py:1213
+msgid "Major"
+msgstr "Dur"
+
+#: tune_actions.py:1214
+msgid "Minor"
+msgstr "Moll"
+
+#: tune_actions.py:1215
+msgid "Diminished"
+msgstr "Vermindert"
+
+#: tune_actions.py:1216
+msgid "Augmented"
+msgstr "Übermäßig"
+
+#: tune_actions.py:1217
+msgid "Suspended"
+msgstr "Vorhalt"
+
+#: tune_actions.py:1218
+msgid "Suspended (2nd)"
+msgstr "Vorhalt (Sekunde statt Terz)"
+
+#: tune_actions.py:1219
+msgid "Seventh"
+msgstr "Sept"
+
+#: tune_actions.py:1220
+msgid "Major seventh"
+msgstr "Dur Septime"
+
+#: tune_actions.py:1222
+msgid "Minor seventh"
+msgstr "Moll Septime"
+
+#: tune_actions.py:1224
+msgid "Augmented seventh"
+msgstr "Übermäßige Septime"
+
+#: tune_actions.py:1225
+msgid "Diminished seventh"
+msgstr "Verminderte Septime"
+
+#: tune_actions.py:1226
+msgid "Major sixth"
+msgstr "Dur Sext"
+
+#: tune_actions.py:1227
+msgid "Minor sixth"
+msgstr "Moll Sext"
+
+#: tune_actions.py:1228
+msgid "Half-diminished seventh"
+msgstr "Halbverminderte Septime"
+
+#: tune_actions.py:1230
+msgid "Power-chord (no third)"
+msgstr "Ohne Terz (Power-Chord)"
+
+#: tune_actions.py:1231
+msgid "Seventh suspended"
+msgstr "Septime vorgehalten"
+
+#: tune_actions.py:1232
+msgid "Seventh suspended (2nd)"
+msgstr "Septime vorgehalten (Sek. statt Terz)"
+
+#: tune_actions.py:1233
+msgid "Dominant 9th"
+msgstr "Dominant None"
+
+#: tune_actions.py:1235
+msgid "Major 9th"
+msgstr "Dur None"
+
+#: tune_actions.py:1236
+msgid "Minor Dominant 9th"
+msgstr "Moll Dominant None"
+
+#: tune_actions.py:1243
+msgid "Dominant 11th"
+msgstr "Dominant Undezime"
+
+#: tune_actions.py:1246
+msgid "Change chord name"
+msgstr "Ändere Akkordnamen"
+
+#: tune_actions.py:1254
+msgid "Root position"
+msgstr "Grundakkord (Tonika)"
+
+#: tune_actions.py:1255
+msgid "First inversion"
+msgstr "Erste Umkehrung"
+
+#: tune_actions.py:1256
+msgid "Second inversion"
+msgstr "Zweite Umkehrung"
+
+#: tune_actions.py:1259
+msgid "Change bass note"
+msgstr "Ändere die Bassnote"
+
+#: tune_actions.py:1267 tune_actions.py:2174
+msgid "Normal"
+msgstr "Normal"
+
+#: tune_actions.py:1268
+msgid "Dashed"
+msgstr "Gestrichtelt"
+
+#: tune_actions.py:1271
+msgid "Change slur"
+msgstr "Ändere den Bindebogen"
+
+#: tune_actions.py:1276
+msgid "Change redefinable symbol"
+msgstr "Ändere das umdefinierbare Symbol"
+
+#: tune_actions.py:1302
+msgid "Change instrument"
+msgstr "Ändere das Instrument"
+
+#: tune_actions.py:1313
+msgid "Change channel"
+msgstr "Ändere den Kanal"
+
+# MIDI percussion instrument names are currently not translated
+#: tune_actions.py:1322
+msgid "High Q"
+msgstr ""
+
+#: tune_actions.py:1323
+msgid "Slap"
+msgstr ""
+
+#: tune_actions.py:1324
+msgid "Scratch Push"
+msgstr ""
+
+#: tune_actions.py:1325
+msgid "Scratch Pull"
+msgstr ""
+
+#: tune_actions.py:1326
+msgid "Sticks"
+msgstr ""
+
+#: tune_actions.py:1327
+msgid "Square Click"
+msgstr ""
+
+#: tune_actions.py:1328
+msgid "Metronome Click"
+msgstr ""
+
+#: tune_actions.py:1329
+msgid "Metronome Bell"
+msgstr ""
+
+#: tune_actions.py:1330
+msgid "Acoustic Bass Drum"
+msgstr ""
+
+#: tune_actions.py:1331
+msgid "Bass Drum 1"
+msgstr ""
+
+#: tune_actions.py:1332
+msgid "Side Stick"
+msgstr ""
+
+#: tune_actions.py:1333
+msgid "Acoustic Snare"
+msgstr ""
+
+#: tune_actions.py:1334
+msgid "Hand Clap"
+msgstr ""
+
+#: tune_actions.py:1335
+msgid "Electric Snare"
+msgstr ""
+
+#: tune_actions.py:1336
+msgid "Low Floor Tom"
+msgstr ""
+
+#: tune_actions.py:1337
+msgid "Closed Hi Hat"
+msgstr ""
+
+#: tune_actions.py:1338
+msgid "High Floor Tom"
+msgstr ""
+
+#: tune_actions.py:1339
+msgid "Pedal Hi-Hat"
+msgstr ""
+
+#: tune_actions.py:1340
+msgid "Low Tom"
+msgstr ""
+
+#: tune_actions.py:1341
+msgid "Open Hi-Hat"
+msgstr ""
+
+#: tune_actions.py:1342
+msgid "Low-Mid Tom"
+msgstr ""
+
+#: tune_actions.py:1343
+msgid "Hi Mid Tom"
+msgstr ""
+
+#: tune_actions.py:1344
+msgid "Crash Cymbal 1"
+msgstr ""
+
+#: tune_actions.py:1345
+msgid "High Tom"
+msgstr ""
+
+#: tune_actions.py:1346
+msgid "Ride Cymbal 1"
+msgstr ""
+
+#: tune_actions.py:1347
+msgid "Chinese Cymbal"
+msgstr ""
+
+#: tune_actions.py:1348
+msgid "Ride Bell"
+msgstr ""
+
+#: tune_actions.py:1349
+msgid "Tambourine"
+msgstr ""
+
+#: tune_actions.py:1350
+msgid "Splash Cymbal"
+msgstr ""
+
+#: tune_actions.py:1351
+msgid "Cowbell"
+msgstr ""
+
+#: tune_actions.py:1352
+msgid "Crash Cymbal 2"
+msgstr ""
+
+#: tune_actions.py:1353
+msgid "Vibraslap"
+msgstr ""
+
+#: tune_actions.py:1354
+msgid "Ride Cymbal 2"
+msgstr ""
+
+#: tune_actions.py:1355
+msgid "Hi Bongo"
+msgstr ""
+
+#: tune_actions.py:1356
+msgid "Low Bongo"
+msgstr ""
+
+#: tune_actions.py:1357
+msgid "Mute Hi Conga"
+msgstr ""
+
+#: tune_actions.py:1358
+msgid "Open Hi Conga"
+msgstr ""
+
+#: tune_actions.py:1359
+msgid "Low Conga"
+msgstr ""
+
+#: tune_actions.py:1360
+msgid "High Timbale"
+msgstr ""
+
+#: tune_actions.py:1361
+msgid "Low Timbale"
+msgstr ""
+
+#: tune_actions.py:1362
+msgid "High Agogo"
+msgstr ""
+
+#: tune_actions.py:1363
+msgid "Low Agogo"
+msgstr ""
+
+#: tune_actions.py:1364
+msgid "Cabasa"
+msgstr ""
+
+#: tune_actions.py:1365
+msgid "Maracas"
+msgstr ""
+
+#: tune_actions.py:1366
+msgid "Short Whistle"
+msgstr ""
+
+#: tune_actions.py:1367
+msgid "Long Whistle"
+msgstr ""
+
+#: tune_actions.py:1368
+msgid "Short Guiro"
+msgstr ""
+
+#: tune_actions.py:1369
+msgid "Long Guiro"
+msgstr ""
+
+#: tune_actions.py:1370
+msgid "Claves"
+msgstr ""
+
+#: tune_actions.py:1371
+msgid "Hi Wood Block"
+msgstr ""
+
+#: tune_actions.py:1372
+msgid "Low Wood Block"
+msgstr ""
+
+#: tune_actions.py:1373
+msgid "Mute Cuica"
+msgstr ""
+
+#: tune_actions.py:1374
+msgid "Open Cuica"
+msgstr ""
+
+#: tune_actions.py:1375
+msgid "Mute Triangle"
+msgstr ""
+
+#: tune_actions.py:1376
+msgid "Open Triangle"
+msgstr ""
+
+#: tune_actions.py:1377
+msgid "Shaker"
+msgstr ""
+
+#: tune_actions.py:1378
+msgid "Jingle Bell"
+msgstr ""
+
+#: tune_actions.py:1379
+msgid "Belltree"
+msgstr ""
+
+#: tune_actions.py:1380
+msgid "Castanets"
+msgstr ""
+
+#: tune_actions.py:1381
+msgid "Closed Surdo"
+msgstr ""
+
+#: tune_actions.py:1382
+msgid "Open Surdo"
+msgstr ""
+
+#: tune_actions.py:1385
+msgid "Change percussion instrument"
+msgstr "Ändere das Schlaginstrument"
+
+#: tune_actions.py:1391
+msgid "Muted"
+msgstr "Stumm"
+
+#: tune_actions.py:1404
+msgid "Change volume"
+msgstr "Ändere die Lautstärke"
+
+#: tune_actions.py:1421 tune_actions.py:1422 tune_actions.py:1423
+#: tune_actions.py:1424 tune_actions.py:1425 tune_actions.py:1429
+#: tune_actions.py:1430 tune_actions.py:1431 tune_actions.py:1432
+#: tune_actions.py:1433
+msgid "Preset"
+msgstr "Voreinstellung"
+
+#: tune_actions.py:1426 tune_actions.py:1434
+msgid "Custom"
+msgstr "Benutzerdefiniert"
+
+#: tune_actions.py:1437
+msgid "Change guitar pattern"
+msgstr "Ändere das Gitarrenmuster"
+
+#: tune_actions.py:1452
+msgid "Fundamental"
+msgstr "Grundbass"
+
+#: tune_actions.py:1453 tune_elements.py:1024
+msgid "Chord"
+msgstr "Akkord"
+
+#: tune_actions.py:1454 tune_elements.py:1043
+msgid "Rest"
+msgstr "Pause"
+
+#: tune_actions.py:1455
+msgid "Double duration"
+msgstr "Doppelte Länge"
+
+#: tune_actions.py:1456
+msgid "Fundamental plus chord"
+msgstr "Grundbass + Akkord"
+
+#: tune_actions.py:1457 tune_actions.py:1461
+msgid "Lowest note"
+msgstr "Tiefste Note"
+
+#: tune_actions.py:1458 tune_actions.py:1462
+msgid "Second note"
+msgstr "Zweite Note"
+
+#: tune_actions.py:1459 tune_actions.py:1463
+msgid "Third note"
+msgstr "Dritte Note"
+
+#: tune_actions.py:1460 tune_actions.py:1464
+msgid "Fourth note"
+msgstr "Vierte Note"
+
+#: tune_actions.py:1461 tune_actions.py:1462 tune_actions.py:1463
+#: tune_actions.py:1464
+msgid "an octave higher"
+msgstr "Oktave höher"
+
+#: tune_actions.py:1467
+msgid "Insert pattern"
+msgstr "Muster eingeben"
+
+#: tune_actions.py:1472
+msgid "Change time"
+msgstr "Zeit ändern"
+
+#: tune_actions.py:1477
+msgid "Double time"
+msgstr "Doppelte Zeit"
+
+#: tune_actions.py:1480
+msgid "Half time"
+msgstr "Halbe Zeit"
+
+#: tune_actions.py:1527
+#, python-brace-format
+msgid "Learn {0}..."
+msgstr "Lerne {0}..."
+
+#: tune_actions.py:1530
+msgid "more"
+msgstr "mehr"
+
+#: tune_actions.py:1593
+msgid "Full ABC specification"
+msgstr "Vollständige ABC-Spezifikation (englisch)"
+
+#: tune_actions.py:1605
+msgid "New tune"
+msgstr "Neues Stück"
+
+#: tune_actions.py:1615
+msgid "Unknown composer"
+msgstr "Unbekannter Komponist"
+
+#: tune_actions.py:1633
+msgid "New tune with multiple voices"
+msgstr "Neues mehrstimmiges Stück"
+
+#: tune_actions.py:1659
+msgid "New drum score"
+msgstr "Neue Schlagzeug-Notation"
+
+#: tune_actions.py:1683
+msgid "Add voice"
+msgstr "Stimme hinzufügen"
+
+#: tune_actions.py:1699
+msgid "Replace invalid characters"
+msgstr "Fehlerhafte Zeichen ersetzen"
+
+#: tune_actions.py:1721
+msgid "New line"
+msgstr "Neue Zeile"
+
+#: tune_actions.py:1736
+msgid "Space"
+msgstr "Leerraum"
+
+#: tune_actions.py:1752
+msgid "New note/rest"
+msgstr "Neue Note/Pause"
+
+#: tune_actions.py:1781 tune_elements.py:968 tune_elements.py:1034
+msgid "Chord symbol"
+msgstr "Akkordsymbol"
+
+#: tune_actions.py:1782
+msgid "Between parenthesis"
+msgstr "In Klammern"
+
+#: tune_actions.py:1788
+msgid "Insert annotation or chord"
+msgstr "Füge Anmerkung oder Akkord ein"
+
+#: tune_actions.py:1800 tune_elements.py:874
+msgid "Ornament"
+msgstr "Verzierung"
+
+#: tune_actions.py:1801 tune_elements.py:916
+msgid "Articulation"
+msgstr "Artikulation"
+
+#: tune_actions.py:1802 tune_elements.py:892
+msgid "Direction"
+msgstr "Ablaufanweisung"
+
+#: tune_actions.py:1803
+msgid "Shortcut symbol"
+msgstr "Code-Kürzel"
+
+#: tune_actions.py:1804 tune_elements.py:856
+msgid "Fingering"
+msgstr "Fingersatz"
+
+#: tune_actions.py:1805
+msgid "Accidental"
+msgstr "Redaktionelles Zeichen"
+
+#: tune_actions.py:1808
+msgid "Insert decoration"
+msgstr "Füge Symbol ein"
+
+#: tune_actions.py:1819
+msgid "Add slur"
+msgstr "Füge Bindebogen ein"
+
+#: tune_actions.py:1830
+msgid "Add bar"
+msgstr "Füge Taktstrich ein"
+
+#: tune_actions.py:1872
+msgid "Combine using beam"
+msgstr "Verbinde mit Balken"
+
+#: tune_actions.py:1884
+msgid "Combine to chord"
+msgstr "Kombiniere zu Akkord"
+
+#: tune_actions.py:1896
+msgid "Make triplets"
+msgstr "Erzeuge Triolen"
+
+#: tune_actions.py:1908
+msgid "Show single voice"
+msgstr "Zeige einzelne Stimme"
+
+#: tune_actions.py:1942
+msgid "Show all voices"
+msgstr "Zeige alle Stimmen"
+
+#: tune_actions.py:1961
+msgid "Show additional voice"
+msgstr "Zeige weitere Stimme"
+
+#: tune_actions.py:1993
+msgid "Hide voice"
+msgstr "Stimme verbergen"
+
+#: tune_actions.py:2031
+msgid "Group together on same stave"
+msgstr "In der gleichen Notenzeile gruppieren"
+
+#: tune_actions.py:2044
+msgid "Brace together"
+msgstr "Mit geschweifter Klammer"
+
+#: tune_actions.py:2057
+msgid "Bracket together"
+msgstr "Mit eckiger Klammer"
+
+#: tune_actions.py:2062
+msgid "Toggle continued bar lines"
+msgstr "Durchgehende Taktstriche ein/aus"
+
+#: tune_actions.py:2079
+msgid "Simplify note"
+msgstr "Note vereinfachen"
+
+#: tune_actions.py:2101 tune_elements.py:80
+msgid "Book"
+msgstr "Buch"
+
+#: tune_actions.py:2103 tune_elements.py:82
+msgid "Discography"
+msgstr "Diskografie"
+
+#: tune_actions.py:2104 tune_elements.py:83
+msgid "File url"
+msgstr "Datei URI"
+
+#: tune_actions.py:2105 tune_elements.py:84
+msgid "Group"
+msgstr "Gruppe"
+
+#: tune_actions.py:2106 tune_elements.py:85
+msgid "History"
+msgstr "Geschichte"
+
+#: tune_actions.py:2107 tune_elements.py:91
+msgid "Notes"
+msgstr "Notizen"
+
+#: tune_actions.py:2108 tune_elements.py:92
+msgid "Origin"
+msgstr "Herkunft"
+
+#: tune_actions.py:2109 tune_elements.py:93
+msgid "Parts"
+msgstr "Abschnitte"
+
+#: tune_actions.py:2111 tune_elements.py:95
+msgid "Rhythm"
+msgstr "Rhythmus"
+
+#: tune_actions.py:2112 tune_elements.py:97
+msgid "Source"
+msgstr "Quelle"
+
+#: tune_actions.py:2113 tune_elements.py:99
+msgid "Tune title"
+msgstr "Titel des Stückes"
+
+#: tune_actions.py:2114 tune_elements.py:102
+msgid "Words (note aligned)"
+msgstr "Liedtext (ausgerichtet an Noten)"
+
+#: tune_actions.py:2115 tune_elements.py:103
+msgid "Words (at the end)"
+msgstr "Liedtext (am Ende)"
+
+#: tune_actions.py:2116 tune_elements.py:104
+msgid "Reference number"
+msgstr "Referenznummer"
+
+#: tune_actions.py:2117 tune_elements.py:105
+msgid "Transcription"
+msgstr "Transkription"
+
+#: tune_actions.py:2120
+msgid "Fields"
+msgstr "Felder"
+
+#: tune_actions.py:2147 tune_actions.py:2151 tune_actions.py:2152
+msgid "Page width"
+msgstr "Seitenbreite"
+
+#: tune_actions.py:2148
+msgid "Page height"
+msgstr "Seitenhöhe"
+
+#: tune_actions.py:2149
+msgid "Top margin"
+msgstr "Oberer Rand"
+
+#: tune_actions.py:2150
+msgid "Bottom margin"
+msgstr "Unterer Rand"
+
+#: tune_actions.py:2153
+msgid "Staff width"
+msgstr "Bereite des Notensystems"
+
+#: tune_actions.py:2154
+msgid "Page orientation"
+msgstr "Seitenausrichtung"
+
+#: tune_actions.py:2157
+msgid "Change page format"
+msgstr "Ändere Seitenformat"
+
+#: tune_actions.py:2163
+msgid "Start of every line"
+msgstr "Zeilenanfang"
+
+#: tune_actions.py:2164
+msgid "Every measure"
+msgstr "Jeden Takt"
+
+#: tune_actions.py:2165
+msgid "Every 4 measures"
+msgstr "Alle vier Takte"
+
+#: tune_actions.py:2166
+msgid "Every 5 measures"
+msgstr "Alle fünf Takte"
+
+#: tune_actions.py:2169
+msgid "Show measure numbers"
+msgstr "Zeige Taktnummern"
+
+#: tune_actions.py:2175
+msgid "Boxed"
+msgstr "Umrahmt"
+
+#: tune_actions.py:2178
+msgid "Show measure box"
+msgstr "Umrahmte Taktnummer"
+
+#: tune_actions.py:2183
+msgid "Zero"
+msgstr "Null"
+
+#: tune_actions.py:2184
+msgid "One"
+msgstr "Eins"
+
+#: tune_actions.py:2187
+msgid "First measure number"
+msgstr "Erste Taktnummer"
+
+#: tune_actions.py:2192
+msgid "Title font"
+msgstr "Schriftart für Titel"
+
+#: tune_actions.py:2193
+msgid "Subtitle font"
+msgstr "Schriftart für Untertitel"
+
+#: tune_actions.py:2194
+msgid "Composer font"
+msgstr "Schriftart für Komponist"
+
+#: tune_actions.py:2195
+msgid "Parts font"
+msgstr "Schriftart für Abschnitte"
+
+#: tune_actions.py:2196
+msgid "Tempo font"
+msgstr "Schriftart für Tempo"
+
+#: tune_actions.py:2197
+msgid "Guitar chord font"
+msgstr "Schriftart für Gitarrenakkorde"
+
+#: tune_actions.py:2198
+msgid "Annotation font"
+msgstr "Schriftart für Anmerkungen"
+
+#: tune_actions.py:2199
+msgid "Info font"
+msgstr "Schriftart für Informationen"
+
+#: tune_actions.py:2200
+msgid "Text font"
+msgstr "Schriftart für Text"
+
+#: tune_actions.py:2201
+msgid "Vocal font"
+msgstr "Schriftart für Singstimme"
+
+#: tune_actions.py:2202
+msgid "Words font"
+msgstr "Schriftart für Liedtexte"
+
+#: tune_actions.py:2203
+msgid "Custom font 1"
+msgstr "Benutzerdefinierte Schriftart 1"
+
+#: tune_actions.py:2204
+msgid "Custom font 2"
+msgstr "Benutzerdefinierte Schriftart 2"
+
+#: tune_actions.py:2205
+msgid "Custom font 3"
+msgstr "Benutzerdefinierte Schriftart 3"
+
+#: tune_actions.py:2206
+msgid "Custom font 4"
+msgstr "Benutzerdefinierte Schriftart 4"
+
+#: tune_actions.py:2209
+msgid "Change font directive"
+msgstr "Ändere Schriftart"
+
+#: tune_actions.py:2214 tune_actions.py:2224
+msgid "Page scale factor"
+msgstr "Skalierungsfaktor der Seite"
+
+#: tune_actions.py:2215
+msgid "Staff scale factor"
+msgstr "Skalierungsfaktor des Notensystems"
+
+#: tune_actions.py:2218
+msgid "Change scale directive"
+msgstr "Ändere die Skalierung"
+
+#: tune_actions.py:2223 tune_elements.py:638
+msgid "Score layout"
+msgstr "Partitur-Layout"
+
+#: tune_actions.py:2225 tune_elements.py:646
+msgid "Measure numbering"
+msgstr "Taktnumerierung"
+
+#: tune_actions.py:2226 tune_elements.py:654
+msgid "Hide fields"
+msgstr "Felder verbergen"
+
+#: tune_actions.py:2227
+msgid "Playback"
+msgstr "Wiedegabe"
+
+#: tune_actions.py:2230
+msgid "Insert directive"
+msgstr "Anweisung einfügen"
+
+#: tune_actions.py:2238 tune_elements.py:591
+msgid "Chord instrument"
+msgstr "Akkord-Instrument"
+
+#: tune_actions.py:2239
+msgid "Chord volume"
+msgstr "Akkordlautstärke"
+
+#: tune_actions.py:2240 tune_elements.py:598
+msgid "Bass instrument"
+msgstr "Bass-Instrument"
+
+#: tune_actions.py:2241
+msgid "Bass volume"
+msgstr "Bass-Lautstärke"
+
+#: tune_actions.py:2243
+msgid "Accompaniment pattern (optional). Place after line with M:"
+msgstr "Begleitmuster (optional). Einfügen nach Zeile mit M:"
+
+#: tune_actions.py:2246 tune_elements.py:584
+msgid "Instrument"
+msgstr "Instrument"
+
+#: tune_actions.py:2246
+msgid "Set instrument"
+msgstr "Instrument einstellen"
+
+#: tune_actions.py:2247 tune_elements.py:622
+msgid "Volume"
+msgstr "Lautstärke"
+
+#: tune_actions.py:2247
+msgid "Set volume"
+msgstr "Lautstärke einstellen"
+
+#: tune_actions.py:2252
+msgid "Insert playback directive"
+msgstr "Spielanweisung einfügen"
+
+#: tune_actions.py:2257
+msgid "break between syllables within a word"
+msgstr "Umbruch zwischen Silben eines Wortes"
+
+#: tune_actions.py:2258
+msgid "previous syllable is to be held for an extra note"
+msgstr "vorherige Silbe halten für eine weitere Note"
+
+#: tune_actions.py:2259
+msgid "one note is skipped (* is equivalent to a blank syllable)"
+msgstr "eine Note auslassen ('*' entspricht leerer Silbe)"
+
+#: tune_actions.py:2260
+msgid "appears as a space; aligns multiple words under one note"
+msgstr "erscheint als Leerzeichen; mehrere Worte unter einer Note"
+
+#: tune_actions.py:2261
+msgid "appears as hyphen; aligns multiple syllables under one note"
+msgstr "erscheint als Bindestrich; mehrere Silben unter einer Note"
+
+#: tune_actions.py:2262 tune_actions.py:2271
+msgid "advances to the next bar"
+msgstr "geht zum nächsten Takt"
+
+#: tune_actions.py:2265 tune_actions.py:2274
+msgid "Insert align symbol"
+msgstr "Ausrichtungssymbol einfügen"
+
+#: tune_actions.py:2270
+msgid "one note is skipped"
+msgstr "eine Note wird augelassen"
+
+#: tune_actions.py:2279 tune_actions.py:2312 tune_actions.py:2331
+msgid "Key / clef"
+msgstr "Tonart / Schlüssel"
+
+#: tune_actions.py:2284 tune_actions.py:2338
+msgid "Change..."
+msgstr "Ändern ..."
+
+#: tune_actions.py:2315 tune_actions.py:2352
+msgid "Add..."
+msgstr "Einfügen..."
+
+#: tune_actions.py:2373
+msgid "Remove"
+msgstr "Entfernen"
 
 #: tune_elements.py:78
 msgid "Staff layout"
